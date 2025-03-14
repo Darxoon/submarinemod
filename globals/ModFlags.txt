@@ -1,0 +1,3 @@
+000 = MF_Debug
+001 = MF_caf_01_SwichHit
+002 = MF_caf_02_KeyCollected

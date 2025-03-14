@@ -1,0 +1,24 @@
+@ $Script_Main {
+	Set   *GB_WorldLocation  .Location:GoombaRoad
+	Call  SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call  SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
+	Call  SetCamEnabled      ( .Cam:Default .True
+	Call  SetCamLeadPlayer   ( .Cam:Default .False )
+	Exec  $Script_MakeEntities
+	Exec  $Script_SetupMusic
+	Exec  $Script_EnterMap
+    
+    Bind  $Script_SwitchActivate .Trigger:AreaFlagSet *AreaFlag[.AreaFlag_Entity_Switch1] 00000001 00000000
+    
+	Return
+	End
+}
+
+#new:Script $Script_SwitchActivate {
+	Call  MakeEntity    ( .Entity:YellowBlock ~Vec4d:Block2 .Item:Mushroom 80000000 )
+    
+    Set *MF_caf_01_SwichHit 1`
+    Unbind
+    Return
+    End
+}

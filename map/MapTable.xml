@@ -568,6 +568,11 @@
 		<Map name="tst_13" nickname="Partners and Shockwave"/>
 		<Map name="tst_20" nickname="Pipes Gallery"/>
 	</Area>
+	<Area name="caf" nickname="surbmarine mod">
+		<Map name="caf_00" nickname="Test stage"/>
+		<Map name="caf_01" nickname="Bunk bed room"/>
+		<Map name="caf_02" nickname="Meeting room"/>
+	</Area>
 	<Resource name="mac_tex" compressed="false"/>
 	<Resource name="tik_tex" compressed="false"/>
 	<Resource name="kgr_tex" compressed="false"/>
