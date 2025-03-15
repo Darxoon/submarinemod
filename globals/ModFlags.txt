@@ -1,3 +1,9 @@
 000 = MF_Debug
 001 = MF_caf_01_SwichHit
 002 = MF_caf_02_KeyCollected
+003 = MF_caf_02_KeyUsed
+004 = MF_RedSwitchHit
+005 = MF_BlueSwitchHit
+006 = MF_old_00_ChestOpened
+007 = MF_old_00_BlockDestroyed
+008 = MF_old_00_BadgeObtained

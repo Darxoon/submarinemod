@@ -1,0 +1,154 @@
+@ $Script_Main {
+	Set  *GB_WorldLocation  .Location:GoombaRoad
+	Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
+	Call SetCamEnabled      ( .Cam:Default .True
+	Call SetCamLeadPlayer   ( .Cam:Default .False )
+	Exec $Script_MakeEntities
+	Exec $Script_SetupMusic
+	Exec $Script_EnterMap
+    
+    % disables platform collider
+    Call ModifyColliderFlags ( 0` ~Collider:Platform1 00018000 ) % 0 = set bits
+    
+    If *MF_caf_02_KeyUsed == 1`
+        Exec $Script_SetupMovingPlatform
+    EndIf
+    
+    BindLock  $Script_TerminalPressA .Trigger:WallPressA ~Collider:Terminal $ItemList_Terminal 00000000 00000001
+    
+    ExecWait $Script_UpdatePlatforms
+    
+	Return
+	End
+}
+
+#new:Script $Script_SetupMovingPlatform {
+    % enable platform collider
+    Call ModifyColliderFlags ( 1` ~Collider:Platform1 00018000 ) % 1 = clear bits
+    
+    Set *Var2 0`
+	Set *Var3 -200`
+    Set *Var4 1`
+	Set *Var5 ~Collider:unreachable
+	Set *Var6 140`
+	Set *Var7 135`
+	Set *Var8 ~Model:Platform1_floor
+	Set *Var9 ~Model:Platform1
+	Set *VarA ~Collider:Platform1
+    Exec $Script_MovePlatform
+    
+    Return
+    End
+}
+
+#new:Script $Script_TerminalPressA {
+    % TODO: message box here
+    
+    If *MF_caf_02_KeyUsed == 1`
+        Return
+    EndIf
+    
+    SetGroup 0`
+    Call  SetTimeFreezeMode ( 00000001 )
+    Call  ShowKeyChoicePopup ( )
+    Set *MB_Debug *Var0
+    If  *Var0  ==  00000000
+        % TODO: here too
+        Call  CloseChoicePopup ( )
+        Call  SetTimeFreezeMode ( 00000000 )
+        Return
+    EndIf
+    If  *Var0  ==  FFFFFFFF
+        Call  CloseChoicePopup ( )
+        Call  SetTimeFreezeMode ( 00000000 )
+        Return
+    EndIf
+    Call  FindKeyItem       ( .Item:TubbaCastleKey *Var0 )
+    Call  RemoveKeyItemAt   ( *Var0 )
+    Call  CloseChoicePopup ( )
+    Call  SetTimeFreezeMode ( 00000000 )
+    
+    % cutscene
+    
+    Set *MF_caf_02_KeyUsed 1`
+    Exec $Script_SetupMovingPlatform
+    Return
+    End
+}
+
+#new:ItemList $ItemList_Terminal
+{
+	.Item:TubbaCastleKey
+	00000000
+}
+
+#new:Script $Script_UpdatePlatforms {
+    If *MF_RedSwitchHit == .True
+        Call SetGroupEnabled ( ~Model:Platform2 .False )
+        Call SetGroupEnabled ( ~Model:Platform2_deactivated .True )
+        
+        Thread
+            Wait 1`
+            Call ModifyColliderFlags ( 0` ~Collider:Platform2 00018000 ) % 0 = set bits
+        EndThread
+    Else
+        Call SetGroupEnabled ( ~Model:Platform2 .True )
+        Call SetGroupEnabled ( ~Model:Platform2_deactivated .False )
+        
+        Thread
+            Wait 1`
+            Call ModifyColliderFlags ( 1` ~Collider:Platform2 00018000 ) % 1 = clear bits
+        EndThread
+    EndIf
+    
+    If *MF_BlueSwitchHit == .True
+        Call SetGroupEnabled ( ~Model:Platform1_activated .False )
+        Call SetGroupEnabled ( ~Model:Platform1_deactivated .True )
+        Call SetGroupEnabled ( ~Model:Platform3 .False )
+        Call SetGroupEnabled ( ~Model:Platform3_deactivated .True )
+        
+        Thread
+            Wait 1`
+            Call ModifyColliderFlags ( 0` ~Collider:Platform1 00018000 ) % 0 = set bits
+            Call ModifyColliderFlags ( 0` ~Collider:Platform3 00018000 ) % 0 = set bits
+        EndThread
+    Else
+        Call SetGroupEnabled ( ~Model:Platform1_activated .True )
+        Call SetGroupEnabled ( ~Model:Platform1_deactivated .False )
+        Call SetGroupEnabled ( ~Model:Platform3 .True )
+        Call SetGroupEnabled ( ~Model:Platform3_deactivated .False )
+        
+        Thread
+            Wait 1`
+            Call ModifyColliderFlags ( 1` ~Collider:Platform1 00018000 ) % 1 = clear bits
+            Call ModifyColliderFlags ( 1` ~Collider:Platform3 00018000 ) % 1 = clear bits
+        EndThread
+    EndIf
+    Return
+    End
+}
+
+@ $Script_EVT_RedSwitch
+{
+    If *MF_RedSwitchHit == .True
+        Set *MF_RedSwitchHit .False
+    Else
+        Set *MF_RedSwitchHit .True
+    EndIf
+    Exec $Script_UpdatePlatforms
+	Return
+	End
+}
+
+@ $Script_EVT_BlueSwitch
+{
+    If *MF_BlueSwitchHit == .True
+        Set *MF_BlueSwitchHit .False
+    Else
+        Set *MF_BlueSwitchHit .True
+    EndIf
+    Exec $Script_UpdatePlatforms
+	Return
+	End
+}

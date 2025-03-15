@@ -1,20 +1,18 @@
-% Auto-generated script for caf_02
+% Auto-generated script for caf_03
 
 #new:Header $Header
 {
 	[MainScript] $Script_Main
-	[Background] 80200000
+	[Background] 00000000
 	[EntryList] $EntryList
 	[EntryCount] 2
 }
 
 #new:EntryList $EntryList
 {
-	~Vec4f:Entry0
-	~Vec4f:Entry1
+	~Vec4f:entry_e
+	~Vec4f:entry_w
 }
-
-#define .AreaFlag_Entity_BlueSwitch 0
 
 #new:Script_Main $Script_Main
 {
@@ -23,7 +21,6 @@
 	Call  SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
 	Call  SetCamEnabled      ( .Cam:Default .True
 	Call  SetCamLeadPlayer   ( .Cam:Default .False )
-	Exec  $Script_MakeEntities
 	Exec  $Script_SetupMusic
 	Exec  $Script_EnterMap
 	Return
@@ -41,18 +38,6 @@
 	JPOP   RA
 }
 
-#new:Script $Script_MakeEntities
-{
-	Call  MakeItemEntity    ( .Item:TubbaCastleKey ~Vec3d:Key .ItemSpawnMode:Fall_NeverVanish *MF_caf_02_KeyCollected )
-	Call  MakeEntity    ( .Entity:RedSwitch ~Vec4d:RedSwitch 80000000 )
-	Call  AssignScript    ( $Script_EVT_RedSwitch )
-	Call  MakeEntity    ( .Entity:BlueSwitch ~Vec4d:BlueSwitch 80000000 )
-	Call  AssignAreaFlag      ( *AreaFlag[.AreaFlag_Entity_BlueSwitch] )
-	Call  AssignScript    ( $Script_EVT_BlueSwitch )
-	Return
-	End
-}
-
 #new:Script $Script_SetupMusic
 {
 	Call  FadeOutMusic  ( 00000000 500` ) % usually between 500-1000
@@ -65,11 +50,9 @@
 {
 	Call  GetEntryID    ( *Var[0] )
 	Switch  *Var[0]
-		CaseOR  ==  ~Entry:Entry1
-		CaseOR  ==  ~Entry:Entry0
+		Case  ==  ~Entry:entry_w
 			Set   *Var[0] $Script_CreateExitTriggers
 			Exec  EnterWalk
-		EndCaseGroup
 		Default
 			Exec  $Script_CreateExitTriggers
 	EndSwitch
@@ -77,12 +60,12 @@
 	End
 }
 
-#new:Script $Script_Exit0
+#new:Script $Script_ExitWest
 {
 	SetGroup 0000001B
-	Call     UseExitHeading ( 60` ~Entry:Entry0 )
+	Call     UseExitHeading ( 60` ~Entry:entry_w )
 	Exec     ExitWalk
-	Call  GotoMap   ( "caf_01" ~Entry:caf_01:entry_n )
+	Call  GotoMap   ( "caf_01" ~Entry:caf_01:entry_e )
 	Wait  100`
 	Return
 	End
@@ -90,19 +73,7 @@
 
 #new:Script $Script_CreateExitTriggers
 {
-	Bind  $Script_Exit0 .Trigger:FloorAbove ~Collider:exit_trigger_0 00000001 00000000
-	Return
-	End
-}
-
-#new:Script $Script_EVT_RedSwitch
-{
-	Return
-	End
-}
-
-#new:Script $Script_EVT_BlueSwitch
-{
+	Bind  $Script_ExitWest .Trigger:FloorAbove ~Collider:exit_trigger_w 00000001 00000000
 	Return
 	End
 }

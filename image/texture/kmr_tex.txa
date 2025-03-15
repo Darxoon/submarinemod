@@ -1334,3 +1334,14 @@ tex: hos_water3tif
 	combine: 8
 }
 
+tex: kpa_kpa_madotif
+{
+	img: kpa_kpa_madotif.png
+	{
+		format: CI-4
+		hwrap: mirror
+		vwrap: repeat
+	}
+	filter: yes
+	combine: 8
+}
