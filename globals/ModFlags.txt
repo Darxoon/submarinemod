@@ -7,3 +7,4 @@
 006 = MF_old_00_ChestOpened
 007 = MF_old_00_BlockDestroyed
 008 = MF_old_00_BadgeObtained
+009 = MF_caf_03_PipeActivated

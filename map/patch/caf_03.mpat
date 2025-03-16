@@ -1,0 +1,107 @@
+#new:Function $Function_IsPartnerBow {
+    0:  LAB       V1, 8010EBB3
+    8:  LI        V0, 9
+    C:  BNEL      V1, V0, .o1C
+   10:  SW        R0, 84 (A0)
+   14:  LI        V0, 1
+   18:  SW        V0, 84 (A0)
+       .o1C
+   1C:  JR        RA
+   20:  LI        V0, 2
+}
+
+@ $Script_Main {
+    Set  *GB_WorldLocation  .Location:GoombaRoad
+    Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
+    Call SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
+    Call SetCamEnabled      ( .Cam:Default .True
+    Call SetCamLeadPlayer   ( .Cam:Default .False )
+    Exec $Script_SetupMusic
+    Exec $Script_EnterMap
+    
+    If *MF_caf_03_PipeActivated == .False
+        % move pipe model under the map
+        Call TranslateModel ( ~Model:Pipe 0` -35` 0` )
+        % disable pipe colliders
+        Call ModifyColliderFlags ( 0` ~Collider:deilip 00018000 )
+        Call ModifyColliderFlags ( 0` ~Collider:o402 00018000 )
+        
+        Exec $Script_ShowHiddenPipe
+    EndIf
+    Return
+    End
+}
+
+@ $Script_CreateExitTriggers {
+    Bind  $Script_ExitWest .Trigger:FloorAbove ~Collider:exit_trigger_w 00000001 00000000
+    
+    If *MF_caf_03_PipeActivated == .True
+        Exec $Script_CreatePipeTrigger
+    EndIf
+    Return
+    End
+}
+
+#new:Script $Script_ShowHiddenPipe {
+    Set *Var1 0`
+    
+    Loop
+        Call $Function_IsPartnerBow (  )
+        If *Var0 == .True
+            Add *Var1 1`
+        Else
+            Set *Var1 0`
+        EndIf
+        
+        If *Var1 >= 120`
+            Exec $Script_RaisePipe_Pipe
+            BreakLoop
+        EndIf
+        Wait 1`
+    EndLoop
+    Return
+    End
+}
+
+#new:Script $Script_RaisePipe_Pipe {
+    Call DisablePlayerInput ( .True )
+    
+    Wait 10`
+    Call PlaySound  ( 0000208E )
+    Set *MF_caf_03_PipeActivated .True
+    
+    % Enable pipe colliders
+    Call ParentColliderToModel ( ~Collider:deilip ~Model:Pipe )
+    Call ModifyColliderFlags ( 1` ~Collider:deilip 00018000 )
+    Call UpdateColliderTransform ( ~Collider:deilip )
+    
+    Call ParentColliderToModel ( ~Collider:o402 ~Model:Pipe )
+    Call ModifyColliderFlags ( 1` ~Collider:o402 00018000 )
+    Call UpdateColliderTransform ( ~Collider:o402 )
+    
+    
+    Call MakeLerp ( -35` 0` 30` .Easing:Linear )
+    Loop
+        Call UpdateLerp ()
+        
+        Call TranslateModel ( ~Model:Pipe 0` *Var0 0` )
+        Call UpdateColliderTransform ( ~Collider:deilip )
+        Call UpdateColliderTransform ( ~Collider:o402 )
+        
+        Wait 1`
+        If *Var1 == 00000000
+            BreakLoop
+        EndIf
+    EndLoop
+    
+    Exec $Script_CreatePipeTrigger
+    Call DisablePlayerInput ( .False )
+    Return
+    End
+}
+
+#new:Script $Script_CreatePipeTrigger {
+    Bind  $Script_SecretPipeExit .Trigger:FloorTouch ~Collider:deilip 00000001 00000000
+    Return
+    End
+}
