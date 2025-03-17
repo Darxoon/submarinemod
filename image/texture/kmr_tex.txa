@@ -1345,3 +1345,27 @@ tex: kpa_kpa_madotif
 	filter: yes
 	combine: 8
 }
+
+tex: mac_mac_doortif
+{
+	img: mac_mac_doortif.png
+	{
+		format: CI-4
+		hwrap: mirror
+		vwrap: mirror
+	}
+	filter: yes
+	combine: 8
+}
+
+tex: omo_yajiruc_1itif
+{
+	img: omo_yajiruc_1itif.png
+	{
+		format: CI-4
+		hwrap: repeat
+		vwrap: repeat
+	}
+	filter: yes
+	combine: 8
+}

@@ -1,0 +1,35 @@
+#import ConveyorBelt.mpat
+
+@ $Script_Main {
+	Set   *GB_WorldLocation  .Location:GoombaRoad
+	Call  SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call  SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
+	Call  SetCamEnabled      ( .Cam:Default .True
+	Call  SetCamLeadPlayer   ( .Cam:Default .False )
+	Exec  $Script_SetupMusic
+	Exec  $Script_EnterMap
+    
+    Exec $Script_SetupConveyors
+	Return
+	End
+}
+
+#new:Data $Data_ConveyorColliders {
+	~Collider:ConveyorLeft
+    ~Collider:ConveyorRight
+    ~Collider:ConveyorUp
+    ~Collider:ConveyorDown
+}
+
+#new:Data $Data_ConveyorPushVels {
+	C079999A 00000000 4079999A 00000000 00000000 4079999A 00000000 C079999A
+}
+
+#new:Script $Script_SetupConveyors {
+    Loop
+        Call $Function_AddConveyorPush (  )
+        Wait 1`
+    EndLoop
+    Return
+    End
+}

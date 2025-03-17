@@ -573,6 +573,7 @@
 		<Map name="caf_01" nickname="Bunk bed room"/>
 		<Map name="caf_02" nickname="Meeting room"/>
 		<Map name="caf_03" nickname="Hallway"/>
+		<Map name="caf_04" nickname="Storage room"/>
 	</Area>
 	<Area name="old" nickname="Old cosmicjam stuff">
 		<Map name="old_00" nickname="Space Station"/>
