@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="old_00" author="unnamed" background="hos_bg" textures="hos_tex">
 	<Editor>
-		<Camera pos="-220.391037,125.942413,184.958023" pitch="17.279936" yaw="339.680664"/>
-		<Camera pos="-461.751434,65536.000000,82.334442"/>
+		<Camera pos="-168.819046,288.564819,444.540985" pitch="34.399929" yaw="1.921011"/>
+		<Camera pos="-476.383728,65536.000000,87.027802"/>
 		<Camera pos="65536.000000,-17.358767,-28.112442"/>
 		<Camera pos="496.517883,22.382597,65536.000000"/>
 	</Editor>
@@ -33,9 +33,10 @@
 		</Node>
 	</ModelTree>
 	<ColliderTree>
-		<Node name="Root" id="2">
+		<Node name="Root" id="3">
 			<Node name="MeshCollider" id="0"/>
 			<Node name="MeshCollider" id="1"/>
+			<Node name="ExitCollider" id="2"/>
 		</Node>
 	</ColliderTree>
 	<ZoneTree>
@@ -923,8 +924,28 @@
 	</Models>
 	<Colliders>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="Root" id="2"/>
+			<MapObject name="Root" id="3"/>
 			<HitObject type="ROOT"/>
+		</Collider>
+		<Collider ver="0" flags="0" surface="0">
+			<MapObject name="ExitCollider" id="2" hidden="true"/>
+			<HitObject type="HIT"/>
+			<HitMesh ver="0">
+				<TriangleBatch ver="0">
+					<VertexTable>
+						<Vertex xyz="-490,0,95" uv="-512,512"/>
+						<Vertex xyz="-390,0,-5" uv="512,-512"/>
+						<Vertex xyz="-490,0,-5" uv="-512,-512"/>
+						<Vertex xyz="-390,0,-5" uv="512,-512"/>
+						<Vertex xyz="-490,0,95" uv="-512,512"/>
+						<Vertex xyz="-390,0,95" uv="512,512"/>
+					</VertexTable>
+					<TriangleList>
+						<Triangle ijk="0,1,2"/>
+						<Triangle ijk="3,4,5"/>
+					</TriangleList>
+				</TriangleBatch>
+			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
 			<MapObject name="MeshCollider" id="1" hidden="true"/>
@@ -1080,11 +1101,11 @@
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
 					<VertexTable>
-						<Vertex xyz="-534,0,245" uv="-512,512"/>
+						<Vertex xyz="-390,0,245" uv="-512,512"/>
 						<Vertex xyz="635,0,-411" uv="512,-512"/>
-						<Vertex xyz="-534,0,-411" uv="-512,-512"/>
+						<Vertex xyz="-390,0,-411" uv="-512,-512"/>
 						<Vertex xyz="635,0,-411" uv="512,-512"/>
-						<Vertex xyz="-534,0,245" uv="-512,512"/>
+						<Vertex xyz="-390,0,245" uv="-512,512"/>
 						<Vertex xyz="635,0,245" uv="512,512"/>
 					</VertexTable>
 					<TriangleList>
@@ -1288,6 +1309,8 @@
 			<TexPanner id="F" generate="false" useTexels="false" max="131072" init="0,0,0,0" step="0,0,0,0" freq="0,0,0,0"/>
 		</TexPanners>
 		<Generators>
+			<Entrance name="Entrance0" type="Walk" hasCallback="true" entry="Entry0"/>
+			<Exit name="Exit0" type="Walk" hasCallback="false" entry="Entry0" destMap="caf_03" destEntry="EntryPipe" trigger="ExitCollider"/>
 		</Generators>
 		<Camera vfov="25" near="16" far="4096" bgcolor="0,0,0" leadsPlayer="false"/>
 		<Fog world="0,10,10,10,255,950,1000" entity="0,10,10,10,255,950,1000"/>

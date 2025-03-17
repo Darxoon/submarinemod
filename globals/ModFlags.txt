@@ -8,3 +8,8 @@
 007 = MF_old_00_BlockDestroyed
 008 = MF_old_00_BadgeObtained
 009 = MF_caf_03_PipeActivated
+00A = MF_old_00_MessageShown
+00B = MF_caf_01_HiddenBlockOpened
+00C = MF_caf_01_Block1Opened
+00D = MF_caf_01_Block2Opened
+00E = MF_caf_01_Block3Opened

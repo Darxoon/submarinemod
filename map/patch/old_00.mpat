@@ -1,0 +1,19 @@
+@ $Script_Callback_Entrance0 {
+    If *MF_old_00_MessageShown == .False
+        Call DisablePlayerInput ( .True )
+    EndIf
+	Return
+	End
+}
+
+@ $Script_CreateExitTriggers {
+	Bind  $Script_Exit0 .Trigger:FloorAbove ~Collider:ExitCollider 00000001 00000000
+    
+    If *MF_old_00_MessageShown == .False
+        Call ShowMessageAtScreenPos ( 002F0000 0` 0` )
+        Call DisablePlayerInput ( .False )
+        Set *MF_old_00_MessageShown .True
+    EndIf
+	Return
+	End
+}

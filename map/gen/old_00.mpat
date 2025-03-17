@@ -404,11 +404,38 @@
 
 #new:Script $Script_EnterMap
 {
+	Call  GetEntryID    ( *Var[0] )
+	Switch  *Var[0]
+		Case  ==  ~Entry:Entry0
+			Exec  $Script_Callback_Entrance0
+			Set   *Var[0] $Script_CreateExitTriggers
+			Exec  EnterWalk
+		Default
+			Exec  $Script_CreateExitTriggers
+	EndSwitch
+	Return
+	End
+}
+
+#new:Script $Script_Exit0
+{
+	SetGroup 0000001B
+	Call     UseExitHeading ( 60` ~Entry:Entry0 )
+	Exec     ExitWalk
+	Call  GotoMap   ( "caf_03" ~Entry:caf_03:EntryPipe )
+	Wait  100`
 	Return
 	End
 }
 
 #new:Script $Script_CreateExitTriggers
+{
+	Bind  $Script_Exit0 .Trigger:FloorAbove ~Collider:ExitCollider 00000001 00000000
+	Return
+	End
+}
+
+#new:Script $Script_Callback_Entrance0
 {
 	Return
 	End

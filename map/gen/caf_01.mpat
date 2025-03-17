@@ -47,6 +47,9 @@
 {
 	Call  MakeEntity    ( .Entity:SavePoint ~Vec4d:Marker 80000000 )
 	Call  MakeEntity    ( .Entity:MultiCoinBrick ~Vec4d:Block1 80000000 )
+	Call  AssignBlockFlag   ( *MF_caf_01_Block1Opened )
+	Call  MakeEntity    ( .Entity:HiddenYellowBlock ~Vec4d:Block4 .Item:AttackFXA 80000000 )
+	Call  AssignBlockFlag   ( *MF_caf_01_HiddenBlockOpened )
 	If  *MF_caf_01_SwichHit  ==  .False
 		Call  MakeEntity    ( .Entity:BlueSwitch ~Vec4d:Switch1 80000000 )
 		Call  AssignAreaFlag      ( *AreaFlag[.AreaFlag_Entity_Switch1] )

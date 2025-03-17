@@ -8,7 +8,11 @@
 	Exec  $Script_SetupMusic
 	Exec  $Script_EnterMap
     
-    Bind  $Script_SwitchActivate .Trigger:AreaFlagSet *AreaFlag[.AreaFlag_Entity_Switch1] 00000001 00000000
+	If *MF_caf_01_SwichHit == .True
+		ExecWait $Script_SwitchActivate
+	Else
+		Bind  $Script_SwitchActivate .Trigger:AreaFlagSet *AreaFlag[.AreaFlag_Entity_Switch1] 00000001 00000000
+	EndIf
     
 	Return
 	End
@@ -16,6 +20,9 @@
 
 #new:Script $Script_SwitchActivate {
 	Call  MakeEntity    ( .Entity:YellowBlock ~Vec4d:Block2 .Item:Mushroom 80000000 )
+	Call  AssignBlockFlag   ( *MF_caf_01_Block2Opened )
+	Call  MakeEntity    ( .Entity:MultiCoinBrick ~Vec4d:Block3 80000000 )
+	Call  AssignBlockFlag   ( *MF_caf_01_Block3Opened )
     
     Set *MF_caf_01_SwichHit 1`
     Unbind
