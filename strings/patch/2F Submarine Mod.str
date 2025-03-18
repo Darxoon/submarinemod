@@ -22,3 +22,26 @@ Still, enjoy. [HEART][br]
 [Wait][END]
 }
 
+#message:2F:001
+{
+[Style Left]
+M-Mario! It's great to see you.[br]
+What happened?![br]
+[Wait][Next]
+One moment, everything was going[br]
+super smoothly and then BOOM![Pause:10][br]
+Everything is broken suddenly.[br]
+[Wait][Next]
+I think we should try finding[br]
+everyone else in our team first[br]
+and see if they are okay.[br]
+[Wait][Next]
+[Pause:5].[Pause:5].[Pause:5].[Pause:5]Also, I heard some strange[br]
+noises from that room up north.[br]
+I locked the door out of panic,[br]
+[Wait][Next]
+but we should maybe take a look[br]
+at what is going on there.
+[Wait][End]
+}
+

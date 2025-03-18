@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="caf_01" author="unnamed" textures="kmr_tex">
 	<Editor>
-		<Camera pos="-94.448128,182.158173,308.631409" pitch="20.319965" yaw="355.844299"/>
+		<Camera pos="0.000000,111.284073,446.336029" pitch="8.000000" yaw="0.000000"/>
 		<Camera pos="-297.829285,65536.000000,-77.761848"/>
 		<Camera pos="65536.000000,126.483574,-137.781799"/>
 		<Camera pos="-295.279968,47.397346,65536.000000"/>
@@ -90,7 +90,7 @@
 		</Node>
 	</ZoneTree>
 	<MarkerTree>
-		<Node name="Root" id="A">
+		<Node name="Root" id="E">
 			<Node name="Entrances" id="3">
 				<Node name="entry_n" id="FFFFFFFF"/>
 				<Node name="entry_e" id="0"/>
@@ -103,6 +103,10 @@
 			<Node name="Marker" id="7"/>
 			<Node name="Block2" id="8"/>
 			<Node name="Block4" id="9"/>
+			<Node name="Goombario" id="A"/>
+			<Node name="Goombario_MoveTo" id="B"/>
+			<Node name="ItemKey" id="C"/>
+			<Node name="Mario_MoveTo" id="D"/>
 		</Node>
 	</MarkerTree>
 	<LightSets>
@@ -2666,7 +2670,22 @@
 	</Zones>
 	<Markers>
 		<Marker ver="4" type="Root">
-			<MapObject name="Root" id="A"/>
+			<MapObject name="Root" id="E"/>
+		</Marker>
+		<Marker ver="4" type="Position" pos="71,0,-42" yaw="0.000000">
+			<MapObject name="Mario_MoveTo" id="D"/>
+		</Marker>
+		<Marker ver="4" type="Entity" pos="-129,113,-148" yaw="0.000000">
+			<MapObject name="ItemKey" id="C"/>
+			<Entity type="FFFFFFFF" flag="*MF_caf_01_KeyObtained" item="KoopaFortressKey" itemSpawnMode="Fixed_NeverVanish"/>
+		</Marker>
+		<Marker ver="4" type="Position" pos="3,0,-42" yaw="0.000000">
+			<MapObject name="Goombario_MoveTo" id="B"/>
+		</Marker>
+		<Marker ver="4" type="NPC" pos="-64,0,-32" yaw="0.000000">
+			<MapObject name="Goombario" id="A"/>
+			<Movement type="Stationary" data="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"/>
+			<Sprite sprite="1" palette="0" animations="1,2,3,3,1,1,0,0,3,3,3,3,3,3,3,3"/>
 		</Marker>
 		<Marker ver="4" type="Entity" pos="-23,146,-154" yaw="0.000000">
 			<MapObject name="Block4" id="9"/>
@@ -2726,8 +2745,10 @@
 			<TexPanner id="F" generate="false" useTexels="false" max="131072" init="0,0,0,0" step="0,0,0,0" freq="0,0,0,0"/>
 		</TexPanners>
 		<Generators>
-			<Entrance name="EntryE" type="Walk" hasCallback="false" entry="entry_e"/>
+			<Entrance name="EntryS" type="Walk" hasCallback="false" entry="entry_s"/>
+			<Entrance name="EntryE" type="Walk" hasCallback="true" entry="entry_e"/>
 			<Entrance name="EntranceN" type="Walk" hasCallback="false" entry="entry_n"/>
+			<Exit name="ExitS" type="Walk" hasCallback="false" entry="entry_s" destMap="caf_04" destEntry="Entry1" trigger="exit_trigger_s"/>
 			<Exit name="ExitE" type="Walk" hasCallback="false" entry="entry_e" destMap="caf_03" destEntry="entry_w" trigger="exit_trigger_e"/>
 			<Exit name="ExitN" type="Walk" hasCallback="false" entry="entry_n" destMap="caf_02" destEntry="Entry0" trigger="exit_trigger_n"/>
 		</Generators>

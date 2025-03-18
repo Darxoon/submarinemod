@@ -21,3 +21,4 @@
 014 = MF_caf_04_Block2Opened
 015 = MF_caf_04_GiantChest
 016 = MF_caf_04_GratingDestroyed
+017 = MF_caf_01_KeyObtained

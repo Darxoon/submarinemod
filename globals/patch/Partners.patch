@@ -1,0 +1,66 @@
+#export:Function $Function_DisableAllPartners {
+    LIO t0, 8010F290
+    
+    SB R0, 001C (t0) % Goombario Get
+    SB R0, 001D (t0) % Goombario level
+    SB R0, 0024 (t0) % Kooper Get
+    SB R0, 0025 (t0) % Kooper level
+    SB R0, 005C (t0) % Bow Get
+    SB R0, 005D (t0) % Bow level
+    SB R0, 0044 (t0) % Watt Get
+    SB R0, 0045 (t0) % Watt level
+    
+    JR RA
+    ORI v0, r0, 2
+}
+
+#export:Function $Function_EnableGoombario {
+    LIO t0, 8010F290
+    
+    ORI t1, R0, 1
+    
+    SB t1, 001C (t0) % Goombario Get
+    SB t1, 001D (t0) % Goombario level
+    SB t1, 0012 (t0) % Goombario out
+    
+    JR RA
+    ORI v0, r0, 2
+}
+
+#export:Function $Function_EnableKooper {
+    LIO t0, 8010F290
+    
+    ORI t1, R0, 1
+    ORI t1, R0, 2
+    
+    SB t1, 0024 (t0) % Kooper Get
+    SB t1, 0025 (t0) % Kooper level
+    SB t2, 0012 (t0) % Kooper out
+    
+    JR RA
+    ORI v0, r0, 2
+}
+
+#export:Function $Function_EnableBow {
+    LIO t0, 8010F290
+    
+    ORI t1, R0, 1
+    
+    SB t1, 005C (t0) % Bow Get
+    SB t1, 005D (t0) % Bow level
+    
+    JR RA
+    ORI v0, r0, 2
+}
+
+#export:Function $Function_EnableWatt {
+    LIO t0, 8010F290
+    
+    ORI t1, R0, 1
+    
+    SB t1, 0044 (t0) % Bow Get
+    SB t1, 0045 (t0) % Bow level
+    
+    JR RA
+    ORI v0, r0, 2
+}
