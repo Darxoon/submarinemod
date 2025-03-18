@@ -22,33 +22,17 @@
 	Exec $Script_SetupMusic
 	Exec $Script_EnterMap
 	
-	Call MakeEntity    ( .Entity:YellowBlock ~Vec4d:Block2 .Item:Mushroom 80000000 )
-	Call AssignBlockFlag   ( *MF_caf_04_Block2Opened )
-	Call UseDynamicShadow ( .True )
-    
-	Call  MakeEntity    ( .Entity:BlueSwitch ~Vec4d:RedSwitch 80000000 )
-	Call  AssignScript    ( $Script_EVT_RedSwitch )
-	
+	Exec $Script_MakeCustomEntities
     Exec $Script_SetupConveyors
     Exec $Script_UpdateSwitches
 	Exec $Script_SetupBowPlatforms
 	
+	Bind $Script_OnPlatformFloor .Trigger:FloorTouch ~Collider:PlatformFloor 00000001 00000000
+	Bind $Script_OnHallwayFloor .Trigger:FloorTouch ~Collider:HallwayFloor 00000001 00000000
+	
 	If *MF_caf_04_GratingDestroyed == .True
 		Call ModifyColliderFlags ( 0` ~Collider:RedSwitch_wall 00018000 )
 		Call SetGroupEnabled ( ~Model:RedSwitch_grating .False )
-	EndIf
-	
-	If *MF_caf_04_Crate0Destroyed == .True
-		Call ModifyColliderFlags ( 0` ~Collider:Box5_wall 00018000 )
-	Else
-		Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box5 FFFFFFFF 80000000 )
-		Call  AssignScript    ( $Script_EVT_Box5 )
-	EndIf
-	If *MF_caf_04_Crate1Destroyed == .True
-		Call ModifyColliderFlags ( 0` ~Collider:Box6_wall 00018000 )
-	Else
-		Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box6 FFFFFFFF 80000000 )
-		Call  AssignScript    ( $Script_EVT_Box6 )
 	EndIf
 	
 	% this is awful
@@ -61,6 +45,83 @@
 	Return
 	End
 }
+
+#new:Script $Script_MakeCustomEntities {
+	Call MakeEntity    ( .Entity:YellowBlock ~Vec4d:Block2 .Item:Mushroom 80000000 )
+	Call AssignBlockFlag   ( *MF_caf_04_Block2Opened )
+	Call UseDynamicShadow ( .True )
+    
+	Call MakeEntity    ( .Entity:BlueSwitch ~Vec4d:RedSwitch 80000000 )
+	Call AssignScript    ( $Script_EVT_RedSwitch )
+	
+	If *MF_caf_04_Crate0Destroyed == .False
+		Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box5 FFFFFFFF 80000000 )
+		Call  AssignScript    ( $Script_EVT_Box5 )
+	Else
+		Call ModifyColliderFlags ( 0` ~Collider:Box5_wall 00018000 )
+	EndIf
+	
+	If *MF_caf_04_Crate1Destroyed == .False
+		Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box6 FFFFFFFF 80000000 )
+		Call  AssignScript    ( $Script_EVT_Box6 )
+	Else
+		Call ModifyColliderFlags ( 0` ~Collider:Box6_wall 00018000 )
+	EndIf
+	Return
+	End
+}
+
+#new:Script $Script_EVT_Box5 {
+	Set *MF_caf_04_Crate0Destroyed .True
+	Call ModifyColliderFlags ( 0` ~Collider:Box5_wall 00018000 )
+	Return
+	End
+}
+
+#new:Script $Script_EVT_Box6 {
+	Set *MF_caf_04_Crate1Destroyed .True
+	Call ModifyColliderFlags ( 0` ~Collider:Box6_wall 00018000 )
+	Return
+	End
+}
+
+% Spring
+
+#new:Script $Script_OnPlatformFloor {
+	Set *MapFlag[2] .True
+	Return
+	End
+}
+
+#new:Script $Script_OnHallwayFloor {
+	Set *MapFlag[2] .False
+	Return
+	End
+}
+
+@ $Script_ScriptedSpring_Spring {
+	Call  DisablePlayerInput    ( .True )
+	Call  DisablePlayerPhysics  ( .True )
+	Call  SetPlayerActionState  ( .ActionState:Launch )
+	Wait  1`
+	Exec  $Script_ScriptedSpring_FollowCam *Var[A]
+	Call  SetPlayerJumpscale    ( *Fixed[0.7] )
+	
+	If *MapFlag[2] == .True
+		Call PlayerJump ( ~Vec3d:LowerSpringDestination 20` )
+	Else
+		Call PlayerJump ( ~Vec3d:SpringDestination 30` )
+	EndIf
+	
+	Kill  *Var[A]
+	Call  SetPlayerActionState  ( .ActionState:Idle )
+	Call  DisablePlayerPhysics  ( .False )
+	Call  DisablePlayerInput    ( .False )
+	Return
+	End
+}
+
+% Conveyors, Switches & Platforms
 
 #new:Data $Data_ConveyorColliders {
 	~Collider:ConveyorLeft
@@ -264,19 +325,7 @@
 	End
 }
 
-#new:Script $Script_EVT_Box5 {
-	Set *MF_caf_04_Crate0Destroyed .True
-	Call ModifyColliderFlags ( 0` ~Collider:Box5_wall 00018000 )
-	Return
-	End
-}
-
-#new:Script $Script_EVT_Box6 {
-	Set *MF_caf_04_Crate1Destroyed .True
-	Call ModifyColliderFlags ( 0` ~Collider:Box6_wall 00018000 )
-	Return
-	End
-}
+% Super Boots Chest
 
 @Message $String_OpenGiantChest_BigChest {
 	[Style Narrate]
