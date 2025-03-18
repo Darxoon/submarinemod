@@ -20,6 +20,7 @@
 	Call SetCamLeadPlayer   ( .Cam:Default .False )
 	Exec $Script_MakeEntities
 	Exec $Script_SetupMusic
+	Exec $Script_SetupTexturePan
 	Exec $Script_EnterMap
 	
 	Exec $Script_MakeCustomEntities
@@ -67,6 +68,19 @@
 	Else
 		Call ModifyColliderFlags ( 0` ~Collider:Box6_wall 00018000 )
 	EndIf
+	Return
+	End
+}
+
+#new:Script $Script_MakeGiantChest {
+	If *MapFlag[3] == .True
+		Return
+	EndIf
+	Set *MapFlag[3] .True
+	
+	Call  MakeEntity    ( .Entity:GiantChest ~Vec4d:BigChest .Item:SpinJump 80000000 )
+	Call  AssignFlag    ( *MF_caf_04_GiantChest )
+	Exec  $Script_MonitorGiantChest_BigChest
 	Return
 	End
 }
@@ -150,18 +164,30 @@
 	If *MF_BlueSwitchHit == .True
 		Call SetGroupEnabled ( ~Model:Platform1_activated .False )
 		Call SetGroupEnabled ( ~Model:Platform1_deactivated .True )
+		
+		Call SetGroupEnabled ( ~Model:ConveyorsUpper .True )
+		Call SetGroupEnabled ( ~Model:ConveyorsUpperReversed .False )
 	Else
 		Call SetGroupEnabled ( ~Model:Platform1_activated .True )
 		Call SetGroupEnabled ( ~Model:Platform1_deactivated .False )
+		
+		Call SetGroupEnabled ( ~Model:ConveyorsUpper .False )
+		Call SetGroupEnabled ( ~Model:ConveyorsUpperReversed .True )
 	EndIf
 	
 	If *MF_RedSwitchHit == .True
 		Call SetGroupEnabled ( ~Model:Platform3_activated .False )
 		Call SetGroupEnabled ( ~Model:Platform3_deactivated .True )
 		Call ModifyColliderFlags ( 0` ~Collider:Platform3 00018000 )
+		
+		Call SetGroupEnabled ( ~Model:ConveyorsLower .True )
+		Call SetGroupEnabled ( ~Model:ConveyorsLowerReversed .False )
 	Else
 		Call SetGroupEnabled ( ~Model:Platform3_activated .True )
 		Call SetGroupEnabled ( ~Model:Platform3_deactivated .False )
+		
+		Call SetGroupEnabled ( ~Model:ConveyorsLower .False )
+		Call SetGroupEnabled ( ~Model:ConveyorsLowerReversed .True )
 		
 		Call $Function_IsPartnerBow (  )
 		If *Var0 == .False
@@ -196,6 +222,7 @@
 		
 		If *Var2 >= 260`
 			Call SetGroupEnabled ( ~Model:FrontWall .True )
+			Call SetGroupEnabled ( ~Model:GratingLower .True )
 			
 			UseArray $Data_ConveyorColliders
 			Set *Array[0] ~Collider:ConveyorLeft2
@@ -211,11 +238,17 @@
 				Set *Array[0] 4079999A
 				Set *Array[2] C079999A
 			EndIf
+			
+			If *MapFlag[3] == .False
+				Exec $Script_MakeGiantChest
+			EndIf
 		Else
 			If *Var0 < -440`
 				Call SetGroupEnabled ( ~Model:FrontWall .True )
+				Call SetGroupEnabled ( ~Model:GratingLower .True )
 			Else
 				Call SetGroupEnabled ( ~Model:FrontWall .False )
+				Call SetGroupEnabled ( ~Model:GratingLower .False )
 				
 				UseArray $Data_ConveyorColliders
 				Set *Array[0] ~Collider:ConveyorLeft
@@ -231,6 +264,24 @@
 				EndIf
 			EndIf
 		EndIf
+		
+		If *Var2 > 220`
+			Call SetGroupEnabled ( ~Model:GratingLowerLeftmost .True )
+		Else
+			Call SetGroupEnabled ( ~Model:GratingLowerLeftmost .False )
+		EndIf
+		
+		% Hack because the lower conveyor puzzle breaks the Kooper moving platform
+		% puzzle and I don't have the time to fix it properly
+		If *Var0 > 50`
+			If *Var2 > 100`
+				If *Var2 < 300`
+					Set *MF_RedSwitchHit .True
+					Exec $Script_UpdateSwitches
+				EndIf
+			EndIf
+		EndIf
+		
 		Wait 1`
 	EndLoop
 	
@@ -327,7 +378,7 @@
 
 % Super Boots Chest
 
-@Message $String_OpenGiantChest_BigChest {
+#new:String $String_OpenGiantChest_BigChest {
 	[Style Narrate]
 	You got the Super Boots![BR]
 	[Pause 5]The attack power of[BR]
@@ -346,7 +397,7 @@
     ORI v0, r0, 2
 }
 
-@ $Script_MonitorGiantChest_BigChest {
+#new:Script $Script_MonitorGiantChest_BigChest {
 	If  *MF_caf_04_GiantChest  ==  .False
 		Loop
 			If  *MF_caf_04_GiantChest  ==  .True
@@ -360,9 +411,34 @@
 		Exec  $Script_GiantChest_Music
 		Call  ShowMessageAtScreenPos    ( $String_OpenGiantChest_BigChest 000000A0 00000028 )
 		Call  $Function_GiantChest_Support ( )
+		
 		% add your extra code here
 		Call $Function_GiveSuperBoots (  )
 	EndIf
 	Return
 	End
+}
+
+#new:Script $Script_GiantChest_Music
+{
+	Call  802D5FF8  ( 00000042 00000001 )
+	Wait  130`
+	Call  802D5FD8 ( )
+	Return
+	End
+}
+
+#new:Function $Function_GiantChest_Support
+{
+	ADDIU     SP, SP, FFE8
+	SW        RA, 10 (SP)
+	JAL       ~Func:get_entity_by_index
+	LW        A0, 94 (A0) % 84 in vanilla
+	LW        A0, 40 (V0)
+	ADDIU     V1, R0, 1
+	SB        V1, 30 (A0)
+	LW        RA, 10 (SP)
+	ADDIU     V0, R0, 2
+	JR        RA
+	ADDIU     SP, SP, 18
 }

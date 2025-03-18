@@ -14,29 +14,6 @@
 	~Vec4f:Entry1
 }
 
-#new:Script $Script_GiantChest_Music
-{
-	Call  802D5FF8  ( 00000042 00000001 )
-	Wait  130`
-	Call  802D5FD8 ( )
-	Return
-	End
-}
-
-#new:Function $Function_GiantChest_Support
-{
-	ADDIU     SP, SP, FFE8
-	SW        RA, 10 (SP)
-	JAL       ~Func:get_entity_by_index
-	LW        A0, 94 (A0) % 84 in vanilla
-	LW        A0, 40 (V0)
-	ADDIU     V1, R0, 1
-	SB        V1, 30 (A0)
-	LW        RA, 10 (SP)
-	ADDIU     V0, R0, 2
-	JR        RA
-	ADDIU     SP, SP, 18
-}
 #new:Script $Script_ScriptedSpring_FollowCam
 {
 	Loop
@@ -71,6 +48,256 @@
 	End
 }
 
+#new:Script $Script_TexturePan_Update
+{
+    SetGroup  00000000
+    If  *Var[5]  ==  00000001
+        If  *Var[6]  ==  00000001
+            If  *Var[7]  ==  00000001
+                If  *Var[8]  ==  00000001
+                    Call  $Function_TexturePan_Simple ( )
+                    Return
+                EndIf
+            EndIf
+        EndIf
+    EndIf
+    Call  $Function_TexturePan_Complex ( )
+    Return
+    End
+}
+
+#new:Function $Function_TexturePan_Simple
+{
+    ADDIU       SP, SP, FFE8
+    SW          S0, 10 (SP)
+    COPY        S0, A0
+    SW          RA, 14 (SP)
+    LW          V1, A8 (S0)
+    LW          V0, 88 (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .o30
+    SW          V1, A8 (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .o40
+    ADDU        V0, V1, V0
+    .o30
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .o44
+    SUBU        V0, V1, A0
+    .o40
+    SW          V0, A8 (S0)
+    .o44
+    LW          V1, AC (S0)
+    LW          V0, 8C (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .o64
+    SW          V1, AC (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .o74
+    ADDU        V0, V1, V0
+    .o64
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .o78
+    SUBU        V0, V1, A0
+    .o74
+    SW          V0, AC (S0)
+    .o78
+    LW          V1, B0 (S0)
+    LW          V0, 90 (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .o98
+    SW          V1, B0 (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .oA8
+    ADDU        V0, V1, V0
+    .o98
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .oAC
+    SUBU        V0, V1, A0
+    .oA8
+    SW          V0, B0 (S0)
+    .oAC
+    LW          V1, B4 (S0)
+    LW          V0, 94 (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .oCC
+    SW          V1, B4 (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .oDC
+    ADDU        V0, V1, V0
+    .oCC
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .oE0
+    SUBU        V0, V1, A0
+    .oDC
+    SW          V0, B4 (S0)
+    .oE0
+    LW          A0, 84 (S0)
+    JAL         8011BC1C
+    LW          A1, A8 (S0)
+    LW          A0, 84 (S0)
+    JAL         8011BC34
+    LW          A1, AC (S0)
+    LW          A0, 84 (S0)
+    JAL         8011BC4C
+    LW          A1, B0 (S0)
+    LW          A0, 84 (S0)
+    JAL         8011BC64
+    LW          A1, B4 (S0)
+    LW          RA, 14 (SP)
+    LW          S0, 10 (SP)
+    CLEAR       V0
+    JR          RA
+    ADDIU       SP, SP, 18
+}
+
+#new:Function $Function_TexturePan_Complex
+{
+    ADDIU       SP, SP, FFE8
+    SW          S0, 10 (SP)
+    COPY        S0, A0
+    BEQ         A1, R0, .o24
+    SW          RA, 14 (SP)
+    SW          R0, 70 (S0)
+    SW          R0, 74 (S0)
+    SW          R0, 78 (S0)
+    SW          R0, 7C (S0)
+    .o24
+    LW          V0, 70 (S0)
+    BNE         V0, R0, .o64
+    NOP
+    LW          V1, A8 (S0)
+    LW          V0, 88 (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .o50
+    SW          V1, A8 (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .o60
+    ADDU        V0, V1, V0
+    .o50
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .o64
+    SUBU        V0, V1, A0
+    .o60
+    SW          V0, A8 (S0)
+    .o64
+    LW          V0, 74 (S0)
+    BNE         V0, R0, .oA4
+    NOP
+    LW          V1, AC (S0)
+    LW          V0, 8C (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .o90
+    SW          V1, AC (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .oA0
+    ADDU        V0, V1, V0
+    .o90
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .oA4
+    SUBU        V0, V1, A0
+    .oA0
+    SW          V0, AC (S0)
+    .oA4
+    LW          V0, 78 (S0)
+    BNE         V0, R0, .oE4
+    NOP
+    LW          V1, B0 (S0)
+    LW          V0, 90 (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .oD0
+    SW          V1, B0 (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .oE0
+    ADDU        V0, V1, V0
+    .oD0
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .oE4
+    SUBU        V0, V1, A0
+    .oE0
+    SW          V0, B0 (S0)
+    .oE4
+    LW          V0, 7C (S0)
+    BNE         V0, R0, .o124
+    NOP
+    LW          V1, B4 (S0)
+    LW          V0, 94 (S0)
+    ADDU        V1, V1, V0
+    BGEZ        V1, .o110
+    SW          V1, B4 (S0)
+    LUI         V0, 2
+    BEQ         R0, R0, .o120
+    ADDU        V0, V1, V0
+    .o110
+    LUI         A0, 2
+    SLT         V0, A0, V1
+    BEQ         V0, R0, .o124
+    SUBU        V0, V1, A0
+    .o120
+    SW          V0, B4 (S0)
+    .o124
+    LW          A0, 84 (S0)
+    JAL         8011BC1C
+    LW          A1, A8 (S0)
+    LW          A0, 84 (S0)
+    JAL         8011BC34
+    LW          A1, AC (S0)
+    LW          A0, 84 (S0)
+    JAL         8011BC4C
+    LW          A1, B0 (S0)
+    LW          A0, 84 (S0)
+    JAL         8011BC64
+    LW          A1, B4 (S0)
+    LW          V0, 70 (S0)
+    LW          V1, 78 (S0)
+    LW          A0, 98 (S0)
+    ADDIU       V0, V0, 1
+    SW          V0, 70 (S0)
+    LW          V0, 74 (S0)
+    ADDIU       V1, V1, 1
+    SW          V1, 78 (S0)
+    LW          V1, 70 (S0)
+    ADDIU       V0, V0, 1
+    SW          V0, 74 (S0)
+    LW          V0, 7C (S0)
+    SLT         V1, V1, A0
+    ADDIU       V0, V0, 1
+    BNE         V1, R0, .o198
+    SW          V0, 7C (S0)
+    SW          R0, 70 (S0)
+    .o198
+    LW          V0, 74 (S0)
+    LW          V1, 9C (S0)
+    SLT         V0, V0, V1
+    BEQL        V0, R0, .o1AC
+    SW          R0, 74 (S0)
+    .o1AC
+    LW          V0, 78 (S0)
+    LW          V1, A0 (S0)
+    SLT         V0, V0, V1
+    BEQL        V0, R0, .o1C0
+    SW          R0, 78 (S0)
+    .o1C0
+    LW          V0, 7C (S0)
+    LW          V1, A4 (S0)
+    SLT         V0, V0, V1
+    BEQL        V0, R0, .o1D4
+    SW          R0, 7C (S0)
+    .o1D4
+    LW          RA, 14 (SP)
+    LW          S0, 10 (SP)
+    CLEAR       V0
+    JR          RA
+    ADDIU       SP, SP, 18
+}
+
 #new:Script_Main $Script_Main
 {
 	Set   *GB_WorldLocation  .Location:GoombaRoad
@@ -80,6 +307,7 @@
 	Call  SetCamLeadPlayer   ( .Cam:Default .False )
 	Exec  $Script_MakeEntities
 	Exec  $Script_SetupMusic
+	Exec  $Script_SetupTexturePan
 	Exec  $Script_EnterMap
 	Return
 	End
@@ -106,9 +334,6 @@
 	Call  AssignBlockFlag   ( *MF_caf_04_Block1Opened )
 	Call  MakeEntity    ( .Entity:HiddenRedBlock ~Vec4d:Block0 .Item:AttackFXF 80000000 )
 	Call  AssignBlockFlag   ( *MF_caf_04_BadgeObtained )
-	Call  MakeEntity    ( .Entity:GiantChest ~Vec4d:BigChest .Item:SpinJump 80000000 )
-	Call  AssignFlag    ( *MF_caf_04_GiantChest )
-	Exec  $Script_MonitorGiantChest_BigChest
 	Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box0 FFFFFFFF 80000000 )
 	Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box1 FFFFFFFF 80000000 )
 	Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box2 FFFFFFFF 80000000 )
@@ -128,6 +353,40 @@
 {
 	Call  FadeOutMusic  ( 00000000 500` ) % usually between 500-1000
 	Call  ClearAmbientSounds ( 250` )
+	Return
+	End
+}
+
+#new:Script $Script_SetupTexturePan
+{
+	Call     802C9000 	( ~Model:ConveyorDown2 0 )
+	Call     802C9000 	( ~Model:ConveyorUp2 0 )
+	Call     802C9000 	( ~Model:ConveyorLeft2 0 )
+	Call     802C9000 	( ~Model:ConveyorRight2 0 )
+	Call     802C9000 	( ~Model:ConveyorRight3 0 )
+	Call     802C9000 	( ~Model:ConveyorLeftReversed2 0 )
+	Call     802C9000 	( ~Model:ConveyorRightReversed2 0 )
+	Call     802C9000 	( ~Model:ConveyorRightReversed3 0 )
+	Call     802C9000 	( ~Model:ConveyorLeft 0 )
+	Call     802C9000 	( ~Model:ConveyorRight 0 )
+	Call     802C9000 	( ~Model:ConveyorLeftReversed 0 )
+	Call     802C9000 	( ~Model:ConveyorRightReversed 0 )
+	Thread
+		Set  *Var[0] 0
+		Set  *Var[1] 0
+		Set  *Var[2] FFFFFB00
+		Set  *Var[3] 0
+		Set  *Var[4] 0
+		Set  *Var[5] 0
+		Set  *Var[6] 1
+		Set  *Var[7] 0
+		Set  *Var[8] 0
+		Set  *Var[9] 0
+		Set  *Var[A] 0
+		Set  *Var[B] 0
+		Set  *Var[C] 0
+		Exec $Script_TexturePan_Update
+	EndThread
 	Return
 	End
 }
@@ -176,36 +435,6 @@
 	Bind  $Script_ExitE .Trigger:FloorAbove ~Collider:exit_trigger_n 00000001 00000000
 	Return
 	End
-}
-
-#new:Script $Script_MonitorGiantChest_BigChest
-{
-	If  *MF_caf_04_GiantChest  ==  .False
-		Loop
-			If  *MF_caf_04_GiantChest  ==  .True
-				BreakLoop
-			EndIf
-			Wait  1`
-		EndLoop
-		Wait  60`
-		% note: ShowMessageAtScreenPos overwrites Var[0], this is a bug in vanilla
-		Set   *Var[4] *Var[0]
-		Exec  $Script_GiantChest_Music
-		Call  ShowMessageAtScreenPos    ( $String_OpenGiantChest_BigChest 000000A0 00000028 )
-		Call  $Function_GiantChest_Support ( )
-		% add your extra code here
-	EndIf
-	Return
-	End
-}
-
-#new:String $String_OpenGiantChest_BigChest
-{
-	[STYLE:NARRATE]
-	You got an item![BR]
-	[WAIT][NEXT]
-	Additional information!
-	[WAIT][END]
 }
 
 #new:Script $Script_EVT_BlueSwitch
