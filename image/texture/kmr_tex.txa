@@ -1369,3 +1369,15 @@ tex: omo_yajiruc_1itif
 	filter: yes
 	combine: 8
 }
+
+tex: omo_yajiruc_2tif
+{
+	img: omo_yajiruc_2tif.png
+	{
+		format: CI-4
+		hwrap: repeat
+		vwrap: repeat
+	}
+	filter: yes
+	combine: 8
+}

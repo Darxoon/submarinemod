@@ -13,3 +13,11 @@
 00C = MF_caf_01_Block1Opened
 00D = MF_caf_01_Block2Opened
 00E = MF_caf_01_Block3Opened
+00F = MF_caf_04_BadgeObtained
+010 = MF_caf_04_Block1Opened
+011 = MF_caf_04_FloorDestroyed
+012 = MF_caf_04_Crate0Destroyed
+013 = MF_caf_04_Crate1Destroyed
+014 = MF_caf_04_Block2Opened
+015 = MF_caf_04_GiantChest
+016 = MF_caf_04_GratingDestroyed

@@ -8,7 +8,6 @@
     ORI t6, r0, 5 % hex for 5
     ORI t7, r0, 4 % hex for 4
     ORI t8, r0, 9 % hex for 9
-    SB t5, 0000 (t0) % set Boots
     SB t5, 0001 (t0) % set Hammer
     SB t4, 0002 (t0) % set hp
     SB t4, 0003 (t0) % max hp
@@ -37,6 +36,9 @@
 @ $Script_8024FD70 {
     Call $GivePlayerStartingStats (  )
     Set *GB_StoryProgress .Story:Ch1_DefeatedDungeonGuards
+    Set *GF_Tutorial_SaveBlock .True
+    Set *GF_Tutorial_HeartBlock .True
+    Set *GF_Tutorial_GotItem .True
     
     Call GotoMap ( "caf_01" ~Entry:caf_01:entry_n )
     

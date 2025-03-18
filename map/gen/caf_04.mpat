@@ -5,12 +5,70 @@
 	[MainScript] $Script_Main
 	[Background] 00000000
 	[EntryList] $EntryList
-	[EntryCount] 1
+	[EntryCount] 2
 }
 
 #new:EntryList $EntryList
 {
-	~Vec4f:entry_n
+	~Vec4f:Entry0
+	~Vec4f:Entry1
+}
+
+#new:Script $Script_GiantChest_Music
+{
+	Call  802D5FF8  ( 00000042 00000001 )
+	Wait  130`
+	Call  802D5FD8 ( )
+	Return
+	End
+}
+
+#new:Function $Function_GiantChest_Support
+{
+	ADDIU     SP, SP, FFE8
+	SW        RA, 10 (SP)
+	JAL       ~Func:get_entity_by_index
+	LW        A0, 94 (A0) % 84 in vanilla
+	LW        A0, 40 (V0)
+	ADDIU     V1, R0, 1
+	SB        V1, 30 (A0)
+	LW        RA, 10 (SP)
+	ADDIU     V0, R0, 2
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+#new:Script $Script_ScriptedSpring_FollowCam
+{
+	Loop
+		Call  GetPlayerPos  ( *Var[0] *Var[1] *Var[2] )
+		Call  SetCamTarget  ( .Cam:Default *Var[0] *Var[1] *Var[2] )
+		Wait  1`
+	EndLoop
+	Return
+	End
+}
+#new:Script $Script_BreakFloor_BoardedFloor
+{
+	Set  *MF_caf_04_FloorDestroyed  .True
+	Return
+	End
+}
+
+#new:Script $Script_ScriptedSpring_Spring
+{
+	Call  DisablePlayerInput    ( .True )
+	Call  DisablePlayerPhysics  ( .True )
+	Call  SetPlayerActionState  ( .ActionState:Launch )
+	Wait  1`
+	Exec  $Script_ScriptedSpring_FollowCam *Var[A]
+	Call  SetPlayerJumpscale    ( *Fixed[0.7] )
+	Call  PlayerJump            ( ~Vec3d:SpringDestination 30` )
+	Kill  *Var[A]
+	Call  SetPlayerActionState  ( .ActionState:Idle )
+	Call  DisablePlayerPhysics  ( .False )
+	Call  DisablePlayerInput    ( .False )
+	Return
+	End
 }
 
 #new:Script_Main $Script_Main
@@ -40,11 +98,28 @@
 
 #new:Script $Script_MakeEntities
 {
+	If  *MF_caf_04_FloorDestroyed  ==  .False
+		Call  MakeEntity    ( .Entity:BoardedFloor ~Vec4d:BoardedFloor 80000000 )
+		Call  AssignScript  ( $Script_BreakFloor_BoardedFloor )
+	EndIf
+	Call  MakeEntity    ( .Entity:HiddenYellowBlock ~Vec4d:Block1 .Item:Mushroom 80000000 )
+	Call  AssignBlockFlag   ( *MF_caf_04_Block1Opened )
+	Call  MakeEntity    ( .Entity:HiddenRedBlock ~Vec4d:Block0 .Item:AttackFXF 80000000 )
+	Call  AssignBlockFlag   ( *MF_caf_04_BadgeObtained )
+	Call  MakeEntity    ( .Entity:GiantChest ~Vec4d:BigChest .Item:SpinJump 80000000 )
+	Call  AssignFlag    ( *MF_caf_04_GiantChest )
+	Exec  $Script_MonitorGiantChest_BigChest
 	Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box0 FFFFFFFF 80000000 )
 	Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box1 FFFFFFFF 80000000 )
 	Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box2 FFFFFFFF 80000000 )
 	Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box3 FFFFFFFF 80000000 )
 	Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box4 FFFFFFFF 80000000 )
+	Call  MakeEntity    ( .Entity:ScriptSpring ~Vec4d:Spring 80000000 )
+	Call  AssignScript    ( $Script_ScriptedSpring_Spring )
+	Call  MakeEntity    ( .Entity:RedSwitch ~Vec4d:BlueSwitch 80000000 )
+	Call  AssignScript    ( $Script_EVT_BlueSwitch )
+	Call  MakeEntity    ( .Entity:RedSwitch ~Vec4d:BlueSwitch2 80000000 )
+	Call  AssignScript    ( $Script_EVT_BlueSwitch2 )
 	Return
 	End
 }
@@ -61,9 +136,11 @@
 {
 	Call  GetEntryID    ( *Var[0] )
 	Switch  *Var[0]
-		Case  ==  ~Entry:entry_n
+		CaseOR  ==  ~Entry:Entry1
+		CaseOR  ==  ~Entry:Entry0
 			Set   *Var[0] $Script_CreateExitTriggers
 			Exec  EnterWalk
+		EndCaseGroup
 		Default
 			Exec  $Script_CreateExitTriggers
 	EndSwitch
@@ -71,12 +148,23 @@
 	End
 }
 
-#new:Script $Script_ExitN
+#new:Script $Script_ExitW
 {
 	SetGroup 0000001B
-	Call     UseExitHeading ( 60` ~Entry:entry_n )
+	Call     UseExitHeading ( 60` ~Entry:Entry1 )
 	Exec     ExitWalk
-	Call  GotoMap   ( "caf_02" ~Entry:caf_02:Entry0 )
+	Call  GotoMap   ( "caf_01" ~Entry:caf_01:entry_s )
+	Wait  100`
+	Return
+	End
+}
+
+#new:Script $Script_ExitE
+{
+	SetGroup 0000001B
+	Call     UseExitHeading ( 60` ~Entry:Entry0 )
+	Exec     ExitWalk
+	Call  GotoMap   ( "caf_01" ~Entry:caf_01:entry_s )
 	Wait  100`
 	Return
 	End
@@ -84,7 +172,50 @@
 
 #new:Script $Script_CreateExitTriggers
 {
-	Bind  $Script_ExitN .Trigger:FloorAbove ~Collider:exit_trigger_n 00000001 00000000
+	Bind  $Script_ExitW .Trigger:FloorAbove ~Collider:exit_trigger_w 00000001 00000000
+	Bind  $Script_ExitE .Trigger:FloorAbove ~Collider:exit_trigger_n 00000001 00000000
+	Return
+	End
+}
+
+#new:Script $Script_MonitorGiantChest_BigChest
+{
+	If  *MF_caf_04_GiantChest  ==  .False
+		Loop
+			If  *MF_caf_04_GiantChest  ==  .True
+				BreakLoop
+			EndIf
+			Wait  1`
+		EndLoop
+		Wait  60`
+		% note: ShowMessageAtScreenPos overwrites Var[0], this is a bug in vanilla
+		Set   *Var[4] *Var[0]
+		Exec  $Script_GiantChest_Music
+		Call  ShowMessageAtScreenPos    ( $String_OpenGiantChest_BigChest 000000A0 00000028 )
+		Call  $Function_GiantChest_Support ( )
+		% add your extra code here
+	EndIf
+	Return
+	End
+}
+
+#new:String $String_OpenGiantChest_BigChest
+{
+	[STYLE:NARRATE]
+	You got an item![BR]
+	[WAIT][NEXT]
+	Additional information!
+	[WAIT][END]
+}
+
+#new:Script $Script_EVT_BlueSwitch
+{
+	Return
+	End
+}
+
+#new:Script $Script_EVT_BlueSwitch2
+{
 	Return
 	End
 }

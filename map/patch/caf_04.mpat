@@ -1,15 +1,63 @@
 #import ConveyorBelt.mpat
 
+#new:Function $Function_IsPartnerBow {
+    0:  LAB       V1, 8010EBB3
+    8:  LI        V0, 9
+    C:  BNEL      V1, V0, .o1C
+   10:  SW        R0, 84 (A0)
+   14:  LI        V0, 1
+   18:  SW        V0, 84 (A0)
+       .o1C
+   1C:  JR        RA
+   20:  LI        V0, 2
+}
+
 @ $Script_Main {
-	Set   *GB_WorldLocation  .Location:GoombaRoad
-	Call  SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
-	Call  SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
-	Call  SetCamEnabled      ( .Cam:Default .True
-	Call  SetCamLeadPlayer   ( .Cam:Default .False )
-	Exec  $Script_SetupMusic
-	Exec  $Script_EnterMap
+	Set  *GB_WorldLocation  .Location:GoombaRoad
+	Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
+	Call SetCamEnabled      ( .Cam:Default .True
+	Call SetCamLeadPlayer   ( .Cam:Default .False )
+	Exec $Script_MakeEntities
+	Exec $Script_SetupMusic
+	Exec $Script_EnterMap
+	
+	Call MakeEntity    ( .Entity:YellowBlock ~Vec4d:Block2 .Item:Mushroom 80000000 )
+	Call AssignBlockFlag   ( *MF_caf_04_Block2Opened )
+	Call UseDynamicShadow ( .True )
     
+	Call  MakeEntity    ( .Entity:BlueSwitch ~Vec4d:RedSwitch 80000000 )
+	Call  AssignScript    ( $Script_EVT_RedSwitch )
+	
     Exec $Script_SetupConveyors
+    Exec $Script_UpdateSwitches
+	Exec $Script_SetupBowPlatforms
+	
+	If *MF_caf_04_GratingDestroyed == .True
+		Call ModifyColliderFlags ( 0` ~Collider:RedSwitch_wall 00018000 )
+		Call SetGroupEnabled ( ~Model:RedSwitch_grating .False )
+	EndIf
+	
+	If *MF_caf_04_Crate0Destroyed == .True
+		Call ModifyColliderFlags ( 0` ~Collider:Box5_wall 00018000 )
+	Else
+		Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box5 FFFFFFFF 80000000 )
+		Call  AssignScript    ( $Script_EVT_Box5 )
+	EndIf
+	If *MF_caf_04_Crate1Destroyed == .True
+		Call ModifyColliderFlags ( 0` ~Collider:Box6_wall 00018000 )
+	Else
+		Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box6 FFFFFFFF 80000000 )
+		Call  AssignScript    ( $Script_EVT_Box6 )
+	EndIf
+	
+	% this is awful
+	If *MF_BlueSwitchHit == .False
+		Exec $Script_SetupRedPlatforms
+	EndIf
+	If *MF_RedSwitchHit == .False
+		Exec $Script_SetupBluePlatforms
+	EndIf
 	Return
 	End
 }
@@ -17,12 +65,15 @@
 #new:Data $Data_ConveyorColliders {
 	~Collider:ConveyorLeft
     ~Collider:ConveyorRight
-    ~Collider:ConveyorUp
     ~Collider:ConveyorDown
+    ~Collider:ConveyorUp
 }
 
 #new:Data $Data_ConveyorPushVels {
-	C079999A 00000000 4079999A 00000000 00000000 4079999A 00000000 C079999A
+	C079999A 00000000
+	4079999A 00000000
+	00000000 4079999A
+	00000000 C079999A
 }
 
 #new:Script $Script_SetupConveyors {
@@ -32,4 +83,237 @@
     EndLoop
     Return
     End
+}
+
+#new:Script $Script_UpdateSwitches {
+	If *MF_BlueSwitchHit == .True
+		Call SetGroupEnabled ( ~Model:Platform1_activated .False )
+		Call SetGroupEnabled ( ~Model:Platform1_deactivated .True )
+	Else
+		Call SetGroupEnabled ( ~Model:Platform1_activated .True )
+		Call SetGroupEnabled ( ~Model:Platform1_deactivated .False )
+	EndIf
+	
+	If *MF_RedSwitchHit == .True
+		Call SetGroupEnabled ( ~Model:Platform3_activated .False )
+		Call SetGroupEnabled ( ~Model:Platform3_deactivated .True )
+		Call ModifyColliderFlags ( 0` ~Collider:Platform3 00018000 )
+	Else
+		Call SetGroupEnabled ( ~Model:Platform3_activated .True )
+		Call SetGroupEnabled ( ~Model:Platform3_deactivated .False )
+		
+		Call $Function_IsPartnerBow (  )
+		If *Var0 == .False
+			Call ModifyColliderFlags ( 1` ~Collider:Platform3 00018000 )
+		EndIf
+	EndIf
+	Return
+	End
+}
+
+#new:Script $Script_SetupBowPlatforms {
+	Loop
+		Call $Function_IsPartnerBow (  )
+		
+		If *Var0 == .True
+			Wait 4`
+			Call ModifyColliderFlags ( 0` ~Collider:Platform1 00018000 )
+			Call ModifyColliderFlags ( 0` ~Collider:Platform2 00018000 )
+			Call ModifyColliderFlags ( 0` ~Collider:Platform3 00018000 )
+			Wait 10`
+		Else
+			If *MF_BlueSwitchHit == .False
+				Call ModifyColliderFlags ( 1` ~Collider:Platform1 00018000 )
+				Call ModifyColliderFlags ( 1` ~Collider:Platform2 00018000 )
+			EndIf
+			If *MF_RedSwitchHit == .False
+				Call ModifyColliderFlags ( 1` ~Collider:Platform3 00018000 )
+			EndIf
+		EndIf
+		
+		Call GetPlayerPos ( *Var0 *Var1 *Var2 )
+		
+		If *Var2 >= 260`
+			Call SetGroupEnabled ( ~Model:FrontWall .True )
+			
+			UseArray $Data_ConveyorColliders
+			Set *Array[0] ~Collider:ConveyorLeft2
+			Set *Array[1] ~Collider:ConveyorRight2
+			Set *Array[2] ~Collider:ConveyorDown2
+			Set *Array[3] ~Collider:ConveyorUp2
+			
+			UseArray $Data_ConveyorPushVels
+			If *MF_RedSwitchHit == .True
+				Set *Array[0] C079999A
+				Set *Array[2] 4079999A
+			Else
+				Set *Array[0] 4079999A
+				Set *Array[2] C079999A
+			EndIf
+		Else
+			If *Var0 < -440`
+				Call SetGroupEnabled ( ~Model:FrontWall .True )
+			Else
+				Call SetGroupEnabled ( ~Model:FrontWall .False )
+				
+				UseArray $Data_ConveyorColliders
+				Set *Array[0] ~Collider:ConveyorLeft
+				Set *Array[1] ~Collider:ConveyorRight
+				
+				UseArray $Data_ConveyorPushVels
+				If *MF_BlueSwitchHit == .True
+					Set *Array[0] C079999A
+					Set *Array[2] 4079999A
+				Else
+					Set *Array[0] 4079999A
+					Set *Array[2] C079999A
+				EndIf
+			EndIf
+		EndIf
+		Wait 1`
+	EndLoop
+	
+	Return
+	End
+}
+
+#new:Script $Script_SetupRedPlatforms {
+	If *MapFlag[0] == .True
+		Return
+	EndIf
+	Set *MapFlag[0] .True
+	
+	Set *Var2 0`
+	Set *Var3 84`
+    Set *Var4 1`
+	Set *Var5 ~Collider:unreachable
+	Set *Var6 80`
+	Set *Var7 60`
+	Set *Var8 ~Model:Platform1_floor
+	Set *Var9 ~Model:Platform1
+	Set *VarA ~Collider:Platform1
+    Exec $Script_MovePlatform
+	Return
+	End
+}
+
+#new:Script $Script_SetupBluePlatforms {
+	If *MapFlag[1] == .True
+		Return
+	EndIf
+	Set *MapFlag[1] .True
+	
+	Wait 90`
+	
+	Set *Var2 0`
+	Set *Var3 60`
+    Set *Var4 1`
+	Set *Var5 ~Collider:unreachable
+	Set *Var6 80`
+	Set *Var7 100`
+	Set *Var8 ~Model:Platform3_floor
+	Set *Var9 ~Model:Platform3
+	Set *VarA ~Collider:Platform3
+    Exec $Script_MovePlatform
+	Return
+	End
+}
+
+% actually the blue switch, I can't be bothered to rename them in code
+#new:Script $Script_EVT_RedSwitch {
+	If *MF_BlueSwitchHit == .True
+		Set *MF_BlueSwitchHit .False
+		Exec $Script_SetupRedPlatforms
+	Else
+		Set *MF_BlueSwitchHit .True
+	EndIf
+	
+	Call ModifyColliderFlags ( 0` ~Collider:RedSwitch_wall 00018000 )
+	Call SetGroupEnabled ( ~Model:RedSwitch_grating .False )
+	Set *MF_caf_04_GratingDestroyed .True
+	
+	Exec $Script_UpdateSwitches
+	Return
+	End
+}
+
+% actually the red switch
+@ $Script_EVT_BlueSwitch {
+	If *MF_RedSwitchHit == .True
+		Set *MF_RedSwitchHit .False
+		Exec $Script_SetupBluePlatforms
+	Else
+		Set *MF_RedSwitchHit .True
+	EndIf
+	
+	Exec $Script_UpdateSwitches
+	Return
+	End
+}
+
+@ $Script_EVT_BlueSwitch2 {
+	If *MF_RedSwitchHit == .True
+		Set *MF_RedSwitchHit .False
+		Exec $Script_SetupBluePlatforms
+	Else
+		Set *MF_RedSwitchHit .True
+	EndIf
+	
+	Exec $Script_UpdateSwitches
+	Return
+	End
+}
+
+#new:Script $Script_EVT_Box5 {
+	Set *MF_caf_04_Crate0Destroyed .True
+	Call ModifyColliderFlags ( 0` ~Collider:Box5_wall 00018000 )
+	Return
+	End
+}
+
+#new:Script $Script_EVT_Box6 {
+	Set *MF_caf_04_Crate1Destroyed .True
+	Call ModifyColliderFlags ( 0` ~Collider:Box6_wall 00018000 )
+	Return
+	End
+}
+
+@Message $String_OpenGiantChest_BigChest {
+	[Style Narrate]
+	You got the Super Boots![BR]
+	[Pause 5]The attack power of[BR]
+	Mario's Jump increases![BR]
+	[Wait][Next]
+	And now you can do the[BR]
+	Spin Jump by pressing [A][BR]
+	again while in the air![Wait][End]
+}
+
+#new:Function $Function_GiveSuperBoots {
+    LIO t0, 8010F290
+    ORI t1, r0, 1 % hex for 1
+    SB t1, 0000 (t0) % set Boots
+    JR RA
+    ORI v0, r0, 2
+}
+
+@ $Script_MonitorGiantChest_BigChest {
+	If  *MF_caf_04_GiantChest  ==  .False
+		Loop
+			If  *MF_caf_04_GiantChest  ==  .True
+				BreakLoop
+			EndIf
+			Wait  1`
+		EndLoop
+		Wait  60`
+		% note: ShowMessageAtScreenPos overwrites Var[0], this is a bug in vanilla
+		Set   *Var[4] *Var[0]
+		Exec  $Script_GiantChest_Music
+		Call  ShowMessageAtScreenPos    ( $String_OpenGiantChest_BigChest 000000A0 00000028 )
+		Call  $Function_GiantChest_Support ( )
+		% add your extra code here
+		Call $Function_GiveSuperBoots (  )
+	EndIf
+	Return
+	End
 }

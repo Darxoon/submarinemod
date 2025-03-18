@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="caf_02" author="unnamed" background="arn_bg" textures="kmr_tex">
 	<Editor>
-		<Camera pos="-146.990234,280.635468,142.195740" pitch="60.320011" yaw="6.246928"/>
+		<Camera pos="-37.337364,439.450714,160.061188" pitch="45.120018" yaw="359.846924"/>
 		<Camera pos="66.550247,65536.000000,-87.990852"/>
 		<Camera pos="65536.000000,44.385315,-148.309570"/>
 		<Camera pos="-22.321270,230.906799,65536.000000"/>
@@ -138,7 +138,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="31"/>
+			<MapObject name="CubeModel" id="31" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_m_tikatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -198,7 +198,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="Split Model" id="30"/>
+			<MapObject name="Split Model" id="30" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_yuka6tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -250,7 +250,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="Split Model" id="2E"/>
+			<MapObject name="Split Model" id="2E" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_yuka6tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -294,7 +294,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="2D"/>
+			<MapObject name="CubeModel" id="2D" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_m_tikatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -362,7 +362,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="Split Model" id="2B"/>
+			<MapObject name="Split Model" id="2B" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_yuka6tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -404,7 +404,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="2A"/>
+			<MapObject name="CubeModel" id="2A" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_m_tikatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -472,7 +472,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="Split Model" id="28"/>
+			<MapObject name="Split Model" id="28" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_yuka6tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -516,7 +516,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="27"/>
+			<MapObject name="CubeModel" id="27" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_m_tikatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -576,7 +576,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="Split Model" id="26"/>
+			<MapObject name="Split Model" id="26" hidden="true"/>
 			<ShapeMesh ver="3" texture="kpa_kpa_madotif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -602,7 +602,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="25"/>
+			<MapObject name="CubeModel" id="25" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_m_tikatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -679,7 +679,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="Split Model" id="22"/>
+			<MapObject name="Split Model" id="22" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_yuka6tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -723,7 +723,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="21"/>
+			<MapObject name="CubeModel" id="21" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_m_tikatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -791,7 +791,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="Platform1_floor" id="1F"/>
+			<MapObject name="Platform1_floor" id="1F" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_m_tikatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -851,7 +851,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="Split Model" id="1E"/>
+			<MapObject name="Split Model" id="1E" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_yuka6tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -895,7 +895,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="Split Model" id="1D"/>
+			<MapObject name="Split Model" id="1D" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_mac_house7tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -963,7 +963,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="ex_s_edge" id="1B"/>
+			<MapObject name="ex_s_edge" id="1B" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_berosaidetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1007,7 +1007,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="ex_s_floor" id="1A"/>
+			<MapObject name="ex_s_floor" id="1A" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_mac_house3tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1035,7 +1035,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="ex_s_edge" id="19"/>
+			<MapObject name="ex_s_edge" id="19" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_berosaidetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1073,7 +1073,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="ex_s_floor" id="18"/>
+			<MapObject name="ex_s_floor" id="18" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_mac_house3tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1115,7 +1115,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="15"/>
+			<MapObject name="CubeModel" id="15" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_kkg_yukatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1183,7 +1183,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="14"/>
+			<MapObject name="CubeModel" id="14" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_kkg_yukatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1251,7 +1251,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="13"/>
+			<MapObject name="CubeModel" id="13" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_kkg_yukatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1319,7 +1319,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="12"/>
+			<MapObject name="CubeModel" id="12" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_kkg_yukatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1363,7 +1363,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="11"/>
+			<MapObject name="CubeModel" id="11" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_kkg_yukatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1431,7 +1431,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="10"/>
+			<MapObject name="CubeModel" id="10" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_woody_plate_jtif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1499,7 +1499,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="F"/>
+			<MapObject name="CubeModel" id="F" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_mac_house3tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1567,7 +1567,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="E"/>
+			<MapObject name="CubeModel" id="E" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_woody_plate_jtif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1611,7 +1611,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="D"/>
+			<MapObject name="CubeModel" id="D" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_kkg_yukatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1679,7 +1679,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="C"/>
+			<MapObject name="CubeModel" id="C" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_yuka6tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1747,7 +1747,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="B"/>
+			<MapObject name="CubeModel" id="B" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_kkg_yukatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1815,7 +1815,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="A"/>
+			<MapObject name="CubeModel" id="A" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_yuka6tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1859,7 +1859,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="8"/>
+			<MapObject name="CubeModel" id="8" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_woody_plate_jtif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1911,7 +1911,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="7"/>
+			<MapObject name="CubeModel" id="7" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_woody_plate_jtif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -1963,7 +1963,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="6"/>
+			<MapObject name="CubeModel" id="6" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_woody_plate_jtif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -2015,7 +2015,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="CubeModel" id="5"/>
+			<MapObject name="CubeModel" id="5" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_woody_plate_jtif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -2055,7 +2055,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="TableSurface" id="4"/>
+			<MapObject name="TableSurface" id="4" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_wood_ctif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -2129,7 +2129,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="Window" id="3"/>
+			<MapObject name="Window" id="3" hidden="true"/>
 			<ShapeMesh ver="3" texture="hos_water3tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -2163,7 +2163,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="Split Model" id="2"/>
+			<MapObject name="Split Model" id="2" hidden="true"/>
 			<ShapeMesh ver="3" texture="">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -2235,7 +2235,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="Split Model" id="1"/>
+			<MapObject name="Split Model" id="1" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_mac_house3tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -2469,7 +2469,7 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="main_floor" id="0"/>
+			<MapObject name="main_floor" id="0" hidden="true"/>
 			<ShapeMesh ver="3" texture="kmr_mac_house3tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
@@ -2501,7 +2501,7 @@
 			<HitObject type="ROOT"/>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="Terminal" id="11" hidden="true"/>
+			<MapObject name="Terminal" id="11"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -2519,7 +2519,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="Split Collider" id="10" hidden="true"/>
+			<MapObject name="Split Collider" id="10"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -2537,7 +2537,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="MeshCollider" id="F" hidden="true"/>
+			<MapObject name="MeshCollider" id="F"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -2621,7 +2621,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="unreachable" id="E" hidden="true"/>
+			<MapObject name="unreachable" id="E"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -2639,7 +2639,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="Platform2" id="D" hidden="true"/>
+			<MapObject name="Platform2" id="D"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -2683,7 +2683,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="8000" surface="0">
-			<MapObject name="MeshCollider" id="C" hidden="true"/>
+			<MapObject name="MeshCollider" id="C"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -2751,7 +2751,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="MeshCollider" id="B" hidden="true"/>
+			<MapObject name="MeshCollider" id="B"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -2811,7 +2811,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="Platform3" id="A" hidden="true"/>
+			<MapObject name="Platform3" id="A"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -2855,7 +2855,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="Platform1" id="9" hidden="true"/>
+			<MapObject name="Platform1" id="9"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -2897,7 +2897,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="8000" surface="0">
-			<MapObject name="MeshCollider" id="8" hidden="true"/>
+			<MapObject name="MeshCollider" id="8"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -3001,7 +3001,7 @@
 			<HitObject type="GROUP"/>
 		</Collider>
 		<Collider ver="0" flags="18000" surface="0">
-			<MapObject name="npc_barrier_1" id="6" hidden="true"/>
+			<MapObject name="npc_barrier_1" id="6"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -3021,7 +3021,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="18000" surface="0">
-			<MapObject name="npc_barrier_0" id="5" hidden="true"/>
+			<MapObject name="npc_barrier_0" id="5"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -3043,7 +3043,7 @@
 			<HitObject type="GROUP"/>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="exit_trigger_1" id="3" hidden="true"/>
+			<MapObject name="exit_trigger_1" id="3"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -3063,7 +3063,7 @@
 			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="exit_trigger_0" id="2" hidden="true"/>
+			<MapObject name="exit_trigger_0" id="2"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
@@ -3085,7 +3085,7 @@
 			<HitObject type="GROUP"/>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="MeshCollider" id="0" hidden="true"/>
+			<MapObject name="MeshCollider" id="0"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">
