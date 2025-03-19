@@ -1,3 +1,32 @@
+#define .NpcID:Kooper 0`
+#define .NpcID:Goombario 1`
+
+@ $Script_Main {
+	Set  *GB_WorldLocation  .Location:GoombaRoad
+	Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
+	Call SetCamEnabled      ( .Cam:Default .True
+	Call SetCamLeadPlayer   ( .Cam:Default .False )
+	Exec $Script_MakeEntities
+	Exec $Script_SetupMusic
+	Exec $Script_EnterMap
+	
+	Exec $aaa
+	
+	Call MakeNpcs ( .False $NpcGroupList )
+	Return
+	End
+}
+
+#new:Script $aaa {
+	Loop
+		Call GetPlayerTargetYaw ( *Debug[0] )
+		Wait 1`
+	EndLoop
+	Return
+	End
+}
+
 @ $Script_ExitN {
     If *MF_caf_02_Door2Unlocked == .False
         Call DisablePlayerInput ( .True )
@@ -17,6 +46,203 @@
 	Wait  17`
 	Call  GotoMap   ( "caf_02" ~Entry:caf_02:Entry1 )
 	Wait  100`
+	Return
+	End
+}
+
+@ $Script_Callback_WalkW {
+	If *MB_Story >= .ModProgress:MetKooper
+		If *MF_caf_01_Key2Obtained == .False
+			If *MF_caf_05_StorageRoomHintShown == .False
+				Call DisablePlayerInput ( .True )
+				Call DisablePartnerAI ( 00000000 )
+				Set *MB_Debug 8
+				Wait 30`
+				Set *MB_Debug 9
+				Exec $Script_StorageRoomHint
+			EndIf
+		EndIf
+	EndIf
+	Return
+	End
+}
+
+@ $Script_Callback_DoorN {
+	If *MB_Story < .ModProgress:MetKooper
+		Return
+	EndIf
+	If *MF_caf_01_Key2Obtained == .True
+		Return
+	EndIf
+	If *MF_caf_05_StorageRoomHintShown == .True
+		Return
+	EndIf
+	
+	Loop
+		Call GetPlayerPos ( *Var0 *Var1 *Var2 )
+		If *Var2 >= -60`
+			If *Var0 < -120`
+				BreakLoop
+			EndIf
+		EndIf
+		Wait 1`
+	EndLoop
+	
+	Call DisablePlayerInput ( .True )
+	Call DisablePartnerAI ( 00000000 )
+	Exec $Script_StorageRoomHint
+	Return
+	End
+}
+
+#new:Script $Script_StorageRoomHint {
+	Set *MF_caf_05_StorageRoomHintShown .True
+	
+	Thread
+		Call PlaySound ( 00000262 )
+	EndThread
+	Call ShowEmote ( .Npc:Partner .Emote:Exclamation -45` 30` .True 0` 0` 0` 0` )
+	
+	Wait 10`
+	
+	Thread
+		Wait 10`
+		Call PlayerMoveTo ( ~Vec2D:Player_MoveTo 40` )
+		Call PlayerFaceNpc ( .Npc:Partner .False )
+	EndThread
+	
+	Call GetCurrentPartnerID ( *Var0 )
+	Switch *Var0
+		Case == .Partner:Goombario
+			Call SetNpcAnimation ( .Npc:Partner 00010003 )
+			Call NpcMoveTo ( .Npc:Partner ~Vec2D:Partner_MoveTo 40` )
+			Call SetNpcAnimation ( .Npc:Partner 00010001 )
+			
+			Wait 10`
+			
+			Call SpeakToPlayer ( .Npc:Partner 00010008 00010001 00000000 002F000C )
+		Case == .Partner:Kooper
+			Call SetNpcAnimation ( .Npc:Partner 00020005 )
+			Call NpcMoveTo ( .Npc:Partner ~Vec2D:Partner_MoveTo 40` )
+			Call SetNpcAnimation ( .Npc:Partner 00020003 )
+			
+			Wait 10`
+			
+			Call SpeakToPlayer ( .Npc:Partner 0002000D 00020003 00000000 002F000B )
+	EndSwitch
+	
+	Call EnablePartnerAI ()
+	Call DisablePlayerInput ( .False )
+	Return
+	End
+}
+
+@ $Script_ExitS {
+	If *MB_Story < .ModProgress:MetBow
+		Declare *GoombarioOut
+		
+		Call GetCurrentPartnerID ( *Var0 )
+		If *Var0 == .Partner:Goombario
+			Call SetNpcAnimation ( .Npc:Partner 00010003 )
+			Call NpcMoveTo ( .Npc:Partner ~Vec2D:Kooper_MoveTo 30` )
+			Call SetNpcAnimation ( .Npc:Partner 00010001 )
+			
+			Call BringPartnerOut ( .Partner:Kooper )
+			Set *GoombarioOut .True
+		Else
+			Set *GoombarioOut .False
+		EndIf
+		
+		Call DisablePlayerInput ( .True )
+		Call DisablePartnerAI ( 0000000 )
+		
+		Call NpcFacePlayer ( .NpcID:Kooper 00000000 )
+		
+		Thread
+			Call GetPlayerPos ( *Var0 *Var1 *Var2 )
+			Call PlayerMoveTo ( -224` *Var2 15` )
+			Call InterpPlayerYaw ( 000000A0 0` )
+		EndThread
+		
+		Call SetNpcAnimation ( .Npc:Partner 00020005 )
+		Call NpcMoveTo ( .Npc:Partner ~Vec2D:Kooper_MoveTo 30` )
+		Call SetNpcAnimation ( .Npc:Partner 00020003 )
+		
+		Call NpcFacePlayer ( .Npc:Partner 00000000 )
+		Wait 8`
+		
+		Call SpeakToPlayer ( .Npc:Partner 0002000D 00020003 00000000 002F000D )
+		
+		If *MF_caf_01_GoombarioObtainedPermanently == .True
+			If *GoombarioOut == .False
+				Call BringPartnerOut ( .Partner:Goombario )
+				Call SpeakToPlayer ( .Npc:Partner 00010008 00010001 00000000 002F000E )
+			Else
+				Call SpeakToPlayer ( -5` 00010008 00010001 00000000 002F000E )
+			EndIf
+		EndIf
+		
+		Call $Function_DisableAllPartners ()
+		Call $Function_EnableBow ()
+	EndIf
+	
+	SetGroup 0000001B
+	Call  DisablePlayerInput ( .True )
+	Call  UseDoorSounds ( .DoorSounds:Metal )
+	Set   *Var[0]  ~Entry:entry_s
+	Set   *Var[1]  ~Collider:door_s
+	Set   *Var[2]  ~Model:door
+	Set   *Var[3]  .DoorSwing:In
+	Exec  ExitSingleDoor
+	Wait  17`
+	Call  GotoMap   ( "caf_04" ~Entry:caf_04:Entry0 )
+	Wait  100`
+	Return
+	End
+}
+
+% Kooper & Goombario
+#new:NpcGroupList $NpcGroupList {
+	00000001 $NpcGroup_Kooper      00000000
+	00000001 $NpcGroup_Goombario      00000000
+	00000000 00000000 00000000
+}
+
+#new:NpcGroup $NpcGroup_Kooper {
+	.NpcID:Kooper $NpcSettings_Kooper ~Vec3f:NPC_Kooper % 20 0 -145
+	00400D09 $Script_Init_Kooper 00000000 00000000 00000000
+	~NoDrops
+	~Movement:NPC_Kooper
+	~AnimationTable:NPC_Kooper
+	00000000 00000000 00000000 00000000
+}
+
+#new:NpcSettings $NpcSettings_Kooper {
+	00000000 00230018 00000000 00000000 00000000 00000000 00000000 00000000
+	00000000 00000000 00630010
+}
+
+#new:Script $Script_Init_Kooper {
+	Return
+	End
+}
+
+#new:NpcGroup $NpcGroup_Goombario {
+	.NpcID:Goombario $NpcSettings_Goombario ~Vec3f:NPC_Goombario % -50 0 -30
+	00002809 $Script_Init_Goombario 00000000 00000000 00000000
+	~NoDrops
+	~Movement:NPC_Goombario
+	~AnimationTable:NPC_Goombario % .Sprite:WorldGoombario
+	00000000 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcSettings $NpcSettings_Goombario
+{
+	00000000 00160018 00000000 00000000 00000000 00000000 00000000 00000000
+	00000000 00000000 00630010
+}
+
+#new:Script $Script_Init_Goombario {
 	Return
 	End
 }

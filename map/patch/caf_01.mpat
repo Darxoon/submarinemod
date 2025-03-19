@@ -110,6 +110,45 @@
 	End
 }
 
+@ $Script_ExitE {
+	If *MB_Story < .ModProgress:MetKooper
+		Call DisablePlayerInput ( .True )
+		Call DisablePartnerAI ( 00000000 )
+		Call SetNpcAnimation ( .Npc:Partner 00010001 )
+		ExecWait $Script_PreventGoingHallway
+		Return
+	EndIf
+	
+	Set *MB_Debug 56
+	SetGroup 0000001B
+	Call     UseExitHeading ( 60` ~Entry:entry_e )
+	Exec     ExitWalk
+	Call  GotoMap   ( "caf_03" ~Entry:caf_03:entry_w )
+	Wait  100`
+	Return
+	End
+}
+
+#new:Script $Script_PreventGoingHallway {
+	Thread
+		Call PlaySound ( 00000262 )
+	EndThread
+	Call ShowEmote ( .Npc:Partner .Emote:Exclamation -45` 30` .True 0` 0` 0` 0` )
+	Call PlayerFaceNpc ( .Npc:Partner .False )
+	
+	Wait 10`
+	Call SpeakToPlayer ( .Npc:Partner 00010008 00010001 00000000 002F0009 )
+	
+	Call GetPlayerPos ( *Var0 *Var1 *Var2 )
+	Call PlayerMoveTo ( 110` *Var2 20` )
+	
+	Wait 15`
+	Call EnablePartnerAI ()
+	Call DisablePlayerInput ( .False )
+	Return
+	End
+}
+
 @ $Script_ExitN {
 	If *MB_Story < .ModProgress:MetKooper
 		ExecWait $Script_ExitToKooper
@@ -169,6 +208,27 @@
 }
 
 #new:Script $Script_Init_Goombario {
+	If *MB_Story > .ModProgress:MetGoombario
+		If *MF_caf_01_GoombarioObtainedPermanently == .False
+			Call SetNpcPos ( .Npc:Self ~Vec3D:Goombario_MoveTo )
+			Call BindNpcInteract ( .Npc:Self $Script_Interact_Goombario )
+		EndIf
+	EndIf
+	Return
+	End
+}
+
+#new:Script $Script_Interact_Goombario {
+	Call DisablePlayerInput ( .True )
+	
+	Call PlayerMoveTo ( ~Vec2D:EntryGoombario 30` )
+	Call SpeakToPlayer ( .Npc:Self 00010008 00010001 00000000 002F000A )
+	
+	Call $Function_EnableGoombarioInBg ()
+	Set *MF_caf_01_GoombarioObtainedPermanently .True
+	
+	Call GotoMap ( "caf_01" ~Entry:EntryGoombario )
+	Call DisablePlayerInput ( .False )
 	Return
 	End
 }

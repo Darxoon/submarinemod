@@ -129,19 +129,21 @@
 {
 	Call  GetEntryID    ( *Var[0] )
 	Switch  *Var[0]
+		Case  ==  ~Entry:entry_w
+			Exec  $Script_Callback_WalkW
+			Set   *Var[0] $Script_CreateExitTriggers
+			Exec  EnterWalk
 		Case  ==  ~Entry:entry_s
 			Set   *Var[2]  ~Model:door
 			Set   *Var[3]  .DoorSwing:In
 			Exec  EnterSingleDoor
 			Exec  $Script_CreateExitTriggers
 		Case  ==  ~Entry:entry_n
+			Exec  $Script_Callback_DoorN
 			Set   *Var[2]  ~Model:door3
 			Set   *Var[3]  .DoorSwing:Out
 			Exec  EnterSingleDoor
 			Exec  $Script_CreateExitTriggers
-		Case  ==  ~Entry:entry_w
-			Set   *Var[0] $Script_CreateExitTriggers
-			Exec  EnterWalk
 		Default
 			Exec  $Script_CreateExitTriggers
 	EndSwitch
@@ -197,6 +199,18 @@
 #new:Script $Script_CreateExitTriggers
 {
 	Bind  $Script_ExitW .Trigger:FloorAbove ~Collider:exit_trigger_w 00000001 00000000
+	Return
+	End
+}
+
+#new:Script $Script_Callback_WalkW
+{
+	Return
+	End
+}
+
+#new:Script $Script_Callback_DoorN
+{
 	Return
 	End
 }

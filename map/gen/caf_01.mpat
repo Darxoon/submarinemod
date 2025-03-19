@@ -5,7 +5,7 @@
 	[MainScript] $Script_Main
 	[Background] 00000000
 	[EntryList] $EntryList
-	[EntryCount] 4
+	[EntryCount] 5
 }
 
 #new:EntryList $EntryList
@@ -14,6 +14,7 @@
 	~Vec4f:entry_e
 	~Vec4f:entry_s
 	~Vec4f:entry_w
+	~Vec4f:EntryGoombario
 }
 
 #define .MapVar_Entity_Padlock 0

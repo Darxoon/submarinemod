@@ -31,3 +31,5 @@
 01E = MF_caf_05_FloorDestroyed
 01F = MF_caf_04_DoorUnlocked
 020 = MF_caf_04_KeyObtained
+021 = MF_caf_01_GoombarioObtainedPermanently
+022 = MF_caf_05_StorageRoomHintShown

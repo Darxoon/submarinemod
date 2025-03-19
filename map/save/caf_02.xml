@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="caf_02" author="unnamed" background="arn_bg" textures="kmr_tex">
 	<Editor>
-		<Camera pos="220.000000,147.909058,383.861694" pitch="15.000000" yaw="0.000000"/>
+		<Camera pos="-36.110592,139.528046,290.933014" pitch="2.360003" yaw="5.280004"/>
 		<Camera pos="-74.595428,65536.000000,5.471440"/>
 		<Camera pos="65536.000000,106.000000,-47.000000"/>
-		<Camera pos="-86.674545,-21.092201,65536.000000"/>
+		<Camera pos="-86.674545,-51.064327,65536.000000"/>
 	</Editor>
 	<ModelTree>
 		<Node name="Root" id="3C">
@@ -4033,9 +4033,8 @@
 		<Marker ver="4" type="Position" pos="-93,0,-93" yaw="0.000000">
 			<MapObject name="Kooper" id="5"/>
 		</Marker>
-		<Marker ver="4" type="Entity" pos="188,168,-175" yaw="0.000000">
+		<Marker ver="4" type="Position" pos="188,168,-175" yaw="0.000000">
 			<MapObject name="BlueSwitch" id="4"/>
-			<Entity type="802E9BD4" hasSpawnFlag="false" spawnFlag="" callback="true" areaFlag="0"/>
 		</Marker>
 		<Marker ver="4" type="Entity" pos="188,228,-175" yaw="0.000000">
 			<MapObject name="RedSwitch" id="3"/>

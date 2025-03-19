@@ -27,6 +27,18 @@
     ORI v0, r0, 2
 }
 
+#export:Function $Function_EnableGoombarioInBg {
+    LIO t0, 8010F290
+    
+    ORI t1, R0, 1
+    
+    SB t1, 001C (t0) % Goombario Get
+    SB t1, 001D (t0) % Goombario level
+    
+    JR RA
+    ORI v0, r0, 2
+}
+
 #export:Function $Function_EnableKooper {
     LIO t0, 8010F290
     
@@ -45,9 +57,11 @@
     LIO t0, 8010F290
     
     ORI t1, R0, 1
+    ORI t2, R0, 9
     
     SB t1, 005C (t0) % Bow Get
     SB t1, 005D (t0) % Bow level
+    SB t2, 0012 (t0) % Bow out
     
     JR RA
     ORI v0, r0, 2

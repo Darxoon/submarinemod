@@ -12,6 +12,9 @@
     
     Call MakeNpcs ( .False $NpcGroupList )
     
+    Call  MakeEntity    ( .Entity:BlueSwitch ~Vec4d:BlueSwitch 80000000 )
+	Call  AssignScript    ( $Script_EVT_BlueSwitch )
+    
     % disables platform collider
     Call ModifyColliderFlags ( 0` ~Collider:Platform1 00018000 ) % 0 = set bits
     
@@ -298,8 +301,7 @@
 	End
 }
 
-@ $Script_EVT_BlueSwitch
-{
+#new:Script $Script_EVT_BlueSwitch {
     If *MF_caf_02_Door2Unlocked == .False
         Call DisablePlayerInput ( .True )
         Bind $Script_BlueSwitch_RemoveCrates .Trigger:FloorTouch ~Collider:MainFloor 1 0

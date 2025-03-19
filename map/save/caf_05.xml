@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="caf_05" author="unnamed" background="arn_bg" textures="kmr_tex">
 	<Editor>
-		<Camera pos="-171.517883,195.920425,266.009979" pitch="41.119957" yaw="5.279645"/>
-		<Camera pos="-168.356552,65536.000000,-266.121033"/>
+		<Camera pos="-206.066345,142.630051,174.234909" pitch="40.479916" yaw="357.920654"/>
+		<Camera pos="-72.472649,65536.000000,123.935936"/>
 		<Camera pos="65536.000000,84.124756,-163.976196"/>
-		<Camera pos="-241.215561,9.071247,65536.000000"/>
+		<Camera pos="-202.669220,-11.733524,65536.000000"/>
 	</Editor>
 	<ModelTree>
 		<Node name="Root" id="1D">
@@ -72,16 +72,21 @@
 		</Node>
 	</ZoneTree>
 	<MarkerTree>
-		<Node name="Root" id="7">
+		<Node name="Root" id="C">
 			<Node name="Entrances" id="2">
 				<Node name="entry_n" id="FFFFFFFF"/>
 				<Node name="entry_s" id="0"/>
 				<Node name="entry_w" id="1"/>
 			</Node>
-			<Node name="NPC_ExitGoombario" id="3"/>
+			<Node name="NPC_Goombario" id="3"/>
 			<Node name="Padlock" id="4"/>
 			<Node name="RedBlock" id="5"/>
 			<Node name="BoardedFloor" id="6"/>
+			<Node name="Partner_MoveTo" id="7"/>
+			<Node name="Player_MoveTo" id="8"/>
+			<Node name="NPC_Kooper" id="9"/>
+			<Node name="Kooper_MoveTo" id="A"/>
+			<Node name="Goombario_MoveTo" id="B"/>
 		</Node>
 	</MarkerTree>
 	<LightSets>
@@ -575,16 +580,16 @@
 					<F3DEX2 cmd="D9FFFFFF,200400"/>
 					<TriangleBatch ver="0">
 						<VertexTable>
-							<Vertex xyz="230,218,26" uv="-1976,4192" rgba="0,0,0,255"/>
-							<Vertex xyz="100,218,26" uv="-1976,-3808" rgba="0,0,0,255"/>
-							<Vertex xyz="100,42,26" uv="-4320,-1464" rgba="0,0,0,255"/>
-							<Vertex xyz="230,42,26" uv="-4320,1848" rgba="0,0,0,255"/>
-							<Vertex xyz="230,42,26" uv="-1976,4192" rgba="0,0,0,255"/>
-							<Vertex xyz="43,-28,26" uv="-4320,-1464" rgba="0,0,0,255"/>
-							<Vertex xyz="230,-28,26" uv="-4320,1848" rgba="0,0,0,255"/>
-							<Vertex xyz="230,42,26" uv="-1976,4192" rgba="0,0,0,255"/>
-							<Vertex xyz="100,42,26" uv="-1976,-3808" rgba="0,0,0,255"/>
-							<Vertex xyz="43,-28,26" uv="-4320,-1464" rgba="0,0,0,255"/>
+							<Vertex xyz="230,218,27" uv="-1976,4192" rgba="0,0,0,255"/>
+							<Vertex xyz="100,218,27" uv="-1976,-3808" rgba="0,0,0,255"/>
+							<Vertex xyz="100,42,27" uv="-4320,-1464" rgba="0,0,0,255"/>
+							<Vertex xyz="230,42,27" uv="-4320,1848" rgba="0,0,0,255"/>
+							<Vertex xyz="230,42,27" uv="-1976,4192" rgba="0,0,0,255"/>
+							<Vertex xyz="43,-28,27" uv="-4320,-1464" rgba="0,0,0,255"/>
+							<Vertex xyz="230,-28,27" uv="-4320,1848" rgba="0,0,0,255"/>
+							<Vertex xyz="230,42,27" uv="-1976,4192" rgba="0,0,0,255"/>
+							<Vertex xyz="100,42,27" uv="-1976,-3808" rgba="0,0,0,255"/>
+							<Vertex xyz="43,-28,27" uv="-4320,-1464" rgba="0,0,0,255"/>
 						</VertexTable>
 						<TriangleList>
 							<Triangle ijk="0,1,2"/>
@@ -676,29 +681,17 @@
 							<Vertex xyz="100,42,-153" uv="985,-819"/>
 							<Vertex xyz="57,33,-153" uv="-39,-819"/>
 							<Vertex xyz="85,42,72" uv="985,1228"/>
-							<Vertex xyz="46,0,113" uv="-39,1638"/>
 							<Vertex xyz="60,42,113" uv="985,1638"/>
 							<Vertex xyz="46,0,113" uv="-39,1638"/>
-							<Vertex xyz="85,42,72" uv="985,1228"/>
-							<Vertex xyz="70,0,72" uv="-39,1228"/>
-							<Vertex xyz="100,42,27" uv="985,819"/>
+							<Vertex xyz="46,0,113" uv="-39,1638"/>
 							<Vertex xyz="70,0,72" uv="-39,1228"/>
 							<Vertex xyz="85,42,72" uv="985,1228"/>
+							<Vertex xyz="100,42,27" uv="985,819"/>
+							<Vertex xyz="85,42,72" uv="985,1228"/>
 							<Vertex xyz="70,0,72" uv="-39,1228"/>
-							<Vertex xyz="100,42,27" uv="985,819"/>
-							<Vertex xyz="85,0,27" uv="-39,819"/>
-							<Vertex xyz="108,42,-18" uv="985,409"/>
+							<Vertex xyz="70,0,72" uv="-39,1228"/>
 							<Vertex xyz="85,0,27" uv="-39,819"/>
 							<Vertex xyz="100,42,27" uv="985,819"/>
-							<Vertex xyz="85,0,27" uv="-39,819"/>
-							<Vertex xyz="108,42,-18" uv="985,409"/>
-							<Vertex xyz="93,0,-18" uv="-39,409"/>
-							<Vertex xyz="110,42,-63" uv="985,0"/>
-							<Vertex xyz="93,0,-18" uv="-39,409"/>
-							<Vertex xyz="108,42,-18" uv="985,409"/>
-							<Vertex xyz="93,0,-18" uv="-39,409"/>
-							<Vertex xyz="110,42,-63" uv="985,0"/>
-							<Vertex xyz="95,0,-63" uv="-39,0"/>
 						</VertexTable>
 						<TriangleList>
 							<Triangle ijk="0,1,2"/>
@@ -737,10 +730,6 @@
 							<Triangle ijk="69,70,71"/>
 							<Triangle ijk="72,73,74"/>
 							<Triangle ijk="75,76,77"/>
-							<Triangle ijk="78,79,80"/>
-							<Triangle ijk="81,82,83"/>
-							<Triangle ijk="84,85,86"/>
-							<Triangle ijk="87,88,89"/>
 						</TriangleList>
 					</TriangleBatch>
 				</DisplayList>
@@ -2036,7 +2025,24 @@
 	</Zones>
 	<Markers>
 		<Marker ver="4" type="Root">
-			<MapObject name="Root" id="7"/>
+			<MapObject name="Root" id="C"/>
+		</Marker>
+		<Marker ver="4" type="Position" pos="-275,0,82" yaw="0.000000">
+			<MapObject name="Goombario_MoveTo" id="B"/>
+		</Marker>
+		<Marker ver="4" type="Position" pos="-174,0,82" yaw="0.000000">
+			<MapObject name="Kooper_MoveTo" id="A"/>
+		</Marker>
+		<Marker ver="4" type="NPC" pos="-93,0,-64" yaw="0.000000">
+			<MapObject name="NPC_Kooper" id="9"/>
+			<Movement type="Stationary" data="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"/>
+			<Sprite sprite="2" palette="0" animations="3,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0"/>
+		</Marker>
+		<Marker ver="4" type="Position" pos="-281,0,47" yaw="0.000000">
+			<MapObject name="Player_MoveTo" id="8"/>
+		</Marker>
+		<Marker ver="4" type="Position" pos="-249,0,66" yaw="0.000000">
+			<MapObject name="Partner_MoveTo" id="7"/>
 		</Marker>
 		<Marker ver="4" type="Entity" pos="-130,0,52" yaw="0.000000">
 			<MapObject name="BoardedFloor" id="6"/>
@@ -2051,7 +2057,7 @@
 			<Entity type="802BCD68" flag="*MF_caf_05_DoorUnlocked" item="KoopaFortressKey" autoMapVar="true" mapVar="0"/>
 		</Marker>
 		<Marker ver="4" type="NPC" pos="0,-300,0" yaw="0.000000">
-			<MapObject name="NPC_ExitGoombario" id="3"/>
+			<MapObject name="NPC_Goombario" id="3"/>
 			<Movement type="Wander" data="0,FFFFFED4,0,46,0,FFFF8001,0,0,FFFFFED4,0,64,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"/>
 			<Sprite sprite="1" palette="0" animations="1,2,3,3,1,1,0,0,3,3,3,3,3,3,3,3"/>
 		</Marker>
@@ -2088,9 +2094,9 @@
 			<TexPanner id="F" generate="false" useTexels="false" max="131072" init="0,0,0,0" step="0,0,0,0" freq="0,0,0,0"/>
 		</TexPanners>
 		<Generators>
-			<Entrance name="WalkW" type="Walk" hasCallback="false" entry="entry_w"/>
+			<Entrance name="WalkW" type="Walk" hasCallback="true" entry="entry_w"/>
 			<Entrance name="DoorS" type="SingleDoor" hasCallback="false" entry="entry_s" door1="door" doorDir="1" doorSFX="1"/>
-			<Entrance name="DoorN" type="SingleDoor" hasCallback="false" entry="entry_n" door1="door3" doorDir="-1" doorSFX="1"/>
+			<Entrance name="DoorN" type="SingleDoor" hasCallback="true" entry="entry_n" door1="door3" doorDir="-1" doorSFX="1"/>
 			<Exit name="ExitW" type="Walk" hasCallback="false" entry="entry_w" destMap="caf_03" destEntry="entry_e" trigger="exit_trigger_w"/>
 			<Exit name="ExitS" type="SingleDoor" hasCallback="false" entry="entry_s" destMap="caf_04" destEntry="Entry0" trigger="door_s" door1="door" lock="Padlock" doorDir="1" doorSFX="1"/>
 			<Exit name="ExitN" type="SingleDoor" hasCallback="false" entry="entry_n" destMap="caf_02" destEntry="Entry1" trigger="door_n" door1="door3" doorDir="-1" doorSFX="1"/>

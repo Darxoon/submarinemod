@@ -135,3 +135,78 @@ this good at computers, Mario.[br]
 [Wait][END]
 }
 
+#message:2F:009
+{
+[Style Left]
+Mario, where are you going?[br]
+I feel like this room in front of[br]
+us has higher priority right now.[br]
+[Wait][Next]
+One of our party members might[br]
+be in there and might be hurt![br]
+[Wait][END]
+}
+
+#message:2F:00A
+{
+[Style Left]
+Oh, the noises were just Kooper[br]
+and some weird computer that[br]
+you already fixed?[br]
+[Wait][Next]
+That's a relief. I guess I can[br]
+join you again then.[br]
+[Wait][Next]
+Also, I promise I will never[br]
+lock doors like this again.[br]
+[Wait][END]
+}
+
+#message:2F:00B
+{
+[Style Left]
+Oh, this door is locked. There is[br]
+probably somewhere in there but[br]
+we can't progress here yet.[br]
+[Wait][Next]
+Let's continue looking, maybe my[br]
+ability might be useful somewhere[br]
+else, now that I'm no longer[br]
+locked into that other room.[br]
+[Wait][END]
+}
+
+#message:2F:00C
+{
+[Style Left]
+Oh, this door is locked. There is[br]
+probably somewhere in there but[br]
+we can't progress here yet.[br]
+[Wait][Next]
+Let's continue looking. Maybe[br]
+Kooper's shell is useful somewhere[br]
+else, now that he's no longer[br]
+locked into that other room.[br]
+[Wait][END]
+}
+
+#message:2F:00D
+{
+[Style Left]
+Mario, I'm starting to get a[br]
+strong headache, probably from[br]
+what happened earlier.[br]
+[Wait][Next]
+I think I will wait for you to[br]
+return here. Good luck in there![br]
+[Wait][END]
+}
+
+#message:2F:00E
+{
+[Style Left]
+I will stay here too and take[br]
+care of Kooper.
+[Wait][END]
+}
+

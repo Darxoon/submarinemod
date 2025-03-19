@@ -14,8 +14,6 @@
 	~Vec4f:Entry1
 }
 
-#define .AreaFlag_Entity_BlueSwitch 0
-
 #new:Script_Main $Script_Main
 {
 	Set   *GB_WorldLocation  .Location:GoombaRoad
@@ -48,9 +46,6 @@
 	Call  MakeItemEntity    ( .Item:TubbaCastleKey ~Vec3d:Key .ItemSpawnMode:Fall_NeverVanish *MF_caf_02_KeyCollected )
 	Call  MakeEntity    ( .Entity:RedSwitch ~Vec4d:RedSwitch 80000000 )
 	Call  AssignScript    ( $Script_EVT_RedSwitch )
-	Call  MakeEntity    ( .Entity:BlueSwitch ~Vec4d:BlueSwitch 80000000 )
-	Call  AssignAreaFlag      ( *AreaFlag[.AreaFlag_Entity_BlueSwitch] )
-	Call  AssignScript    ( $Script_EVT_BlueSwitch )
 	Return
 	End
 }
@@ -151,12 +146,6 @@
 }
 
 #new:Script $Script_EVT_RedSwitch
-{
-	Return
-	End
-}
-
-#new:Script $Script_EVT_BlueSwitch
 {
 	Return
 	End
