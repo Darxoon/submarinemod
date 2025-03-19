@@ -34,6 +34,7 @@
 
 @ $Script_CreateExitTriggers {
     Bind  $Script_ExitWest .Trigger:FloorAbove ~Collider:exit_trigger_w 00000001 00000000
+	Bind  $Script_ExitEast .Trigger:FloorAbove ~Collider:exit_trigger_e 00000001 00000000
     
     If *MF_caf_03_PipeActivated == .True
         Exec $Script_CreatePipeTrigger

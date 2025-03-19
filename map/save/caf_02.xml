@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="caf_02" author="unnamed" background="arn_bg" textures="kmr_tex">
 	<Editor>
-		<Camera pos="-142.857697,211.626343,119.962250" pitch="53.759979" yaw="359.360901"/>
+		<Camera pos="220.000000,147.909058,383.861694" pitch="15.000000" yaw="0.000000"/>
 		<Camera pos="-74.595428,65536.000000,5.471440"/>
 		<Camera pos="65536.000000,106.000000,-47.000000"/>
 		<Camera pos="-86.674545,-21.092201,65536.000000"/>
@@ -4016,7 +4016,7 @@
 		</Marker>
 		<Marker ver="4" type="CamTarget" pos="-508,0,30" yaw="0.000000">
 			<MapObject name="Entry1Cam" id="9"/>
-			<CamTarget sampleZone="true" generatePan="true" panSpeed="1.500000" overrideLength="450.000000" overrideAngles="15.000000,-6.000000"/>
+			<CamTarget sampleZone="true" generatePan="true" panSpeed="1.500000" overrideLength="450.000000"/>
 		</Marker>
 		<Marker ver="4" type="CamTarget" pos="-450,0,30" yaw="0.000000">
 			<MapObject name="Entry0Cam" id="8"/>
@@ -4077,7 +4077,7 @@
 		<Generators>
 			<Entrance name="Entrance1" type="SingleDoor" hasCallback="false" entry="Entry1" door1="doorR" doorDir="1" doorSFX="1"/>
 			<Entrance name="Entrance0" type="SingleDoor" hasCallback="true" entry="Entry0" door1="doorL" doorDir="-1" doorSFX="1"/>
-			<Exit name="Exit1" type="SingleDoor" hasCallback="false" entry="Entry1" destMap="caf_01" destEntry="entry_n" trigger="door_r" door1="doorR" doorDir="1" doorSFX="1"/>
+			<Exit name="Exit1" type="SingleDoor" hasCallback="false" entry="Entry1" destMap="caf_05" destEntry="entry_n" trigger="door_r" door1="doorR" doorDir="1" doorSFX="1"/>
 			<Exit name="Exit0" type="SingleDoor" hasCallback="false" entry="Entry0" destMap="caf_01" destEntry="entry_n" trigger="door_l" door1="doorL" doorDir="1" doorSFX="1"/>
 		</Generators>
 		<Camera vfov="25" near="16" far="4096" bgcolor="0,0,0" leadsPlayer="false"/>

@@ -71,7 +71,6 @@
 #new:Script $Script_PanCamera_Entry1Cam
 {
 	Call  UseSettingsFrom   ( .Cam:Default -508` 0` 30` )
-	Call  SetCamPitch       ( .Cam:Default *Fixed[15.000000] *Fixed[-6.000000] )
 	Call  SetCamDistance    ( .Cam:Default 450` )
 	Call  SetPanTarget      ( .Cam:Default ~Vec3d:Entry1Cam )
 	Call  SetCamSpeed       ( .Cam:Default *Fixed[1.500000] )
@@ -122,7 +121,7 @@
 	Set   *Var[3]  .DoorSwing:In
 	Exec  ExitSingleDoor
 	Wait  17`
-	Call  GotoMap   ( "caf_01" ~Entry:caf_01:entry_n )
+	Call  GotoMap   ( "caf_05" ~Entry:caf_05:entry_n )
 	Wait  100`
 	Return
 	End

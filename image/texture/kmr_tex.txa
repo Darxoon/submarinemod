@@ -1381,3 +1381,15 @@ tex: omo_yajiruc_2tif
 	filter: yes
 	combine: 8
 }
+
+tex: flo_kumokumo2tif
+{
+	img: flo_kumokumo2tif.png
+	{
+		format: IA-8
+		hwrap: repeat
+		vwrap: repeat
+	}
+	filter: yes
+	combine: 8
+}

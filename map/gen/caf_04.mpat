@@ -14,6 +14,8 @@
 	~Vec4f:Entry1
 }
 
+#define .MapVar_Entity_Padlock 0
+
 #new:Script $Script_ScriptedSpring_FollowCam
 {
 	Loop
@@ -30,6 +32,54 @@
 	Return
 	End
 }
+
+#new:Function $Function_Lock_Support
+{
+	ADDIU     SP, SP, FFE8
+	SW        RA, 10 (SP)
+	JAL       ~Func:get_entity_by_index
+	LW        A0, 84 (A0)
+	COPY      V1, V0
+	LW        A0, 0 (V1)
+	LUI       A1, 10
+	OR        A0, A0, A1
+	SW        A0, 0 (V1)
+	LW        RA, 10 (SP)
+	ADDIU     V0, R0, 2
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+#new:ItemList $ItemList_Padlock
+{
+	.Item:KoopaFortressKey
+	00000000
+}
+
+#new:Script $Script_CheckLock_Padlock
+{
+	Call  802D6420 ( )
+	If  *Var[0]  ==  00000000
+		Call  ShowMessageAtScreenPos    ( 001D00D8 000000A0 00000028 ) % It's locked! You can't open it.
+		Call  802D6954 ( )
+		Return
+	EndIf
+	If  *Var[0]  ==  FFFFFFFF
+		Call  802D6954 ( )
+		Return
+	EndIf
+	Call  PlaySoundAt       ( 00000269 00000000 ~Vec3d:Padlock )
+	Set   *Var[0]  *MapVar[.MapVar_Entity_Padlock]
+	Call  $Function_Lock_Support ( )
+	Wait  5`
+	Call  RemoveKeyItemAt   ( *Var[1] )
+	Set   *MF_caf_04_DoorUnlocked  .True
+	Call  802D6954 ( )
+	Unbind
+	Bind  $Script_ExitW .Trigger:WallPressA ~Collider:door_w 00000001 00000000
+	Return
+	End
+	}
 
 #new:Script $Script_ScriptedSpring_Spring
 {
@@ -326,6 +376,14 @@
 
 #new:Script $Script_MakeEntities
 {
+	If  *MF_caf_04_DoorUnlocked  ==  .False
+		Call  MakeEntity    ( .Entity:Padlock ~Vec4d:Padlock 80000000 )
+		Set   *MapVar[.MapVar_Entity_Padlock]  *Var[0]
+		BindLock  $Script_CheckLock_Padlock .Trigger:WallPressA 00004000 $ItemList_Padlock 00000000 00000001
+	Else
+		Bind  $Script_ExitW .Trigger:WallPressA ~Collider:door_w 00000001 00000000
+	EndIf
+	Bind  $Script_ExitE .Trigger:WallPressA ~Collider:door_e 00000001 00000000
 	If  *MF_caf_04_FloorDestroyed  ==  .False
 		Call  MakeEntity    ( .Entity:BoardedFloor ~Vec4d:BoardedFloor 80000000 )
 		Call  AssignScript  ( $Script_BreakFloor_BoardedFloor )
@@ -334,6 +392,7 @@
 	Call  AssignBlockFlag   ( *MF_caf_04_Block1Opened )
 	Call  MakeEntity    ( .Entity:HiddenRedBlock ~Vec4d:Block0 .Item:AttackFXF 80000000 )
 	Call  AssignBlockFlag   ( *MF_caf_04_BadgeObtained )
+	Call  MakeItemEntity    ( .Item:KoopaFortressKey ~Vec3d:Marker .ItemSpawnMode:Fixed_NeverVanish *MF_caf_04_KeyObtained )
 	Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box0 FFFFFFFF 80000000 )
 	Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box1 FFFFFFFF 80000000 )
 	Call  MakeEntity    ( .Entity:WoodenCrate ~Vec4d:Box2 FFFFFFFF 80000000 )
@@ -359,8 +418,6 @@
 
 #new:Script $Script_SetupTexturePan
 {
-	Call     802C9000 	( ~Model:ConveyorDown2 0 )
-	Call     802C9000 	( ~Model:ConveyorUp2 0 )
 	Call     802C9000 	( ~Model:ConveyorLeft2 0 )
 	Call     802C9000 	( ~Model:ConveyorRight2 0 )
 	Call     802C9000 	( ~Model:ConveyorRight3 0 )
@@ -371,6 +428,8 @@
 	Call     802C9000 	( ~Model:ConveyorRight 0 )
 	Call     802C9000 	( ~Model:ConveyorLeftReversed 0 )
 	Call     802C9000 	( ~Model:ConveyorRightReversed 0 )
+	Call     802C9000 	( ~Model:ConveyorDown2 0 )
+	Call     802C9000 	( ~Model:ConveyorUp2 0 )
 	Thread
 		Set  *Var[0] 0
 		Set  *Var[1] 0
@@ -395,11 +454,16 @@
 {
 	Call  GetEntryID    ( *Var[0] )
 	Switch  *Var[0]
-		CaseOR  ==  ~Entry:Entry1
-		CaseOR  ==  ~Entry:Entry0
-			Set   *Var[0] $Script_CreateExitTriggers
-			Exec  EnterWalk
-		EndCaseGroup
+		Case  ==  ~Entry:Entry1
+			Set   *Var[2]  ~Model:door4
+			Set   *Var[3]  .DoorSwing:In
+			Exec  EnterSingleDoor
+			Exec  $Script_CreateExitTriggers
+		Case  ==  ~Entry:Entry0
+			Set   *Var[2]  ~Model:door3
+			Set   *Var[3]  .DoorSwing:In
+			Exec  EnterSingleDoor
+			Exec  $Script_CreateExitTriggers
 		Default
 			Exec  $Script_CreateExitTriggers
 	EndSwitch
@@ -410,8 +474,14 @@
 #new:Script $Script_ExitW
 {
 	SetGroup 0000001B
-	Call     UseExitHeading ( 60` ~Entry:Entry1 )
-	Exec     ExitWalk
+	Call  DisablePlayerInput ( .True )
+	Call  UseDoorSounds ( .DoorSounds:Metal )
+	Set   *Var[0]  ~Entry:Entry1
+	Set   *Var[1]  ~Collider:door_w
+	Set   *Var[2]  ~Model:door4
+	Set   *Var[3]  .DoorSwing:In
+	Exec  ExitSingleDoor
+	Wait  17`
 	Call  GotoMap   ( "caf_01" ~Entry:caf_01:entry_s )
 	Wait  100`
 	Return
@@ -421,9 +491,15 @@
 #new:Script $Script_ExitE
 {
 	SetGroup 0000001B
-	Call     UseExitHeading ( 60` ~Entry:Entry0 )
-	Exec     ExitWalk
-	Call  GotoMap   ( "caf_01" ~Entry:caf_01:entry_s )
+	Call  DisablePlayerInput ( .True )
+	Call  UseDoorSounds ( .DoorSounds:Metal )
+	Set   *Var[0]  ~Entry:Entry0
+	Set   *Var[1]  ~Collider:door_e
+	Set   *Var[2]  ~Model:door3
+	Set   *Var[3]  .DoorSwing:In
+	Exec  ExitSingleDoor
+	Wait  17`
+	Call  GotoMap   ( "caf_05" ~Entry:caf_05:entry_s )
 	Wait  100`
 	Return
 	End
@@ -431,8 +507,6 @@
 
 #new:Script $Script_CreateExitTriggers
 {
-	Bind  $Script_ExitW .Trigger:FloorAbove ~Collider:exit_trigger_w 00000001 00000000
-	Bind  $Script_ExitE .Trigger:FloorAbove ~Collider:exit_trigger_n 00000001 00000000
 	Return
 	End
 }

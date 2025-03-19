@@ -1,0 +1,22 @@
+@ $Script_ExitN {
+    If *MF_caf_02_Door2Unlocked == .False
+        Call DisablePlayerInput ( .True )
+        Call  ShowMessageAtScreenPos    ( 001D016A  160`  40` ) % It won't open. It must be locked from the inside.
+		Call DisablePlayerInput ( .False )
+        Return
+    EndIf
+    
+	SetGroup 0000001B
+	Call  DisablePlayerInput ( .True )
+	Call  UseDoorSounds ( .DoorSounds:Metal )
+	Set   *Var[0]  ~Entry:entry_n
+	Set   *Var[1]  ~Collider:door_n
+	Set   *Var[2]  ~Model:door3
+	Set   *Var[3]  .DoorSwing:Out
+	Exec  ExitSingleDoor
+	Wait  17`
+	Call  GotoMap   ( "caf_02" ~Entry:caf_02:Entry1 )
+	Wait  100`
+	Return
+	End
+}

@@ -50,6 +50,29 @@
 	End
 }
 
+@ $Script_ExitS {
+	If *MF_caf_04_DoorUnlocked == .False
+		Call DisablePlayerInput ( .True )
+        Call  ShowMessageAtScreenPos    ( 001D016A  160`  40` ) % It won't open. It must be locked from the inside.
+		Call DisablePlayerInput ( .False )
+        Return
+    EndIf
+	
+	SetGroup 0000001B
+	Call  DisablePlayerInput ( .True )
+	Call  UseDoorSounds ( .DoorSounds:Metal )
+	Set   *Var[0]  ~Entry:entry_s
+	Set   *Var[1]  ~Collider:door_s
+	Set   *Var[2]  ~Model:door
+	Set   *Var[3]  .DoorSwing:In
+	Exec  ExitSingleDoor
+	Wait  17`
+	Call  GotoMap   ( "caf_04" ~Entry:caf_04:Entry1 )
+	Wait  100`
+	Return
+	End
+}
+
 % Goombario scripting
 
 @ $Script_Callback_EntryE {

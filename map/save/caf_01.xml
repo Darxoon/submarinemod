@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="caf_01" author="unnamed" textures="kmr_tex">
 	<Editor>
-		<Camera pos="20.736799,122.016312,34.150921" pitch="-2.520001" yaw="2.799974"/>
+		<Camera pos="-181.398056,286.175873,194.145493" pitch="28.839970" yaw="359.440125"/>
 		<Camera pos="45.852871,65536.000000,71.191635"/>
 		<Camera pos="65536.000000,-184.869110,37.001236"/>
 		<Camera pos="58.438118,44.345726,65536.000000"/>
@@ -65,7 +65,7 @@
 		</Node>
 	</ModelTree>
 	<ColliderTree>
-		<Node name="Root" id="14">
+		<Node name="Root" id="15">
 			<Node name="Stage" id="1">
 				<Node name="MeshCollider" id="0"/>
 			</Node>
@@ -89,6 +89,7 @@
 			<Node name="CubeCollider" id="11"/>
 			<Node name="Split Collider" id="12"/>
 			<Node name="CubeCollider" id="13"/>
+			<Node name="MeshCollider" id="14"/>
 		</Node>
 	</ColliderTree>
 	<ZoneTree>
@@ -99,7 +100,7 @@
 		</Node>
 	</ZoneTree>
 	<MarkerTree>
-		<Node name="Root" id="11">
+		<Node name="Root" id="12">
 			<Node name="Entrances" id="3">
 				<Node name="entry_n" id="FFFFFFFF"/>
 				<Node name="entry_e" id="0"/>
@@ -119,6 +120,7 @@
 			<Node name="NPC_ExitGoombario" id="E"/>
 			<Node name="Marker" id="F"/>
 			<Node name="Padlock" id="10"/>
+			<Node name="ItemKey2" id="11"/>
 		</Node>
 	</MarkerTree>
 	<LightSets>
@@ -2313,18 +2315,18 @@
 							<Vertex xyz="-300,132,-175" uv="2928,368" rgba="127,127,127,255"/>
 							<Vertex xyz="-300,0,-200" uv="2698,-1744" rgba="95,91,91,255"/>
 							<Vertex xyz="-300,170,-200" uv="2698,976" rgba="115,115,115,255"/>
-							<Vertex xyz="-300,112,-175" uv="3179,-1640" rgba="85,85,85,255"/>
-							<Vertex xyz="-300,136,-175" uv="3179,-2827" rgba="85,85,85,255"/>
-							<Vertex xyz="-400,136,-175" uv="4572,-2827" rgba="0,0,0,255"/>
-							<Vertex xyz="-300,112,-175" uv="3179,-1640" rgba="85,85,85,255"/>
-							<Vertex xyz="-400,136,-175" uv="4572,-2827" rgba="0,0,0,255"/>
-							<Vertex xyz="-400,112,-175" uv="4572,-1640" rgba="0,0,0,255"/>
-							<Vertex xyz="-300,112,-124" uv="3179,-1640" rgba="93,93,93,255"/>
-							<Vertex xyz="-300,112,-175" uv="3179,-2827" rgba="85,85,85,255"/>
-							<Vertex xyz="-400,112,-175" uv="4572,-2827" rgba="0,0,0,255"/>
-							<Vertex xyz="-300,112,-124" uv="3179,-1640" rgba="93,93,93,255"/>
-							<Vertex xyz="-400,112,-175" uv="4572,-2827" rgba="0,0,0,255"/>
-							<Vertex xyz="-400,112,-124" uv="4572,-1640" rgba="0,0,0,255"/>
+							<Vertex xyz="-300,112,-175" uv="3693,-1877" rgba="85,85,85,255"/>
+							<Vertex xyz="-300,136,-175" uv="3693,-2589" rgba="85,85,85,255"/>
+							<Vertex xyz="-400,136,-175" uv="6089,-2589" rgba="0,0,0,255"/>
+							<Vertex xyz="-300,112,-175" uv="3693,-1877" rgba="85,85,85,255"/>
+							<Vertex xyz="-400,136,-175" uv="6089,-2589" rgba="0,0,0,255"/>
+							<Vertex xyz="-400,112,-175" uv="6089,-1877" rgba="0,0,0,255"/>
+							<Vertex xyz="-300,112,-124" uv="3693,-1877" rgba="93,93,93,255"/>
+							<Vertex xyz="-300,112,-175" uv="3693,-2589" rgba="85,85,85,255"/>
+							<Vertex xyz="-400,112,-175" uv="6089,-2589" rgba="0,0,0,255"/>
+							<Vertex xyz="-300,112,-124" uv="3693,-1877" rgba="93,93,93,255"/>
+							<Vertex xyz="-400,112,-175" uv="6089,-2589" rgba="0,0,0,255"/>
+							<Vertex xyz="-400,112,-124" uv="6089,-1877" rgba="0,0,0,255"/>
 							<Vertex xyz="81,218,-200" uv="-2888,1744" rgba="139,139,139,255"/>
 							<Vertex xyz="11,218,-200" uv="-1816,1744" rgba="146,146,146,255"/>
 							<Vertex xyz="11,170,-200" uv="-1816,976" rgba="174,174,174,255"/>
@@ -2431,8 +2433,28 @@
 	</Models>
 	<Colliders>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="Root" id="14"/>
+			<MapObject name="Root" id="15"/>
 			<HitObject type="ROOT"/>
+		</Collider>
+		<Collider ver="0" flags="0" surface="0">
+			<MapObject name="MeshCollider" id="14" hidden="true"/>
+			<HitObject type="HIT"/>
+			<HitMesh ver="0">
+				<TriangleBatch ver="0">
+					<VertexTable>
+						<Vertex xyz="-300,112,-124" uv="3179,-1640" rgba="93,93,93,255"/>
+						<Vertex xyz="-400,112,-175" uv="4572,-2827" rgba="0,0,0,255"/>
+						<Vertex xyz="-400,112,-124" uv="4572,-1640" rgba="0,0,0,255"/>
+						<Vertex xyz="-300,112,-124" uv="3179,-1640" rgba="93,93,93,255"/>
+						<Vertex xyz="-300,112,-175" uv="3179,-2827" rgba="85,85,85,255"/>
+						<Vertex xyz="-400,112,-175" uv="4572,-2827" rgba="0,0,0,255"/>
+					</VertexTable>
+					<TriangleList>
+						<Triangle ijk="0,1,2"/>
+						<Triangle ijk="3,4,5"/>
+					</TriangleList>
+				</TriangleBatch>
+			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
 			<MapObject name="CubeCollider" id="13" hidden="true"/>
@@ -3146,7 +3168,11 @@
 	</Zones>
 	<Markers>
 		<Marker ver="4" type="Root">
-			<MapObject name="Root" id="11"/>
+			<MapObject name="Root" id="12"/>
+		</Marker>
+		<Marker ver="4" type="Entity" pos="-374,113,-148" yaw="0.000000">
+			<MapObject name="ItemKey2" id="11"/>
+			<Entity type="FFFFFFFF" flag="*MF_caf_01_Key2Obtained" item="KoopaFortressKey" itemSpawnMode="Fixed_NeverVanish"/>
 		</Marker>
 		<Marker ver="4" type="Entity" pos="44,8,-197" yaw="0.000000">
 			<MapObject name="Padlock" id="10"/>

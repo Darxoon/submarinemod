@@ -512,12 +512,25 @@
 		Case  ==  ~Entry:EntryPipe
 			Set   *Var[A] $Script_CreateExitTriggers
 			Exec  $Script_EnterVerticalPipe
-		Case  ==  ~Entry:entry_w
+		CaseOR  ==  ~Entry:entry_e
+		CaseOR  ==  ~Entry:entry_w
 			Set   *Var[0] $Script_CreateExitTriggers
 			Exec  EnterWalk
+		EndCaseGroup
 		Default
 			Exec  $Script_CreateExitTriggers
 	EndSwitch
+	Return
+	End
+}
+
+#new:Script $Script_ExitEast
+{
+	SetGroup 0000001B
+	Call     UseExitHeading ( 60` ~Entry:entry_e )
+	Exec     ExitWalk
+	Call  GotoMap   ( "caf_05" ~Entry:caf_05:entry_w )
+	Wait  100`
 	Return
 	End
 }
@@ -554,6 +567,7 @@
 
 #new:Script $Script_CreateExitTriggers
 {
+	Bind  $Script_ExitEast .Trigger:FloorAbove ~Collider:exit_trigger_e 00000001 00000000
 	Bind  $Script_SecretPipeExit .Trigger:FloorTouch ~Collider:deilip 00000001 00000000
 	Bind  $Script_ExitWest .Trigger:FloorAbove ~Collider:exit_trigger_w 00000001 00000000
 	Return

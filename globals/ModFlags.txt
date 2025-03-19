@@ -25,3 +25,9 @@
 018 = MF_caf_02_Door1Unlocked
 019 = MF_caf_02_Door2Unlocked
 01A = MF_caf_01_DoorUnlocked
+01B = MF_caf_01_Key2Obtained
+01C = MF_caf_05_DoorUnlocked
+01D = MF_caf_05_BadgeObtained
+01E = MF_caf_05_FloorDestroyed
+01F = MF_caf_04_DoorUnlocked
+020 = MF_caf_04_KeyObtained

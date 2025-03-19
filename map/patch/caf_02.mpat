@@ -93,7 +93,9 @@
 
 @ $Script_Exit0 {
     If *MF_caf_02_Door1Unlocked == .False
+        Call DisablePlayerInput ( .True )
         Call  ShowMessageAtScreenPos    ( 001D016A  160`  40` ) % It won't open. It must be locked from the inside.
+		Call DisablePlayerInput ( .False )
         Return
     EndIf
     
