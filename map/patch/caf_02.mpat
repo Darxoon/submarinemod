@@ -1,3 +1,5 @@
+#define .NpcID:TerminalHelper 0`
+
 @ $Script_Main {
 	Set  *GB_WorldLocation  .Location:GoombaRoad
 	Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
@@ -8,11 +10,18 @@
 	Exec $Script_SetupMusic
 	Exec $Script_EnterMap
     
+    Call MakeNpcs ( .False $NpcGroupList )
+    
     % disables platform collider
     Call ModifyColliderFlags ( 0` ~Collider:Platform1 00018000 ) % 0 = set bits
     
     If *MF_caf_02_KeyUsed == 1`
         Exec $Script_SetupMovingPlatform
+    EndIf
+    
+    If *MF_caf_02_Door2Unlocked == .True
+        Call SetGroupEnabled ( ~Model:Crates .False )
+        Call ModifyColliderFlags ( 0` ~Collider:CrateCollider 00018000 ) % 0 = set bits
     EndIf
     
     BindLock  $Script_TerminalPressA .Trigger:WallPressA ~Collider:Terminal $ItemList_Terminal 00000000 00000001
@@ -23,9 +32,147 @@
 	End
 }
 
+@ $Script_Callback_Entrance0 {
+    If *MB_Story < .ModProgress:MetKooper
+		Call DisablePlayerInput ( .True )
+		Call DisablePartnerAI ( 00000000 )
+		Exec $Script_MeetKooper
+    EndIf
+	Return
+	End
+}
+
+#new:Script $Script_MeetKooper {
+    Loop 20`
+        Call SetNpcPos ( .Npc:Partner ~Vec3D:Kooper )
+        Wait 1`
+    EndLoop
+    Call PlaySound ( 00000269 ) % Key used
+	Wait 30`
+    Call ShowMessageAtScreenPos ( 002F0003 0` 0` )
+    
+    Wait 40`
+    Call NpcFacePlayer ( .Npc:Partner 00000000 )
+	Thread
+		Call PlaySound ( 00000262 )
+	EndThread
+	Call ShowEmote ( .Npc:Partner .Emote:Exclamation -45` 30` .True 0` 0` 0` 0` )
+	
+	Wait 29`
+    Call SetNpcAnimation ( .Npc:Partner 00020005 )
+    Call NpcMoveTo ( .Npc:Partner ~Vec2D:Kooper_MoveTo 30` )
+	
+    Call SetNpcAnimation ( .Npc:Partner 00020010 )
+    Wait 30`
+	Call SpeakToPlayer ( .Npc:Partner 0002000D 00020003 00000000 002F0004 )
+    
+    Thread
+        Wait 10`
+        Call PlayerMoveTo ( ~Vec2D:Mario_MoveTo 40` )
+        Call PlayerFaceNpc ( .NpcID:TerminalHelper .False )
+    EndThread
+    
+    Call SetNpcAnimation ( .Npc:Partner 00020005 )
+    Call NpcFaceNpc ( .Npc:Partner .NpcID:TerminalHelper 00000000 )
+    Wait 1`
+    Call NpcMoveTo ( .Npc:Partner ~Vec2D:Kooper_MoveTo2 40` )
+	
+    Wait 10`
+    
+	Call EndSpeech ( .Npc:Partner 0002000D 00020003 00000000 )
+    
+    Wait 10`
+    
+	Call EnablePartnerAI ()
+	Call DisablePlayerInput ( .False )
+	
+	Set *MB_Story .ModProgress:MetKooper
+    Return
+    End
+}
+
+@ $Script_Exit0 {
+    If *MF_caf_02_Door1Unlocked == .False
+        Call  ShowMessageAtScreenPos    ( 001D016A  160`  40` ) % It won't open. It must be locked from the inside.
+        Return
+    EndIf
+    
+	SetGroup 0000001B
+	Call  DisablePlayerInput ( .True )
+	Call  UseDoorSounds ( .DoorSounds:Metal )
+	Set   *Var[0]  ~Entry:Entry0
+	Set   *Var[1]  ~Collider:door_l
+	Set   *Var[2]  ~Model:doorL
+	Set   *Var[3]  .DoorSwing:In
+	Exec  ExitSingleDoor
+	Wait  17`
+	Call  GotoMap   ( "caf_01" ~Entry:caf_01:entry_n )
+	Wait  100`
+	Return
+	End
+}
+
+% moving platforms
+
+#new:Script $Script_TerminalPressA {
+    Call DisablePlayerInput ( .True )
+    
+    If *MF_caf_02_KeyUsed == 1`
+        Call ShowMessageAtScreenPos ( 002F0006 0` 0` )
+        Call DisablePlayerInput ( .False )
+        Return
+    EndIf
+    
+    Call ShowMessageAtScreenPos ( 002F0005 0` 0` )
+    
+    SetGroup 0`
+    Call  SetTimeFreezeMode ( 00000001 )
+    Call  ShowKeyChoicePopup ( )
+    Set *MB_Debug *Var0
+    If  *Var0  ==  00000000
+        Call  CloseChoicePopup ( )
+        Call  SetTimeFreezeMode ( 00000000 )
+        Call DisablePlayerInput ( .False )
+        Return
+    EndIf
+    If  *Var0  ==  FFFFFFFF
+        Call  CloseChoicePopup ( )
+        Call  SetTimeFreezeMode ( 00000000 )
+        Call DisablePlayerInput ( .False )
+        Return
+    EndIf
+    Call  FindKeyItem       ( .Item:TubbaCastleKey *Var0 )
+    Call  RemoveKeyItemAt   ( *Var0 )
+    Call  CloseChoicePopup ( )
+    Call  SetTimeFreezeMode ( 00000000 )
+    
+    % cutscene
+    Call DisablePartnerAI ( 00000000 )
+    Call SetNpcAnimation ( .Npc:Partner 00020003 )
+    
+	Call SpeakToPlayer ( .NpcID:TerminalHelper 00010000 00010000 00000000 002F0007 )
+    
+    Set *MF_caf_02_KeyUsed 1`
+    Exec $Script_SetupMovingPlatform
+    
+    Call EndSpeech ( .NpcID:TerminalHelper 00010000 00010000 00000000 )
+    Wait 15`
+    
+    Call SetNpcAnimation ( .Npc:Partner 00020010 )
+    Wait 30`
+    Call SetNpcAnimation ( .Npc:Partner 00020003 )
+	Call SpeakToPlayer ( .Npc:Partner 0002000D 00020003 00000000 002F0008 )
+    
+    Call EnablePartnerAI ()
+    Call DisablePlayerInput ( .False )
+    Return
+    End
+}
+
 #new:Script $Script_SetupMovingPlatform {
     % enable platform collider
     Call ModifyColliderFlags ( 1` ~Collider:Platform1 00018000 ) % 1 = clear bits
+    Set *MapFlag[0] .True
     
     Set *Var2 0`
 	Set *Var3 -200`
@@ -42,46 +189,39 @@
     End
 }
 
-#new:Script $Script_TerminalPressA {
-    % TODO: message box here
-    
-    If *MF_caf_02_KeyUsed == 1`
-        Return
-    EndIf
-    
-    SetGroup 0`
-    Call  SetTimeFreezeMode ( 00000001 )
-    Call  ShowKeyChoicePopup ( )
-    Set *MB_Debug *Var0
-    If  *Var0  ==  00000000
-        % TODO: here too
-        Call  CloseChoicePopup ( )
-        Call  SetTimeFreezeMode ( 00000000 )
-        Return
-    EndIf
-    If  *Var0  ==  FFFFFFFF
-        Call  CloseChoicePopup ( )
-        Call  SetTimeFreezeMode ( 00000000 )
-        Return
-    EndIf
-    Call  FindKeyItem       ( .Item:TubbaCastleKey *Var0 )
-    Call  RemoveKeyItemAt   ( *Var0 )
-    Call  CloseChoicePopup ( )
-    Call  SetTimeFreezeMode ( 00000000 )
-    
-    % cutscene
-    
-    Set *MF_caf_02_KeyUsed 1`
-    Exec $Script_SetupMovingPlatform
-    Return
-    End
-}
-
 #new:ItemList $ItemList_Terminal
 {
 	.Item:TubbaCastleKey
 	00000000
 }
+
+% Terminal helper NPC
+#new:NpcGroupList $NpcGroupList {
+	00000001 $NpcGroup_TerminalHelper      00000000
+	00000000 00000000 00000000
+}
+
+#new:NpcGroup $NpcGroup_TerminalHelper {
+	.NpcID:TerminalHelper $NpcSettings_TerminalHelper ~Vec3f:NpcTerminalHelper % -50 0 -30
+	00002809 $Script_Init_TerminalHelper 00000000 00000000 00000000
+	~NoDrops
+	~Movement:NpcTerminalHelper
+	~AnimationTable:NpcTerminalHelper % .Sprite:WorldTerminalHelper
+	00000000 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcSettings $NpcSettings_TerminalHelper
+{
+	00000000 00160018 00000000 00000000 00000000 00000000 00000000 00000000
+	00000000 00000000 00630010
+}
+
+#new:Script $Script_Init_TerminalHelper {
+	Return
+	End
+}
+
+% Switches and colored platforms
 
 #new:Script $Script_UpdatePlatforms {
     If *MF_RedSwitchHit == .True
@@ -121,7 +261,9 @@
         
         Thread
             Wait 1`
-            Call ModifyColliderFlags ( 1` ~Collider:Platform1 00018000 ) % 1 = clear bits
+            If *MapFlag[0] == .True
+                Call ModifyColliderFlags ( 1` ~Collider:Platform1 00018000 ) % 1 = clear bits
+            EndIf
             Call ModifyColliderFlags ( 1` ~Collider:Platform3 00018000 ) % 1 = clear bits
         EndThread
     EndIf
@@ -131,6 +273,19 @@
 
 @ $Script_EVT_RedSwitch
 {
+    If *MF_caf_02_Door1Unlocked == .False
+        Call DisablePlayerInput ( .True )
+        Thread
+            ExecWait $Script_PanCamera_Entry0Cam
+            Wait 15`
+            Call PlaySound ( 00000269 ) % Key used
+            Wait 25`
+            Call ResetCam ( .Cam:Default *Fixed[90.0] )
+            Call DisablePlayerInput ( .False )
+            Set *MF_caf_02_Door1Unlocked .True
+        EndThread
+    EndIf
+    
     If *MF_RedSwitchHit == .True
         Set *MF_RedSwitchHit .False
     Else
@@ -143,6 +298,11 @@
 
 @ $Script_EVT_BlueSwitch
 {
+    If *MF_caf_02_Door2Unlocked == .False
+        Call DisablePlayerInput ( .True )
+        Bind $Script_BlueSwitch_RemoveCrates .Trigger:FloorTouch ~Collider:MainFloor 1 0
+    EndIf
+    
     If *MF_BlueSwitchHit == .True
         Set *MF_BlueSwitchHit .False
     Else
@@ -151,4 +311,19 @@
     Exec $Script_UpdatePlatforms
 	Return
 	End
+}
+
+#new:Script $Script_BlueSwitch_RemoveCrates {
+    Unbind
+    Wait 15`
+    ExecWait $Script_PanCamera_Entry1Cam
+    Wait 20`
+    Call SetGroupEnabled ( ~Model:Crates .False )
+    Call ModifyColliderFlags ( 0` ~Collider:CrateCollider 00018000 ) % 0 = set bits
+    Wait 20`
+    Call ResetCam ( .Cam:Default *Fixed[90.0] )
+    Call DisablePlayerInput ( .False )
+    Set *MF_caf_02_Door2Unlocked .True
+    Return
+    End
 }

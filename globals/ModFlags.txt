@@ -22,3 +22,6 @@
 015 = MF_caf_04_GiantChest
 016 = MF_caf_04_GratingDestroyed
 017 = MF_caf_01_KeyObtained
+018 = MF_caf_02_Door1Unlocked
+019 = MF_caf_02_Door2Unlocked
+01A = MF_caf_01_DoorUnlocked

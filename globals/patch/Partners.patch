@@ -31,7 +31,7 @@
     LIO t0, 8010F290
     
     ORI t1, R0, 1
-    ORI t1, R0, 2
+    ORI t2, R0, 2
     
     SB t1, 0024 (t0) % Kooper Get
     SB t1, 0025 (t0) % Kooper level

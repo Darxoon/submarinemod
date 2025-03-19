@@ -1,0 +1,11 @@
+#string:25:0A7
+{
+	Opens a locked door in the[BR]
+	submarine.[End]
+}
+
+#string:25:0A9
+{
+	Grants admin access at[BR]
+	the submarine's Terminal (?).[End]
+}

@@ -45,3 +45,93 @@ at what is going on there.
 [Wait][End]
 }
 
+#message:2F:002
+{
+[Style Left]
+[Pause:3].[Pause:3].[Pause:3].[Pause:3]Actually[Pause:5].[Pause:5].[Pause:5].[Pause:5][br]
+[Wait][Next]
+Something about that room makes[br]
+me feel uneasy.[Pause:5] I think it would[br]
+be better for you to go in there[br]
+yourself[br]
+[Wait][Next]
+while I[Pause:1].[Pause:1].[Pause:1].[Pause:8] uh[Pause:1].[Pause:1].[Pause:1].[Pause:10] make sure[br]
+everything is still okay here.[br]
+Have fun in there.[br]
+[Wait][End]
+}
+
+#message:2F:003
+{
+[Style Narrate]
+Goombario locked the door again.
+[Wait][End]
+}
+
+#message:2F:004
+{
+[Style Left]
+Mario, it's great to see you![br]
+I've been worried for everyone[br]
+else on here. Are you alright?[br]
+[Wait][Next]
+I wanted to check on other[br]
+people myself, but unfortunately[br]
+the door has been locked by[br]
+something.[br]
+[Wait][Next]
+By the way, look at this weird[br]
+machine.[Yield] It made some strange[br]
+noises just a moment ago.[br]
+[Wait][END]
+}
+
+#message:2F:005
+{
+[Style Inspect]
+SYSTEM MALFUNCTION.[br]
+INSERT KEY FOR ADMIN ACCESS.[br]
+[Wait][END]
+}
+
+#message:2F:006
+{
+[Style Inspect]
+SYSTEM OPERATIONAL[br]
+[br]
+SHOWING LOGS.TXT:[br]
+[Wait][Next]
+SHUTTING DOWN SUBSYSTEM...[br]
+RESTARTING DEVICE...[br]
+INITIALIZING MEMORY...[br]
+RESETTING SERVOS...[br]
+[Wait][Next]
+INITIALIZATION COMPLETE[br]
+SETTING UP MOVING PLATFORMS...[br]
+ENTERING MAIN LOOP...[br]
+WAITING FOR CHANGES...[br]
+[Wait][End]
+}
+
+#message:2F:007
+{
+[Style Inspect]
+ADMIN ACCESS GRANTED.[br]
+[Wait][Next]
+...[br]
+[Wait][Next]
+RESETTING SYSTEM IN 3[Pause:3].[Pause:3].[Pause:3].[Pause:3] 2[Pause:3].[Pause:3].[Pause:3].[Pause:3] 1[Pause:3].[Pause:3].[Pause:3].[Pause:3][br]
+[Wait][Next]
+LOADING...[br][Yield]
+[Wait][END]
+}
+
+#message:2F:008
+{
+[Style Left]
+Yay, you got the thing working[br]
+again! I had no idea you were[br]
+this good at computers, Mario.[br]
+[Wait][END]
+}
+

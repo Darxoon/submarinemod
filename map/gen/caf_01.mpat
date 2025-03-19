@@ -16,7 +16,56 @@
 	~Vec4f:entry_w
 }
 
+#define .MapVar_Entity_Padlock 0
 #define .AreaFlag_Entity_Switch1 0
+
+#new:Function $Function_Lock_Support
+{
+	ADDIU     SP, SP, FFE8
+	SW        RA, 10 (SP)
+	JAL       ~Func:get_entity_by_index
+	LW        A0, 84 (A0)
+	COPY      V1, V0
+	LW        A0, 0 (V1)
+	LUI       A1, 10
+	OR        A0, A0, A1
+	SW        A0, 0 (V1)
+	LW        RA, 10 (SP)
+	ADDIU     V0, R0, 2
+	JR        RA
+	ADDIU     SP, SP, 18
+}
+
+#new:ItemList $ItemList_Padlock
+{
+	.Item:KoopaFortressKey
+	00000000
+}
+
+#new:Script $Script_CheckLock_Padlock
+{
+	Call  802D6420 ( )
+	If  *Var[0]  ==  00000000
+		Call  ShowMessageAtScreenPos    ( 001D00D8 000000A0 00000028 ) % It's locked! You can't open it.
+		Call  802D6954 ( )
+		Return
+	EndIf
+	If  *Var[0]  ==  FFFFFFFF
+		Call  802D6954 ( )
+		Return
+	EndIf
+	Call  PlaySoundAt       ( 00000269 00000000 ~Vec3d:Padlock )
+	Set   *Var[0]  *MapVar[.MapVar_Entity_Padlock]
+	Call  $Function_Lock_Support ( )
+	Wait  5`
+	Call  RemoveKeyItemAt   ( *Var[1] )
+	Set   *MF_caf_01_DoorUnlocked  .True
+	Call  802D6954 ( )
+	Unbind
+	Bind  $Script_ExitN .Trigger:WallPressA ~Collider:door_n 00000001 00000000
+	Return
+	End
+	}
 
 #new:Script_Main $Script_Main
 {
@@ -45,7 +94,15 @@
 
 #new:Script $Script_MakeEntities
 {
-	Call  MakeEntity    ( .Entity:SavePoint ~Vec4d:Marker 80000000 )
+	Bind  $Script_ExitS .Trigger:WallPressA ~Collider:door_s 00000001 00000000
+	If  *MF_caf_01_DoorUnlocked  ==  .False
+		Call  MakeEntity    ( .Entity:Padlock ~Vec4d:Padlock 80000000 )
+		Set   *MapVar[.MapVar_Entity_Padlock]  *Var[0]
+		BindLock  $Script_CheckLock_Padlock .Trigger:WallPressA 00004000 $ItemList_Padlock 00000000 00000001
+	Else
+		Bind  $Script_ExitN .Trigger:WallPressA ~Collider:door_n 00000001 00000000
+	EndIf
+	Call  MakeEntity    ( .Entity:SavePoint ~Vec4d:SaveBlock 80000000 )
 	Call  MakeEntity    ( .Entity:MultiCoinBrick ~Vec4d:Block1 80000000 )
 	Call  AssignBlockFlag   ( *MF_caf_01_Block1Opened )
 	Call  MakeEntity    ( .Entity:HiddenYellowBlock ~Vec4d:Block4 .Item:AttackFXA 80000000 )
@@ -81,11 +138,16 @@
 			Exec  $Script_Callback_EntryE
 			Set   *Var[0] $Script_CreateExitTriggers
 			Exec  EnterWalk
-		CaseOR  ==  ~Entry:entry_s
-		CaseOR  ==  ~Entry:entry_n
-			Set   *Var[0] $Script_CreateExitTriggers
-			Exec  EnterWalk
-		EndCaseGroup
+		Case  ==  ~Entry:entry_s
+			Set   *Var[2]  ~Model:door
+			Set   *Var[3]  .DoorSwing:In
+			Exec  EnterSingleDoor
+			Exec  $Script_CreateExitTriggers
+		Case  ==  ~Entry:entry_n
+			Set   *Var[2]  ~Model:door3
+			Set   *Var[3]  .DoorSwing:Out
+			Exec  EnterSingleDoor
+			Exec  $Script_CreateExitTriggers
 		Default
 			Exec  $Script_CreateExitTriggers
 	EndSwitch
@@ -96,9 +158,32 @@
 #new:Script $Script_ExitS
 {
 	SetGroup 0000001B
-	Call     UseExitHeading ( 60` ~Entry:entry_s )
-	Exec     ExitWalk
+	Call  DisablePlayerInput ( .True )
+	Call  UseDoorSounds ( .DoorSounds:Metal )
+	Set   *Var[0]  ~Entry:entry_s
+	Set   *Var[1]  ~Collider:door_s
+	Set   *Var[2]  ~Model:door
+	Set   *Var[3]  .DoorSwing:In
+	Exec  ExitSingleDoor
+	Wait  17`
 	Call  GotoMap   ( "caf_04" ~Entry:caf_04:Entry1 )
+	Wait  100`
+	Return
+	End
+}
+
+#new:Script $Script_ExitN
+{
+	SetGroup 0000001B
+	Call  DisablePlayerInput ( .True )
+	Call  UseDoorSounds ( .DoorSounds:Metal )
+	Set   *Var[0]  ~Entry:entry_n
+	Set   *Var[1]  ~Collider:door_n
+	Set   *Var[2]  ~Model:door3
+	Set   *Var[3]  .DoorSwing:Out
+	Exec  ExitSingleDoor
+	Wait  17`
+	Call  GotoMap   ( "caf_02" ~Entry:caf_02:Entry0 )
 	Wait  100`
 	Return
 	End
@@ -115,22 +200,9 @@
 	End
 }
 
-#new:Script $Script_ExitN
-{
-	SetGroup 0000001B
-	Call     UseExitHeading ( 60` ~Entry:entry_n )
-	Exec     ExitWalk
-	Call  GotoMap   ( "caf_02" ~Entry:caf_02:Entry0 )
-	Wait  100`
-	Return
-	End
-}
-
 #new:Script $Script_CreateExitTriggers
 {
-	Bind  $Script_ExitS .Trigger:FloorAbove ~Collider:exit_trigger_s 00000001 00000000
 	Bind  $Script_ExitE .Trigger:FloorAbove ~Collider:exit_trigger_e 00000001 00000000
-	Bind  $Script_ExitN .Trigger:FloorAbove ~Collider:exit_trigger_n 00000001 00000000
 	Return
 	End
 }
