@@ -335,3 +335,113 @@ room. But I don't know.
 [Wait][End]
 }
 
+#message:2F:01A
+{
+[Style Left]
+Oh, this looks like it's our[BR]
+submarine's engine![BR]
+Let me see[Pause:3].[Pause:3].[Pause:3].[Pause:3][BR]
+[Wait][Next]
+It looks there are parts[BR]
+missing! That might have caused[BR]
+a lot of the issues.[BR]
+[Wait][Next]
+From what I can tell, we need[BR]
+these 5 parts:[BR]
+1 Gear, 1 Screw, 1 Belt and[BR]
+some Oil.[BR]
+[Wait][Next]
+Let's try obtaining these![BR]
+[Wait][Next]
+Finally having our entire team[BR]
+together will help a lot, try[BR]
+using everyone's abilities![br]
+[Wait][Next]
+Also, didn't you get cool better[BR]
+boots with Bow? Surely they will[BR]
+also be useful.
+[Wait][END]
+}
+
+#message:2F:01B
+{
+[Style Left]
+I quickly have to go check[BR]
+something, go ahead without me![BR]
+[Wait][END]
+}
+
+#message:2F:01C
+{
+[Style Left]
+Maybe we should reunite[BR]
+everyone in our team before[BR]
+entering that first.[BR]
+[Wait][END]
+}
+
+#message:2F:01D
+{
+Gear[END]
+}
+
+#message:2F:01E
+{
+Screw[END]
+}
+
+#message:2F:01F
+{
+Belt[END]
+}
+
+#message:2F:020
+{
+Oil[END]
+}
+
+#message:2F:021
+{
+[Style Left]
+Hahaha, my plan is working!
+[Wait][END]
+}
+
+#message:2F:022
+{
+[Style Inspect]
+Thank you for playing my mod![BR]
+This was literally all made in[BR]
+1 week before the deadline.[BR]
+I hope you liked it regardless. :)[BR]
+[Wait][Next]
+I was originally intending to have[BR]
+a boss fight at the end but that[BR]
+did not work out for time reasons.[BR]
+[Wait][Next]
+In general, the ending had to be[BR]
+rushed together quite a lot in[BR]
+the last few hours before the[BR]
+deadline.[BR]
+[Wait][Next]
+(I am writing this at almost 7 am,[BR]
+less than 2 hours before the[BR]
+deadline :D )[BR]
+[Wait][Next]
+---------- Credits ----------[Wait][BR]
+[BR]
+Darxoon (me) - Creator[BR]
+[Wait][Next]
+[Color:08]Shayla/Snakemouth Den[Color:00] - Technical[BR]
+and creative assistance[BR]
+[Color:03]ShyBlookster137[Color:00] - Distracting me[BR]
+with a Mario fangame once[BR]
+[Wait][Next]
+Star Haven for hosting this jam[BR]
+and having a lot of other cool[BR]
+people![BR]
+[Wait][Next]
+And you for playing!
+[Wait][END]
+}
+

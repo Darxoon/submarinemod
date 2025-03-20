@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="caf_02" author="unnamed" background="arn_bg" textures="kmr_tex">
 	<Editor>
-		<Camera pos="-36.110592,139.528046,290.933014" pitch="2.360003" yaw="5.280004"/>
+		<Camera pos="-23.720108,373.932404,74.583107" pitch="51.199997" yaw="0.160092"/>
 		<Camera pos="-74.595428,65536.000000,5.471440"/>
 		<Camera pos="65536.000000,106.000000,-47.000000"/>
 		<Camera pos="-86.674545,-51.064327,65536.000000"/>
@@ -120,7 +120,7 @@
 		</Node>
 	</ZoneTree>
 	<MarkerTree>
-		<Node name="Root" id="C">
+		<Node name="Root" id="E">
 			<Node name="Entrances" id="1">
 				<Node name="Entry0" id="FFFFFFFF"/>
 				<Node name="Entry1" id="0"/>
@@ -135,6 +135,8 @@
 			<Node name="Entry1Cam" id="9"/>
 			<Node name="Kooper_MoveTo2" id="A"/>
 			<Node name="Mario_MoveTo" id="B"/>
+			<Node name="Block" id="C"/>
+			<Node name="BadgeBlock" id="D"/>
 		</Node>
 	</MarkerTree>
 	<LightSets>
@@ -4006,7 +4008,15 @@
 	</Zones>
 	<Markers>
 		<Marker ver="4" type="Root">
-			<MapObject name="Root" id="C"/>
+			<MapObject name="Root" id="E"/>
+		</Marker>
+		<Marker ver="4" type="Entity" pos="246,60,-119" yaw="0.000000">
+			<MapObject name="BadgeBlock" id="D"/>
+			<Entity type="802EA5D0" flag="*MF_caf_02_BadgeObtained" callback="false" item="AttackFXE"/>
+		</Marker>
+		<Marker ver="4" type="Entity" pos="201,60,-119" yaw="0.000000">
+			<MapObject name="Block" id="C"/>
+			<Entity type="802EA588" flag="*MF_caf_02_ItemObtained" callback="false" item="Screw"/>
 		</Marker>
 		<Marker ver="4" type="Position" pos="-173,0,-102" yaw="0.000000">
 			<MapObject name="Mario_MoveTo" id="B"/>
@@ -4016,7 +4026,7 @@
 		</Marker>
 		<Marker ver="4" type="CamTarget" pos="-508,0,30" yaw="0.000000">
 			<MapObject name="Entry1Cam" id="9"/>
-			<CamTarget sampleZone="true" generatePan="true" panSpeed="1.500000" overrideLength="450.000000"/>
+			<CamTarget sampleZone="true" generatePan="true" panSpeed="1.500000" overrideLength="450.000000" overrideAngles="15.000000,-6.000000"/>
 		</Marker>
 		<Marker ver="4" type="CamTarget" pos="-450,0,30" yaw="0.000000">
 			<MapObject name="Entry0Cam" id="8"/>

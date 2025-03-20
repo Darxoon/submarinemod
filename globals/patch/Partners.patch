@@ -39,6 +39,16 @@
     ORI v0, r0, 2
 }
 
+#export:Function $Function_RemoveGoombario {
+    LIO t0, 8010F290
+    
+    SB R0, 001C (t0) % Goombario Get
+    SB R0, 001D (t0) % Goombario level
+    
+    JR RA
+    ORI v0, r0, 2
+}
+
 #export:Function $Function_EnableKooper {
     LIO t0, 8010F290
     

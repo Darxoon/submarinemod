@@ -1,0 +1,160 @@
+@ $Script_Main {
+	Set  *GB_WorldLocation  .Location:GoombaRoad
+	Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
+	Call SetCamEnabled      ( .Cam:Default .True
+	Call SetCamLeadPlayer   ( .Cam:Default .False )
+	Exec $Script_MakeEntities
+	Exec $Script_SetupMusic
+	Exec $Script_SetDarkRoom
+	Exec $Script_EnterMap
+    
+    Exec $Script_UpdateSwitches
+    
+    If *MF_RedSwitchHit == .False
+        Exec $Script_SetupPlatform
+    EndIf
+    
+    Bind $Script_EngineCutscene .Trigger:FloorTouch ~Collider:MainEngineFloor 1 0
+    BindLock $Script_Terminal .Trigger:WallPressA ~Collider:EngineTerminal $ItemList_Terminal 00000000 00000001
+    
+	Return
+	End
+}
+
+#new:Script $Script_UpdateSwitches {
+    % Disable everything except grating collider
+    Call SetGroupEnabled ( ~Model:Platform1 .False )
+    Call SetGroupEnabled ( ~Model:Platform1_deactivated .False )
+    Call SetGroupEnabled ( ~Model:BlueGrating .False )
+    Call SetGroupEnabled ( ~Model:BlueGrating_deactivated .False )
+    Call ModifyColliderFlags ( 0` ~Collider:Platform1 00018000 )
+    
+    Loop
+        Call GetCurrentPartner ( *Var0 )
+        If *Var0 == .Partner:Watt
+            BreakLoop
+        EndIf
+        Wait 1`
+    EndLoop
+    
+    If *MF_RedSwitchHit == .True
+        Call SetGroupEnabled ( ~Model:Platform1 .False )
+        Call SetGroupEnabled ( ~Model:Platform1_deactivated .True )
+		Call ModifyColliderFlags ( 0` ~Collider:Platform1 00018000 )
+    Else
+        Call SetGroupEnabled ( ~Model:Platform1 .True )
+        Call SetGroupEnabled ( ~Model:Platform1_deactivated .False )
+		Call ModifyColliderFlags ( 1` ~Collider:Platform1 00018000 )
+    EndIf
+    
+    If *MF_BlueSwitchHit == .True
+        Call SetGroupEnabled ( ~Model:BlueGrating .False )
+        Call SetGroupEnabled ( ~Model:BlueGrating_deactivated .True )
+		Call ModifyColliderFlags ( 0` ~Collider:GratingCollider 00018000 )
+    Else
+        Call SetGroupEnabled ( ~Model:BlueGrating .True )
+        Call SetGroupEnabled ( ~Model:BlueGrating_deactivated .False )
+		Call ModifyColliderFlags ( 1` ~Collider:GratingCollider 00018000 )
+    EndIf
+    Return
+    End
+}
+
+#new:Script $Script_SetupPlatform {
+	Set *Var2 0`
+	Set *Var3 113`
+    Set *Var4 1`
+	Set *Var5 ~Collider:unreachable
+	Set *Var6 80`
+	Set *Var7 60`
+	Set *Var8 ~Model:Platform1_floor
+	Set *Var9 ~Model:Platform1
+	Set *VarA ~Collider:Platform1
+    Exec $Script_MovePlatform
+    Return
+    End
+}
+
+#new:Script $Script_EngineCutscene {
+    Unbind
+    
+    If *MF_caf_06_EngineCutscenePlayed == .True
+        Return
+    EndIf
+    
+    Set *MF_caf_06_EngineCutscenePlayed .True
+    Call DisablePlayerInput ( .True )
+    
+    Call PlayerMoveTo ( ~Vec2D:Mario_MoveTo 40` )
+    
+    Call GetCurrentPartnerID ( *Var0 )
+    If *Var0 != .Partner:Watt
+        Call BringPartnerOut ( .Partner:Watt )
+        Set *Var1 .True
+    Else
+        Set *Var1 .False
+    EndIf
+    
+    Wait 20`
+	Call SpeakToPlayer ( .Npc:Partner 00060004 00060001 00000000 002F001A )
+    
+    If *Var1 == .True
+        Call PutPartnerAway ()
+    EndIf
+    
+    Call DisablePlayerInput ( .False )
+    Return
+    End
+}
+
+#new:ItemList $ItemList_Terminal
+{
+	.Item:Gear
+	.Item:Screw
+	.Item:Belt
+	.Item:Oil
+	00000000
+}
+
+#new:Script $Script_Terminal {
+    SetGroup 0`
+    Call  SetTimeFreezeMode ( 00000001 )
+    Call  ShowKeyChoicePopup ( )
+    Set *MB_Debug *Var0
+    If  *Var0  ==  00000000
+        Call  CloseChoicePopup ( )
+        Call  SetTimeFreezeMode ( 00000000 )
+        Call DisablePlayerInput ( .False )
+        Return
+    EndIf
+    If  *Var0  ==  FFFFFFFF
+        Call  CloseChoicePopup ( )
+        Call  SetTimeFreezeMode ( 00000000 )
+        Call DisablePlayerInput ( .False )
+        Return
+    EndIf
+    
+    Call  FindKeyItem       ( *Var0 *Var1 )
+    Call RemoveKeyItemAt ( *Var1 )
+    Call  CloseChoicePopup ( )
+    Call  SetTimeFreezeMode ( 00000000 )
+    Add *MB_MachinePartsGiven 1`
+    
+    If *MB_MachinePartsGiven >= 4`
+        Call DisablePlayerInput ( .True )
+        
+        Call  ShakeCam  ( .Cam:Default 00000000 200` *Fixed[1.0] )
+        Wait 20`
+        Thread
+            Call PlaySound ( 00000262 )
+        EndThread
+        Call GetPlayerPos ( *Var0 *Var1 *Var2 )
+        Call ShowEmote ( 0` .Emote:Exclamation -45` 30` .False *Var0 *Var1 *Var2 0` )
+        Wait 30`
+        Call GotoMap ( "caf_05" ~Entry:caf_05:Aaa )
+    EndIf
+    Return
+    End
+}
+

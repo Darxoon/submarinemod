@@ -575,6 +575,7 @@
 		<Map name="caf_03" nickname="Hallway"/>
 		<Map name="caf_04" nickname="Storage room"/>
 		<Map name="caf_05" nickname="Deck/Control Room"/>
+		<Map name="caf_06" nickname="Engine room"/>
 	</Area>
 	<Area name="old" nickname="Old cosmicjam stuff">
 		<Map name="old_00" nickname="Space Station"/>

@@ -5,7 +5,7 @@
 	[MainScript] $Script_Main
 	[Background] 80200000
 	[EntryList] $EntryList
-	[EntryCount] 6
+	[EntryCount] 7
 }
 
 #new:EntryList $EntryList
@@ -16,6 +16,7 @@
 	~Vec4f:Mario_MoveTo_Goombario
 	~Vec4f:Mario_MoveTo_Kooper
 	~Vec4f:EntryWatt
+	~Vec4f:Aaa
 }
 
 #define .MapVar_Entity_Padlock 0
@@ -115,8 +116,36 @@
 		Call  AssignScript  ( $Script_BreakFloor_BoardedFloor )
 	EndIf
 	Call  MakeEntity    ( .Entity:SavePoint ~Vec4d:SaveBlock 80000000 )
+	Call  MakeEntity    ( .Entity:HiddenYellowBlock ~Vec4d:ItemBlock .Item:Oil 80000000 )
+	Call  AssignBlockFlag   ( *MF_caf_05_ItemObtained )
 	Call  MakeEntity    ( .Entity:HiddenRedBlock ~Vec4d:RedBlock .Item:AttackFXB 80000000 )
 	Call  AssignBlockFlag   ( *MF_caf_05_BadgeObtained )
+	Return
+	End
+}
+
+#new:Script $Script_PanCamera_AaaCam
+{
+	Call  UseSettingsFrom   ( .Cam:Default 368` 40` 174` )
+	Call  SetCamPitch       ( .Cam:Default *Fixed[20.000000] *Fixed[-6.000000] )
+	Call  SetCamDistance    ( .Cam:Default 450` )
+	Call  SetPanTarget      ( .Cam:Default ~Vec3d:AaaCam )
+	Call  SetCamSpeed       ( .Cam:Default *Fixed[90.000000] )
+	Call  PanToTarget       ( .Cam:Default 00000000 00000001 )
+	Call  WaitForCam        ( .Cam:Default *Fixed[1.0] )
+	Return
+	End
+}
+
+#new:Script $Script_PanCamera_AaaCam2
+{
+	Call  UseSettingsFrom   ( .Cam:Default 458` 40` 174` )
+	Call  SetCamPitch       ( .Cam:Default *Fixed[20.000000] *Fixed[-6.000000] )
+	Call  SetCamDistance    ( .Cam:Default 300` )
+	Call  SetPanTarget      ( .Cam:Default ~Vec3d:AaaCam2 )
+	Call  SetCamSpeed       ( .Cam:Default *Fixed[90.000000] )
+	Call  PanToTarget       ( .Cam:Default 00000000 00000001 )
+	Call  WaitForCam        ( .Cam:Default *Fixed[1.0] )
 	Return
 	End
 }
@@ -154,6 +183,8 @@
 			Set   *Var[3]  .DoorSwing:Out
 			Exec  EnterSingleDoor
 			Exec  $Script_CreateExitTriggers
+		Case  ==  ~Entry:Aaa
+			Exec  $Script_Callback_Aaaa
 		Default
 			Exec  $Script_CreateExitTriggers
 	EndSwitch
@@ -220,6 +251,12 @@
 }
 
 #new:Script $Script_Callback_DoorN
+{
+	Return
+	End
+}
+
+#new:Script $Script_Callback_Aaaa
 {
 	Return
 	End

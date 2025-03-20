@@ -280,15 +280,18 @@
 		Call RemoveNpc ( .Npc:Self )
 		Return
 	EndIf
-	If *MF_caf_01_GoombarioObtainedPermanently == .False
-		Call RemoveNpc ( .Npc:Self )
-		Return
+	If *MB_Story < .ModProgress:GoombarioDeparted
+		If *MF_caf_01_GoombarioObtainedPermanently == .False
+			Call RemoveNpc ( .Npc:Self )
+			Return
+		EndIf
+		If *MF_caf_05_PartnersRegained == .True
+			Call RemoveNpc ( .Npc:Self )
+			Return
+		EndIf
+		
+		Call BindNpcInteract ( .Npc:Self $Script_Interact_Goombario )
 	EndIf
-	If *MF_caf_05_PartnersRegained == .True
-		Call RemoveNpc ( .Npc:Self )
-		Return
-	EndIf
-	Call BindNpcInteract ( .Npc:Self $Script_Interact_Goombario )
 	Return
 	End
 }
@@ -357,6 +360,15 @@
 	Call SpeakToPlayer ( .NpcID:Watt 00060004 00060001 00000000 002F0014 )
 	Call $Function_EnableWatt (  )
 	Call GotoMap ( "caf_05" ~Entry:EntryWatt )
+	Return
+	End
+}
+
+@ $Script_Callback_Aaaa {
+	Call SetNpcPos ( .NpcID:Goombario ~Vec3D:Seat )
+    ExecWait $Script_PanCamera_AaaCam
+	
+	Call SpeakToPlayer ( .NpcID:Goombario 00010008 00010001 00000000 002F0021 )
 	Return
 	End
 }

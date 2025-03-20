@@ -388,7 +388,7 @@
 		Call  MakeEntity    ( .Entity:BoardedFloor ~Vec4d:BoardedFloor 80000000 )
 		Call  AssignScript  ( $Script_BreakFloor_BoardedFloor )
 	EndIf
-	Call  MakeEntity    ( .Entity:HiddenYellowBlock ~Vec4d:Block1 .Item:Mushroom 80000000 )
+	Call  MakeEntity    ( .Entity:HiddenYellowBlock ~Vec4d:Block1 .Item:Belt 80000000 )
 	Call  AssignBlockFlag   ( *MF_caf_04_Block1Opened )
 	Call  MakeEntity    ( .Entity:HiddenRedBlock ~Vec4d:Block0 .Item:AttackFXF 80000000 )
 	Call  AssignBlockFlag   ( *MF_caf_04_BadgeObtained )

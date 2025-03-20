@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="caf_05" author="unnamed" background="arn_bg" textures="kmr_tex">
 	<Editor>
-		<Camera pos="-132.059647,94.036507,107.310173" pitch="54.160061" yaw="9.920038"/>
-		<Camera pos="-123.652588,65536.000000,43.468945"/>
-		<Camera pos="65536.000000,66.540031,-203.273331"/>
+		<Camera pos="-28.548857,140.890610,193.046951" pitch="16.959997" yaw="44.480122"/>
+		<Camera pos="15.317402,65536.000000,87.244286"/>
+		<Camera pos="65536.000000,12.226967,-141.460983"/>
 		<Camera pos="-121.204681,-38.099998,65536.000000"/>
 	</Editor>
 	<ModelTree>
@@ -46,7 +46,7 @@
 		</Node>
 	</ModelTree>
 	<ColliderTree>
-		<Node name="Root" id="D">
+		<Node name="Root" id="E">
 			<Node name="Stage" id="1">
 				<Node name="MeshCollider" id="0"/>
 			</Node>
@@ -63,18 +63,21 @@
 			<Node name="CubeCollider" id="A"/>
 			<Node name="MeshCollider" id="B"/>
 			<Node name="MeshCollider" id="C"/>
+			<Node name="MeshCollider" id="D"/>
 		</Node>
 	</ColliderTree>
 	<ZoneTree>
-		<Node name="Root" id="4">
+		<Node name="Root" id="6">
 			<Node name="main_cam" id="0"/>
 			<Node name="platform_cam" id="1"/>
 			<Node name="bed_cam" id="2"/>
 			<Node name="watt_cam" id="3"/>
+			<Node name="aaaaaaaaaa" id="4"/>
+			<Node name="aaaaaaaaaa2" id="5"/>
 		</Node>
 	</ZoneTree>
 	<MarkerTree>
-		<Node name="Root" id="12">
+		<Node name="Root" id="17">
 			<Node name="Entrances" id="2">
 				<Node name="entry_n" id="FFFFFFFF"/>
 				<Node name="entry_s" id="0"/>
@@ -95,6 +98,11 @@
 			<Node name="Watt_Position" id="F"/>
 			<Node name="EntryWatt" id="10"/>
 			<Node name="NPC_Watt" id="11"/>
+			<Node name="ItemBlock" id="12"/>
+			<Node name="AaaCam" id="13"/>
+			<Node name="Aaa" id="14"/>
+			<Node name="AaaCam2" id="15"/>
+			<Node name="Seat" id="16"/>
 		</Node>
 	</MarkerTree>
 	<LightSets>
@@ -1612,8 +1620,28 @@
 	</Models>
 	<Colliders>
 		<Collider ver="0" flags="0" surface="0">
-			<MapObject name="Root" id="D"/>
+			<MapObject name="Root" id="E"/>
 			<HitObject type="ROOT"/>
+		</Collider>
+		<Collider ver="0" flags="0" surface="0">
+			<MapObject name="MeshCollider" id="D" hidden="true"/>
+			<HitObject type="HIT"/>
+			<HitMesh ver="0">
+				<TriangleBatch ver="0">
+					<VertexTable>
+						<Vertex xyz="42,25,-144" uv="1772,82" rgba="99,62,25,255"/>
+						<Vertex xyz="9,25,-96" uv="942,1008" rgba="99,62,25,255"/>
+						<Vertex xyz="42,25,-96" uv="1772,1008" rgba="99,62,25,255"/>
+						<Vertex xyz="9,25,-144" uv="942,82" rgba="99,62,25,255"/>
+						<Vertex xyz="9,25,-96" uv="942,1008" rgba="99,62,25,255"/>
+						<Vertex xyz="42,25,-144" uv="1772,82" rgba="99,62,25,255"/>
+					</VertexTable>
+					<TriangleList>
+						<Triangle ijk="0,1,2"/>
+						<Triangle ijk="3,4,5"/>
+					</TriangleList>
+				</TriangleBatch>
+			</HitMesh>
 		</Collider>
 		<Collider ver="0" flags="0" surface="0">
 			<MapObject name="MeshCollider" id="C" hidden="true"/>
@@ -2066,8 +2094,50 @@
 	</Colliders>
 	<Zones>
 		<Zone ver="0">
-			<MapObject name="Root" id="4"/>
+			<MapObject name="Root" id="6"/>
 			<HitObject type="ROOT"/>
+		</Zone>
+		<Zone ver="0">
+			<MapObject name="aaaaaaaaaa2" id="5" hidden="true"/>
+			<HitObject type="HIT"/>
+			<HitMesh ver="0">
+				<TriangleBatch ver="0">
+					<VertexTable>
+						<Vertex xyz="434,0,200"/>
+						<Vertex xyz="490,0,155"/>
+						<Vertex xyz="434,0,155"/>
+						<Vertex xyz="434,0,200"/>
+						<Vertex xyz="490,0,200"/>
+						<Vertex xyz="490,0,155"/>
+					</VertexTable>
+					<TriangleList>
+						<Triangle ijk="0,1,2"/>
+						<Triangle ijk="3,4,5"/>
+					</TriangleList>
+				</TriangleBatch>
+			</HitMesh>
+			<Camera type="TYPE_4" flag="false" boomLength="460.000000" boomPitch="18.000000" viewPitch="-6.000000" posA="156,0,-68" posB="156,0,-126" posC="0,0,0"/>
+		</Zone>
+		<Zone ver="0">
+			<MapObject name="aaaaaaaaaa" id="4" hidden="true"/>
+			<HitObject type="HIT"/>
+			<HitMesh ver="0">
+				<TriangleBatch ver="0">
+					<VertexTable>
+						<Vertex xyz="344,0,200"/>
+						<Vertex xyz="400,0,155"/>
+						<Vertex xyz="344,0,155"/>
+						<Vertex xyz="344,0,200"/>
+						<Vertex xyz="400,0,200"/>
+						<Vertex xyz="400,0,155"/>
+					</VertexTable>
+					<TriangleList>
+						<Triangle ijk="0,1,2"/>
+						<Triangle ijk="3,4,5"/>
+					</TriangleList>
+				</TriangleBatch>
+			</HitMesh>
+			<Camera type="TYPE_4" flag="false" boomLength="460.000000" boomPitch="18.000000" viewPitch="-6.000000" posA="16,0,-49" posB="16,0,-107" posC="0,0,0"/>
 		</Zone>
 		<Zone ver="0">
 			<MapObject name="watt_cam" id="3" hidden="true"/>
@@ -2162,7 +2232,25 @@
 	</Zones>
 	<Markers>
 		<Marker ver="4" type="Root">
-			<MapObject name="Root" id="12"/>
+			<MapObject name="Root" id="17"/>
+		</Marker>
+		<Marker ver="4" type="Position" pos="25,25,-119" yaw="0.000000">
+			<MapObject name="Seat" id="16"/>
+		</Marker>
+		<Marker ver="4" type="CamTarget" pos="458,40,174" yaw="0.000000">
+			<MapObject name="AaaCam2" id="15"/>
+			<CamTarget sampleZone="true" generatePan="true" panSpeed="90.000000" overrideLength="300.000000" overrideAngles="20.000000,-6.000000"/>
+		</Marker>
+		<Marker ver="4" type="Entry" pos="206,68,-71" yaw="0.000000">
+			<MapObject name="Aaa" id="14"/>
+		</Marker>
+		<Marker ver="4" type="CamTarget" pos="368,40,174" yaw="0.000000">
+			<MapObject name="AaaCam" id="13"/>
+			<CamTarget sampleZone="true" generatePan="true" panSpeed="90.000000" overrideLength="450.000000" overrideAngles="20.000000,-6.000000"/>
+		</Marker>
+		<Marker ver="4" type="Entity" pos="-173,60,-69" yaw="0.000000">
+			<MapObject name="ItemBlock" id="12"/>
+			<Entity type="802EA588" flag="*MF_caf_05_ItemObtained" callback="false" item="Oil"/>
 		</Marker>
 		<Marker ver="4" type="NPC" pos="0,-300,0" yaw="0.000000">
 			<MapObject name="NPC_Watt" id="11"/>
@@ -2252,6 +2340,7 @@
 			<TexPanner id="F" generate="false" useTexels="false" max="131072" init="0,0,0,0" step="0,0,0,0" freq="0,0,0,0"/>
 		</TexPanners>
 		<Generators>
+			<Entrance name="Aaaa" type="Teleport" hasCallback="true" entry="Aaa"/>
 			<Entrance name="WalkW" type="Walk" hasCallback="true" entry="entry_w"/>
 			<Entrance name="DoorS" type="SingleDoor" hasCallback="false" entry="entry_s" door1="door" doorDir="1" doorSFX="1"/>
 			<Entrance name="DoorN" type="SingleDoor" hasCallback="true" entry="entry_n" door1="door3" doorDir="-1" doorSFX="1"/>

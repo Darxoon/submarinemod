@@ -1,5 +1,17 @@
 #define .NpcID:TerminalHelper 0`
 
+#new:Function $Function_IsPartnerBow {
+    0:  LAB       V1, 8010EBB3
+    8:  LI        V0, 9
+    C:  BNEL      V1, V0, .o1C
+   10:  SW        R0, 84 (A0)
+   14:  LI        V0, 1
+   18:  SW        V0, 84 (A0)
+       .o1C
+   1C:  JR        RA
+   20:  LI        V0, 2
+}
+
 @ $Header {
 	[MainScript] $Script_Main
 	[Background] 80200000
@@ -17,6 +29,8 @@
 	Exec $Script_MakeEntities
 	Exec $Script_SetupMusic
 	Exec $Script_EnterMap
+    
+    Exec $Script_SetupBowPlatforms
     
     Call MakeNpcs ( .False $NpcGroupList )
     
@@ -200,6 +214,34 @@
     
     Return
     End
+}
+
+
+#new:Script $Script_SetupBowPlatforms {
+	Loop
+		Call $Function_IsPartnerBow (  )
+		
+		If *Var0 == .True
+			Wait 4`
+			Call ModifyColliderFlags ( 0` ~Collider:Platform1 00018000 )
+			Call ModifyColliderFlags ( 0` ~Collider:Platform2 00018000 )
+			Call ModifyColliderFlags ( 0` ~Collider:Platform3 00018000 )
+			Wait 10`
+		Else
+			If *MF_BlueSwitchHit == .False
+				Call ModifyColliderFlags ( 1` ~Collider:Platform1 00018000 )
+				Call ModifyColliderFlags ( 1` ~Collider:Platform3 00018000 )
+			EndIf
+			If *MF_RedSwitchHit == .False
+				Call ModifyColliderFlags ( 1` ~Collider:Platform2 00018000 )
+			EndIf
+		EndIf
+		
+		Wait 1`
+	EndLoop
+	
+	Return
+	End
 }
 
 #new:ItemList $ItemList_Terminal

@@ -28,6 +28,8 @@
 		Bind  $Script_SwitchActivate .Trigger:AreaFlagSet *AreaFlag[.AreaFlag_Entity_Switch1] 00000001 00000000
 	EndIf
     
+	Bind $Script_BedGroundPound .Trigger:FloorTouch ~Collider:BedCollider 1 0
+	
 	Return
 	End
 }
@@ -77,6 +79,90 @@
 	Wait  17`
 	Call  GotoMap   ( "caf_04" ~Entry:caf_04:Entry1 )
 	Wait  100`
+	Return
+	End
+}
+
+@ $Script_ExitW {
+	If *MB_Story >= .ModProgress:MetWatt
+		If *MF_caf_01_GoombarioObtainedPermanently == .False
+			Call DisablePlayerInput ( .True )
+			Call GetCurrentPartnerID ( *Var0 )
+			
+			Switch *Var0
+				Case == .Partner:Kooper
+					Call SpeakToPlayer ( .Npc:Partner 0002000D 00020003 00000000 002F001C )
+				Case == .Partner:Bow
+					Call SpeakToPlayer ( .Npc:Partner 00050004 00050001 00000000 002F001C )
+				Case == .Partner:Watt
+					Call SpeakToPlayer ( .Npc:Partner 00060004 00060001 00000000 002F001C )
+			EndSwitch
+			
+			Call GetPlayerPos ( *Var0 *Var1 *Var2 )
+			Call PlayerMoveTo ( -292` *Var2 15` )
+			Call DisablePlayerInput ( .False )
+			Return
+		EndIf
+	EndIf
+	
+	If *MF_caf_01_GearObtained == .True
+		If *MF_caf_02_ItemObtained == .True
+			If *MF_caf_04_Block1Opened == .True
+				If *MF_caf_05_ItemObtained == .True
+					If *MB_Story < .ModProgress:GoombarioDeparted
+						Call DisablePlayerInput ( .True )
+						Call GetCurrentPartnerID ( *Var0 )
+						
+						If *Var0 == .Partner:Goombario
+							Call DisablePartnerAI ( 00000000 )
+							Call SpeakToPlayer ( .Npc:Partner 00010008 00010001 00000000 002F001B )
+							Thread
+								Call SetNpcAnimation ( .Npc:Partner 00010003 )
+								Call NpcMoveTo ( .Npc:Partner ~Vec2D:entry_e 110` )
+								Call $Function_EnableKooper (  )
+							EndThread
+						Else
+							Call BringPartnerOut ( .Partner:Goombario )
+							Call SpeakToPlayer ( .Npc:Partner 00010008 00010001 00000000 002F001B )
+							Thread
+								Call SetNpcAnimation ( .Npc:Partner 00010003 )
+								Call NpcMoveTo ( .Npc:Partner ~Vec2D:entry_e 110` )
+							EndThread
+						EndIf
+						
+						Call $Function_RemoveGoombario ()
+					EndIf
+				EndIf
+			EndIf
+		EndIf
+	EndIf
+	
+	SetGroup 0000001B
+	Call     UseExitHeading ( 60` ~Entry:entry_w )
+	Exec     ExitWalk
+	Call  GotoMap   ( "caf_06" ~Entry:caf_06:Entry0 )
+	Wait  100`
+	Return
+	End
+}
+
+#new:Script $Script_BedGroundPound {
+	Call GetPlayerActionState ( *Var0 )
+	If *Var0 != .ActionState:SpinJump
+		Return
+	EndIf
+	
+	Call DisablePlayerInput ( .True )
+	
+	Wait 5`
+	Call GetPlayerPos ( *Var0 *Var1 *Var2 )
+	Call  SetPlayerJumpscale    (  *Fixed[0.1] )
+	Call PlayerJump2 ( *Var0 190` *Var2 2` )
+	Call ShowGotItem ( .Item:Gear .False 00000000 )
+	Call AddKeyItem ( .Item:Gear )
+	Set *MF_caf_01_GearObtained .True
+	
+	Call DisablePlayerInput ( .False )
 	Return
 	End
 }

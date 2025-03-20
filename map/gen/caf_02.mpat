@@ -43,6 +43,10 @@
 {
 	Bind  $Script_Exit1 .Trigger:WallPressA ~Collider:door_r 00000001 00000000
 	Bind  $Script_Exit0 .Trigger:WallPressA ~Collider:door_l 00000001 00000000
+	Call  MakeEntity    ( .Entity:HiddenYellowBlock ~Vec4d:Block .Item:Screw 80000000 )
+	Call  AssignBlockFlag   ( *MF_caf_02_ItemObtained )
+	Call  MakeEntity    ( .Entity:HiddenRedBlock ~Vec4d:BadgeBlock .Item:AttackFXE 80000000 )
+	Call  AssignBlockFlag   ( *MF_caf_02_BadgeObtained )
 	Call  MakeItemEntity    ( .Item:TubbaCastleKey ~Vec3d:Key .ItemSpawnMode:Fall_NeverVanish *MF_caf_02_KeyCollected )
 	Call  MakeEntity    ( .Entity:RedSwitch ~Vec4d:RedSwitch 80000000 )
 	Call  AssignScript    ( $Script_EVT_RedSwitch )

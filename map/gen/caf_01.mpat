@@ -150,9 +150,23 @@
 			Set   *Var[3]  .DoorSwing:Out
 			Exec  EnterSingleDoor
 			Exec  $Script_CreateExitTriggers
+		Case  ==  ~Entry:entry_w
+			Set   *Var[0] $Script_CreateExitTriggers
+			Exec  EnterWalk
 		Default
 			Exec  $Script_CreateExitTriggers
 	EndSwitch
+	Return
+	End
+}
+
+#new:Script $Script_ExitW
+{
+	SetGroup 0000001B
+	Call     UseExitHeading ( 60` ~Entry:entry_w )
+	Exec     ExitWalk
+	Call  GotoMap   ( "caf_06" ~Entry:caf_06:Entry0 )
+	Wait  100`
 	Return
 	End
 }
@@ -204,6 +218,7 @@
 
 #new:Script $Script_CreateExitTriggers
 {
+	Bind  $Script_ExitW .Trigger:FloorAbove ~Collider:exit_trigger_w 00000001 00000000
 	Bind  $Script_ExitE .Trigger:FloorAbove ~Collider:exit_trigger_e 00000001 00000000
 	Return
 	End

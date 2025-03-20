@@ -34,3 +34,9 @@
 021 = MF_caf_01_GoombarioObtainedPermanently
 022 = MF_caf_05_StorageRoomHintShown
 023 = MF_caf_05_PartnersRegained
+024 = MF_caf_06_BadgeObtained
+025 = MF_caf_06_EngineCutscenePlayed
+026 = MF_caf_02_ItemObtained
+027 = MF_caf_02_BadgeObtained
+028 = MF_caf_05_ItemObtained
+029 = MF_caf_01_GearObtained
