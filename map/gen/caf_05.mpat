@@ -5,7 +5,7 @@
 	[MainScript] $Script_Main
 	[Background] 80200000
 	[EntryList] $EntryList
-	[EntryCount] 3
+	[EntryCount] 6
 }
 
 #new:EntryList $EntryList
@@ -13,6 +13,9 @@
 	~Vec4f:entry_n
 	~Vec4f:entry_s
 	~Vec4f:entry_w
+	~Vec4f:Mario_MoveTo_Goombario
+	~Vec4f:Mario_MoveTo_Kooper
+	~Vec4f:EntryWatt
 }
 
 #define .MapVar_Entity_Padlock 0
@@ -111,6 +114,7 @@
 		Call  MakeEntity    ( .Entity:BoardedFloor ~Vec4d:BoardedFloor 80000000 )
 		Call  AssignScript  ( $Script_BreakFloor_BoardedFloor )
 	EndIf
+	Call  MakeEntity    ( .Entity:SavePoint ~Vec4d:SaveBlock 80000000 )
 	Call  MakeEntity    ( .Entity:HiddenRedBlock ~Vec4d:RedBlock .Item:AttackFXB 80000000 )
 	Call  AssignBlockFlag   ( *MF_caf_05_BadgeObtained )
 	Return
@@ -127,6 +131,12 @@
 
 #new:Script $Script_EnterMap
 {
+	Call  GetLoadType   ( *Var[0] )
+	If  *Var[0]  ==  1
+		Exec  EnterSavePoint
+		Exec $Script_CreateExitTriggers
+		Return
+	EndIf
 	Call  GetEntryID    ( *Var[0] )
 	Switch  *Var[0]
 		Case  ==  ~Entry:entry_w

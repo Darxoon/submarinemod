@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="caf_04" author="unnamed" textures="kmr_tex">
 	<Editor>
-		<Camera pos="-778.619812,331.340240,577.984375" pitch="17.440050" yaw="16.640766"/>
-		<Camera pos="-882.791504,65536.000000,-73.531113"/>
+		<Camera pos="-10.361108,113.547371,25.034374" pitch="14.400009" yaw="0.960030"/>
+		<Camera pos="-166.390274,65536.000000,-69.398888"/>
 		<Camera pos="65536.000000,154.149994,-18.113947"/>
 		<Camera pos="-840.418640,97.003761,65536.000000"/>
 	</Editor>
@@ -155,7 +155,7 @@
 		</Node>
 	</ZoneTree>
 	<MarkerTree>
-		<Node name="Root" id="19">
+		<Node name="Root" id="1B">
 			<Node name="Entrances" id="1">
 				<Node name="Entry0" id="FFFFFFFF"/>
 				<Node name="Entry1" id="0"/>
@@ -184,6 +184,8 @@
 			<Node name="Marker" id="16"/>
 			<Node name="Padlock" id="17"/>
 			<Node name="Marker" id="18"/>
+			<Node name="Bow_Start" id="19"/>
+			<Node name="Bow_MoveTo" id="1A"/>
 		</Node>
 	</MarkerTree>
 	<LightSets>
@@ -4776,7 +4778,13 @@
 	</Zones>
 	<Markers>
 		<Marker ver="4" type="Root">
-			<MapObject name="Root" id="19"/>
+			<MapObject name="Root" id="1B"/>
+		</Marker>
+		<Marker ver="4" type="Position" pos="-41,21,-182" yaw="0.000000">
+			<MapObject name="Bow_MoveTo" id="1A"/>
+		</Marker>
+		<Marker ver="4" type="Position" pos="-81,0,-132" yaw="0.000000">
+			<MapObject name="Bow_Start" id="19"/>
 		</Marker>
 		<Marker ver="4" type="Entity" pos="-814,0,63" yaw="0.000000">
 			<MapObject name="Marker" id="18"/>
@@ -4891,7 +4899,7 @@
 		</TexPanners>
 		<Generators>
 			<Entrance name="Entrance1" type="SingleDoor" hasCallback="false" entry="Entry1" door1="door4" doorDir="1" doorSFX="1"/>
-			<Entrance name="Entrance0" type="SingleDoor" hasCallback="false" entry="Entry0" door1="door3" doorDir="1" doorSFX="1"/>
+			<Entrance name="Entrance0" type="SingleDoor" hasCallback="true" entry="Entry0" door1="door3" doorDir="1" doorSFX="1"/>
 			<Exit name="ExitW" type="SingleDoor" hasCallback="false" entry="Entry1" destMap="caf_01" destEntry="entry_s" trigger="door_w" door1="door4" lock="Padlock" doorDir="1" doorSFX="1"/>
 			<Exit name="ExitE" type="SingleDoor" hasCallback="false" entry="Entry0" destMap="caf_05" destEntry="entry_s" trigger="door_e" door1="door3" doorDir="1" doorSFX="1"/>
 		</Generators>

@@ -10,6 +10,14 @@
    20:  LI        V0, 2
 }
 
+@ $Header {
+	[MainScript] $Script_Main
+	[Background] 00000000
+	[EntryList] $EntryList
+	[EntryCount] 3
+	[MapTattle] 002F0019
+}
+
 @ $Script_Main {
     Set  *GB_WorldLocation  .Location:GoombaRoad
     Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )

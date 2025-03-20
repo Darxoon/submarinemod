@@ -1,5 +1,13 @@
 #define .NpcID:TerminalHelper 0`
 
+@ $Header {
+	[MainScript] $Script_Main
+	[Background] 80200000
+	[EntryList] $EntryList
+	[EntryCount] 2
+	[MapTattle] 002F0016
+}
+
 @ $Script_Main {
 	Set  *GB_WorldLocation  .Location:GoombaRoad
 	Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )

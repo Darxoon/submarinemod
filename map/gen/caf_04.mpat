@@ -460,6 +460,7 @@
 			Exec  EnterSingleDoor
 			Exec  $Script_CreateExitTriggers
 		Case  ==  ~Entry:Entry0
+			Exec  $Script_Callback_Entrance0
 			Set   *Var[2]  ~Model:door3
 			Set   *Var[3]  .DoorSwing:In
 			Exec  EnterSingleDoor
@@ -518,6 +519,12 @@
 }
 
 #new:Script $Script_EVT_BlueSwitch2
+{
+	Return
+	End
+}
+
+#new:Script $Script_Callback_Entrance0
 {
 	Return
 	End

@@ -210,3 +210,128 @@ care of Kooper.
 [Wait][END]
 }
 
+#message:2F:00F
+{
+[Style Left]
+Hahaha, you should have seen[br]
+your reaction![br]
+[Wait][Next]
+It's good to see someone else[br]
+finally. [Pause:8]Not that I was worried[br]
+for you but earlier I got trapped[br]
+in this storage room.[br]
+[Wait][Next]
+I looked through this place[br]
+and found some things that[br]
+might be worthwhile for you.[br]
+[Wait][Next]
+Why don't you go look for them[br]
+while I follow you around?[br]
+That sounds fun.[br]
+[Wait][END]
+}
+
+#message:2F:010
+{
+[Style Left]
+Why so hasty, didn't you hear[br]
+what I said?[br]
+[Wait][Next]
+There are things in this room[br]
+useful to you and I decide[br]
+that you go look for them now.[br]
+[Wait][END]
+}
+
+#message:2F:011
+{
+[Style Left]
+There is still more in here![br]
+Don't stop now, you're killing[br]
+my suspense.[br]
+[Wait][END]
+}
+
+#message:2F:012
+{
+[Style Left]
+Oh, you're back with Bow! Kooper[br]
+is already feeling better again.[br]
+Let's reunite![br]
+[Wait][END]
+}
+
+#message:2F:013
+{
+[Style Left]
+Oh, you're back with Bow! I[br]
+am already feeling better again.[br]
+Let's reunite![br]
+[Wait][END]
+}
+
+#message:2F:014
+{
+[Style Left]
+Oh, Mario! I'm so relieved that[br]
+you saved me![br]
+[Wait][END]
+}
+
+#message:2F:015
+{
+[Style Tattle][EnableCDownNext]
+The bunk beds in this room aren't[br]
+the most comfortable.[br]
+[Wait][Next]
+Sleeping here for the rest of the[br]
+mission is going to be fun.
+[Wait][End]
+}
+
+#message:2F:016
+{
+[Style Tattle][EnableCDownNext]
+This room seems to be both a kind[br]
+of meeting room and dining room.[br]
+It also has this weird computer[br]
+that you had to fix.[br]
+[Wait][End]
+}
+
+#message:2F:017
+{
+[Style Tattle][EnableCDownNext]
+This is the control room.[br]
+Here is where all of the[br]
+important stuff for us[br]
+for the submarine is.[br]
+[Wait][End]
+}
+
+#message:2F:018
+{
+[Style Tattle][EnableCDownNext]
+This is a storage room.[br]
+There is so much stuff here![br]
+[Wait][Next]
+Crates! Conveyor belts![br]
+Moving platforms![br]
+[Wait][Next]
+Aaaah![br]
+[Wait][End]
+}
+
+#message:2F:019
+{
+[Style Tattle][EnableCDownNext]
+This dark, gritty corridor[br]
+connects our sleeping room[br]
+with the control room.[br]
+[Wait][Next]
+I feel like there is...[Pause:10] something[br]
+hidden behind this simple-looking[br]
+room. But I don't know.
+[Wait][End]
+}
+

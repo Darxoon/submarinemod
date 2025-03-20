@@ -1,5 +1,13 @@
 #define .NpcID:NPC_ExitGoombario 0`
 
+@ $Header {
+	[MainScript] $Script_Main
+	[Background] 00000000
+	[EntryList] $EntryList
+	[EntryCount] 5
+	[MapTattle] 002F0015
+}
+
 @ $Script_Main {
 	Set  *GB_WorldLocation  .Location:GoombaRoad
 	Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )

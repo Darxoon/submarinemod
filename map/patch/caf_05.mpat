@@ -1,5 +1,14 @@
 #define .NpcID:Kooper 0`
 #define .NpcID:Goombario 1`
+#define .NpcID:Watt 2`
+
+@ $Header {
+	[MainScript] $Script_Main
+	[Background] 80200000
+	[EntryList] $EntryList
+	[EntryCount] 6
+	[MapTattle] 002F0017
+}
 
 @ $Script_Main {
 	Set  *GB_WorldLocation  .Location:GoombaRoad
@@ -156,8 +165,6 @@
 		Call DisablePlayerInput ( .True )
 		Call DisablePartnerAI ( 0000000 )
 		
-		Call NpcFacePlayer ( .NpcID:Kooper 00000000 )
-		
 		Thread
 			Call GetPlayerPos ( *Var0 *Var1 *Var2 )
 			Call PlayerMoveTo ( -224` *Var2 15` )
@@ -205,6 +212,7 @@
 #new:NpcGroupList $NpcGroupList {
 	00000001 $NpcGroup_Kooper      00000000
 	00000001 $NpcGroup_Goombario      00000000
+	00000001 $NpcGroup_Watt      00000000
 	00000000 00000000 00000000
 }
 
@@ -223,6 +231,31 @@
 }
 
 #new:Script $Script_Init_Kooper {
+	If *MB_Story < .ModProgress:MetBow
+		Call RemoveNpc ( .Npc:Self )
+		Return
+	EndIf
+	If *MF_caf_05_PartnersRegained == .True
+		Call RemoveNpc ( .Npc:Self )
+		Return
+	EndIf
+	Call BindNpcInteract ( .Npc:Self $Script_Interact_Kooper )
+	Return
+	End
+}
+
+#new:Script $Script_Interact_Kooper {
+	Call DisablePlayerInput ( .True )
+	Call PlayerMoveTo ( ~Vec2D:Mario_MoveTo_Kooper 20` )
+	Call SpeakToPlayer ( .Npc:Self 00010008 00010001 00000000 002F0012 )
+	
+	If *MF_caf_01_GoombarioObtainedPermanently == .True
+		Call $Function_EnableGoombarioInBg (  )
+	EndIf
+	Call $Function_EnableKooperInBg (  )
+	Set *MF_caf_05_PartnersRegained .True
+	
+	Call GotoMap ( "caf_05" ~Entry:Mario_MoveTo_Kooper )
 	Return
 	End
 }
@@ -243,6 +276,87 @@
 }
 
 #new:Script $Script_Init_Goombario {
+	If *MB_Story < .ModProgress:MetBow
+		Call RemoveNpc ( .Npc:Self )
+		Return
+	EndIf
+	If *MF_caf_01_GoombarioObtainedPermanently == .False
+		Call RemoveNpc ( .Npc:Self )
+		Return
+	EndIf
+	If *MF_caf_05_PartnersRegained == .True
+		Call RemoveNpc ( .Npc:Self )
+		Return
+	EndIf
+	Call BindNpcInteract ( .Npc:Self $Script_Interact_Goombario )
+	Return
+	End
+}
+
+#new:Script $Script_Interact_Goombario {
+	Call DisablePlayerInput ( .True )
+	Call PlayerMoveTo ( ~Vec2D:Mario_MoveTo_Goombario 20` )
+	Call SpeakToPlayer ( .Npc:Self 00010008 00010001 00000000 002F0012 )
+	
+	Call $Function_EnableGoombarioInBg (  )
+	Call $Function_EnableKooperInBg (  )
+	Set *MF_caf_05_PartnersRegained .True
+	
+	Call GotoMap ( "caf_05" ~Entry:Mario_MoveTo_Goombario )
+	Return
+	End
+}
+
+#new:NpcGroup $NpcGroup_Watt
+{
+	.NpcID:Watt $NpcSettings_Watt ~Vec3f:NPC_Watt % 0 -1000 0
+	00000D09 $Script_Init_Watt 00000001 00000000 0000010E
+	~NoDrops
+	~Movement:NPC_Watt
+	~AnimationTable:NPC_Watt % .Sprite:WorldWatt
+	00000000 00000000 00000000 00000000 % Say... This is the lantern that belongs to the Big ...
+}
+
+#new:NpcSettings $NpcSettings_Watt
+{
+	00000000 00170016 00000000 00000000 00000000 80077F70 00000000 8007809C
+	00000000 00000000 000E0001
+}
+
+#new:Script $Script_Init_Watt {
+	If *MF_caf_05_FloorDestroyed == .True
+		Call RemoveNpc ( .Npc:Self )
+	EndIf
+	Return
+	End
+}
+
+@ $Script_BreakFloor_BoardedFloor {
+	Set  *MF_caf_05_FloorDestroyed  .True
+	Call SetNpcPos ( .NpcID:Watt ~Vec3D:Watt_Position )
+	Exec $Script_MeetWatt
+	
+	Return
+	End
+}
+
+#new:Script $Script_MeetWatt {
+	Call DisablePlayerInput ( .True )
+	
+	Wait 30`
+	Call SetNpcAnimation ( .NpcID:Watt 00060006 )
+	Call SetNpcFlagBits ( .NpcID:Watt 00000100 .True ) % ignore player collision
+	
+	Call GetNpcPos ( .NpcID:Watt *Var0 *Var1 *Var2 )
+	Add *Var1 30`
+	Call NpcFlyTo ( .NpcID:Watt *Var0 *Var1 *Var2 20` 0` .Easing:Linear )
+	
+	Wait 19`
+	Call SetNpcAnimation ( .NpcID:Watt 00060001 )
+	Wait 1`
+	Call SpeakToPlayer ( .NpcID:Watt 00060004 00060001 00000000 002F0014 )
+	Call $Function_EnableWatt (  )
+	Call GotoMap ( "caf_05" ~Entry:EntryWatt )
 	Return
 	End
 }

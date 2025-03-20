@@ -33,3 +33,4 @@
 020 = MF_caf_04_KeyObtained
 021 = MF_caf_01_GoombarioObtainedPermanently
 022 = MF_caf_05_StorageRoomHintShown
+023 = MF_caf_05_PartnersRegained

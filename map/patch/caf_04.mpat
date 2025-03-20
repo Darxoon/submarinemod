@@ -12,6 +12,14 @@
    20:  LI        V0, 2
 }
 
+@ $Header {
+	[MainScript] $Script_Main
+	[Background] 00000000
+	[EntryList] $EntryList
+	[EntryCount] 2
+	[MapTattle] 002F0018
+}
+
 @ $Script_Main {
 	Set  *GB_WorldLocation  .Location:GoombaRoad
 	Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
@@ -95,6 +103,128 @@
 #new:Script $Script_EVT_Box6 {
 	Set *MF_caf_04_Crate1Destroyed .True
 	Call ModifyColliderFlags ( 0` ~Collider:Box6_wall 00018000 )
+	Return
+	End
+}
+
+@ $Script_Callback_Entrance0 {
+	If *MB_Story < .ModProgress:MetBow
+		Call DisablePlayerInput ( .True )
+		Call DisablePartnerAI ( 00000000 )
+		Exec $Script_MeetBow
+	EndIf
+	Return
+	End
+}
+
+#new:Script $Script_MeetBow {
+	% Make Bow invisible
+	Call  802CFD30  ( .Npc:Partner 00000007 0` 00000000 00000000 00000000 )
+	
+	Wait 5`
+	Call SetNpcPos ( .Npc:Partner ~Vec3D:Bow_Start )
+	Call NpcFacePlayer ( .Npc:Partner 00000000 )
+	
+	Wait 20`
+	
+	Call InterpPlayerYaw ( 80 0` )
+	
+	Wait 40`
+	Call InterpPlayerYaw ( F0 0` )
+	Wait 40`
+	
+	Call SetNpcAnimation ( .Npc:Partner 00050008 )
+	
+	Thread
+		Call  GetNpcPos     ( .Npc:Partner *VarA *VarB *VarC )
+		Set   *VarB  30`
+		Call  SetNpcPos     ( .Npc:Partner *VarA *VarB *VarC )
+		Call  SetNpcScale   ( .Npc:Partner *Fixed[3.0] *Fixed[3.0] *Fixed[3.0] )
+		SetF  *Var0  *Fixed[0.0]
+		Loop  00000014
+			AddF  *Var0  *Fixed[12.0]
+			Call  802CFD30  ( .Npc:Partner 00000007 *Var0 00000000 00000000 00000000 )
+			Wait  1`
+		EndLoop
+	EndThread
+	Call  PlaySoundAtNpc    ( .Npc:Partner 00000291 00000000 )
+	ExecWait  $Script_SpookPlayer
+	
+	Call MakeLerp ( 300` 100` 30` .Easing:CosInOut )
+	Loop
+        Call UpdateLerp ()
+		DivF *Var0 100`
+		Call  SetNpcScale   ( .Npc:Partner *Var0 *Var0 *Var0 )
+		
+        Wait 1`
+        If *Var1 == 00000000
+            BreakLoop
+        EndIf
+	EndLoop
+	
+	Call SetNpcAnimation ( .Npc:Partner 00050001 )
+	Call NpcFlyTo ( .Npc:Partner ~Vec3D:Bow_MoveTo 40` 0` .Easing:CosInOut )
+	
+	Call ResetCam ( .Cam:Default *Fixed[5.0] )
+	
+	Call SpeakToPlayer ( .Npc:Partner 00050004 00050001 00000000 002F000F )
+	
+	Set *MB_Story .ModProgress:MetBow
+	Call EnablePartnerAI ()
+	Call DisablePlayerInput ( .False )
+	Return
+	End
+}
+
+#new:Script $Script_SpookPlayer
+{
+	ChildThread
+		Call  GetPlayerPos      ( *VarA *VarB *VarC )
+		Call  UseSettingsFrom   ( .Cam:Default *VarA *VarB *VarC )
+		Call  SetCamSpeed       ( .Cam:Default *Fixed[90.0] )
+		Loop
+			Call  SetCamDistance    ( .Cam:Default  400` )
+			Call  PanToTarget       ( .Cam:Default 00000000 00000001 )
+			Wait  1`
+			Call  SetCamDistance    ( .Cam:Default  450` )
+			Call  PanToTarget       ( .Cam:Default 00000000 00000001 )
+			Wait  1`
+		EndLoop
+	EndChildThread
+	Call  SetPlayerAnimation    ( 0001002B )
+	Wait  30`
+	Call  SetPlayerAnimation    ( 00010002 )
+	Return
+	End
+}
+
+@ $Script_ExitE {
+	If *MB_Story <= .ModProgress:MetBow
+		If *MF_caf_04_GiantChest == .False
+			Call DisablePlayerInput ( .True )
+			Call SpeakToPlayer ( .Npc:Partner 00050004 00050001 00000000 002F0010 )
+			Call DisablePlayerInput ( .False )
+			Return
+		EndIf
+		If *MF_caf_04_DoorUnlocked == .False
+			Call DisablePlayerInput ( .True )
+			Call SpeakToPlayer ( .Npc:Partner 00050004 00050001 00000000 002F0011 )
+			Call DisablePlayerInput ( .False )
+			Return
+		EndIf
+	EndIf
+	
+	SetGroup 0000001B
+	Call  DisablePlayerInput ( .True )
+	Call  UseDoorSounds ( .DoorSounds:Metal )
+	Set   *Var[0]  ~Entry:Entry0
+	Set   *Var[1]  ~Collider:door_e
+	Set   *Var[2]  ~Model:door3
+	Set   *Var[3]  .DoorSwing:In
+	Exec  ExitSingleDoor
+	Wait  17`
+	Call  GotoMap   ( "caf_05" ~Entry:caf_05:entry_s )
+	Wait  100`
 	Return
 	End
 }
