@@ -34,6 +34,8 @@
     Set *GF_Tutorial_HeartBlock .True
     Set *GF_Tutorial_GotItem .True
     
+    Call AddBadge ( .Item:SpeedySpin 0` )
+    
     Call GotoMap ( "caf_01" ~Entry:caf_01:entry_e )
     
     Return

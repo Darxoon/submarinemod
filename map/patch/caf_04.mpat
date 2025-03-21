@@ -38,6 +38,8 @@
 	
 	Bind $Script_OnPlatformFloor .Trigger:FloorTouch ~Collider:PlatformFloor 00000001 00000000
 	Bind $Script_OnHallwayFloor .Trigger:FloorTouch ~Collider:HallwayFloor 00000001 00000000
+	Bind $Script_SaveRedSwitchState .Trigger:FloorTouch ~Collider:LowerFloorStart 00000001 00000000
+	Bind $Script_SaveRedSwitchState .Trigger:FloorTouch ~Collider:UpperFloor 00000001 00000000
 	
 	If *MF_caf_04_GratingDestroyed == .True
 		Call ModifyColliderFlags ( 0` ~Collider:RedSwitch_wall 00018000 )
@@ -229,6 +231,12 @@
 	End
 }
 
+#new:Script $Script_SaveRedSwitchState {
+	Set *MapFlag[4] *MF_RedSwitchHit
+	Return
+	End
+}
+
 % Spring
 
 #new:Script $Script_OnPlatformFloor {
@@ -406,7 +414,7 @@
 		If *Var0 > 50`
 			If *Var2 > 100`
 				If *Var2 < 300`
-					Set *MF_RedSwitchHit .True
+					Set *MF_RedSwitchHit *MapFlag[4]
 					Exec $Script_UpdateSwitches
 				EndIf
 			EndIf
@@ -496,7 +504,6 @@
 @ $Script_EVT_BlueSwitch2 {
 	If *MF_RedSwitchHit == .True
 		Set *MF_RedSwitchHit .False
-		Exec $Script_SetupBluePlatforms
 	Else
 		Set *MF_RedSwitchHit .True
 	EndIf

@@ -365,8 +365,8 @@
 	<Item index="16A" nameMsg="00-000" desc1Msg="00-000" desc2Msg="00-000" typeFlags="1000" targetFlags="0008" name="Boots2Icon" hudElement="Boots2" itemEntity="Boots2" sellValue="0"/>
 	<Item index="16B" nameMsg="00-000" desc1Msg="00-000" desc2Msg="00-000" typeFlags="1000" targetFlags="0008" name="Boots3Icon" hudElement="Boots3" itemEntity="Boots3" sellValue="0"/>
 	<Item index="16C" nameMsg="00-000" desc1Msg="00-000" desc2Msg="00-000" typeFlags="1000" targetFlags="0008" name="ItemsIcon" hudElement="Items" itemEntity="Items" sellValue="0"/>
-	<Item index="16D" nameMsg="00-000" desc1Msg="00-000" desc2Msg="00-000" typeFlags="1009" targetFlags="0008" name="Gear" hudElement="JadeRaven" itemEntity="JadeRaven"/>
-	<Item index="16E" nameMsg="00-000" desc1Msg="00-000" desc2Msg="00-000" typeFlags="1009" targetFlags="0008" name="Screw" hudElement="MiracleWater" itemEntity="MiracleWater"/>
-	<Item index="16F" nameMsg="00-000" desc1Msg="00-000" desc2Msg="00-000" typeFlags="1009" targetFlags="0008" name="Belt" hudElement="Dictionary" itemEntity="Dictionary"/>
-	<Item index="170" nameMsg="00-000" desc1Msg="00-000" desc2Msg="00-000" typeFlags="1009" targetFlags="0008" name="Oil" hudElement="KootShell" itemEntity="KootShell"/>
+	<Item index="16D" nameMsg="2F-01D" desc1Msg="2F-023" desc2Msg="2F-023" typeFlags="1009" targetFlags="0008" name="Gear" hudElement="JadeRaven" itemEntity="JadeRaven"/>
+	<Item index="16E" nameMsg="2F-01E" desc1Msg="2F-024" desc2Msg="2F-024" typeFlags="1009" targetFlags="0008" name="Screw" hudElement="MiracleWater" itemEntity="MiracleWater"/>
+	<Item index="16F" nameMsg="2F-01F" desc1Msg="2F-025" desc2Msg="2F-025" typeFlags="1009" targetFlags="0008" name="Belt" hudElement="Dictionary" itemEntity="Dictionary"/>
+	<Item index="170" nameMsg="2F-020" desc1Msg="2F-026" desc2Msg="2F-026" typeFlags="1009" targetFlags="0008" name="Oil" hudElement="KootShell" itemEntity="KootShell"/>
 </Items>

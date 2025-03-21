@@ -86,22 +86,10 @@
 @ $Script_ExitW {
 	If *MB_Story >= .ModProgress:MetWatt
 		If *MF_caf_01_GoombarioObtainedPermanently == .False
-			Call DisablePlayerInput ( .True )
-			Call GetCurrentPartnerID ( *Var0 )
-			
-			Switch *Var0
-				Case == .Partner:Kooper
-					Call SpeakToPlayer ( .Npc:Partner 0002000D 00020003 00000000 002F001C )
-				Case == .Partner:Bow
-					Call SpeakToPlayer ( .Npc:Partner 00050004 00050001 00000000 002F001C )
-				Case == .Partner:Watt
-					Call SpeakToPlayer ( .Npc:Partner 00060004 00060001 00000000 002F001C )
-			EndSwitch
-			
-			Call GetPlayerPos ( *Var0 *Var1 *Var2 )
-			Call PlayerMoveTo ( -292` *Var2 15` )
-			Call DisablePlayerInput ( .False )
-			Return
+			Goto 0
+		EndIf
+		If *MF_caf_05_PartnersRegained == .False
+			Goto 0
 		EndIf
 	EndIf
 	
@@ -130,6 +118,7 @@
 							EndThread
 						EndIf
 						
+						Set *MB_Story .ModProgress:GoombarioDeparted
 						Call $Function_RemoveGoombario ()
 					EndIf
 				EndIf
@@ -142,6 +131,25 @@
 	Exec     ExitWalk
 	Call  GotoMap   ( "caf_06" ~Entry:caf_06:Entry0 )
 	Wait  100`
+	Return
+	
+	Label 0
+	% Message to regain partners first
+	Call DisablePlayerInput ( .True )
+	Call GetCurrentPartnerID ( *Var0 )
+	
+	Switch *Var0
+		Case == .Partner:Kooper
+			Call SpeakToPlayer ( .Npc:Partner 0002000D 00020003 00000000 002F001C )
+		Case == .Partner:Bow
+			Call SpeakToPlayer ( .Npc:Partner 00050004 00050001 00000000 002F001C )
+		Case == .Partner:Watt
+			Call SpeakToPlayer ( .Npc:Partner 00060004 00060001 00000000 002F001C )
+	EndSwitch
+	
+	Call GetPlayerPos ( *Var0 *Var1 *Var2 )
+	Call PlayerMoveTo ( -292` *Var2 15` )
+	Call DisablePlayerInput ( .False )
 	Return
 	End
 }
@@ -158,9 +166,12 @@
 	Call GetPlayerPos ( *Var0 *Var1 *Var2 )
 	Call  SetPlayerJumpscale    (  *Fixed[0.1] )
 	Call PlayerJump2 ( *Var0 190` *Var2 2` )
-	Call ShowGotItem ( .Item:Gear .False 00000000 )
-	Call AddKeyItem ( .Item:Gear )
-	Set *MF_caf_01_GearObtained .True
+	
+	If *MF_caf_01_GearObtained == .False
+		Call ShowGotItem ( .Item:Gear .False 00000000 )
+		Call AddKeyItem ( .Item:Gear )
+		Set *MF_caf_01_GearObtained .True
+	EndIf
 	
 	Call DisablePlayerInput ( .False )
 	Return

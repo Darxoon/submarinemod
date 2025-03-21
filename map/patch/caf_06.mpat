@@ -152,7 +152,9 @@
         Call GetPlayerPos ( *Var0 *Var1 *Var2 )
         Call ShowEmote ( 0` .Emote:Exclamation -45` 30` .False *Var0 *Var1 *Var2 0` )
         Wait 30`
-        Call GotoMap ( "caf_05" ~Entry:caf_05:Aaa )
+        % Call GotoMap ( "caf_05" ~Entry:caf_05:Aaa )
+        
+        Call ShowMessageAtScreenPos ( 002F0022 0` 0` )
     EndIf
     Return
     End

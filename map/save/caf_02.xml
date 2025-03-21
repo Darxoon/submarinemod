@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="caf_02" author="unnamed" background="arn_bg" textures="kmr_tex">
 	<Editor>
-		<Camera pos="-23.720108,373.932404,74.583107" pitch="51.199997" yaw="0.160092"/>
-		<Camera pos="-74.595428,65536.000000,5.471440"/>
-		<Camera pos="65536.000000,106.000000,-47.000000"/>
+		<Camera pos="-31.560991,353.503845,223.624664" pitch="27.200010" yaw="336.479919"/>
+		<Camera pos="-275.878265,65536.000000,-170.114532"/>
+		<Camera pos="65536.000000,97.032120,-106.207726"/>
 		<Camera pos="-86.674545,-51.064327,65536.000000"/>
 	</Editor>
 	<ModelTree>
@@ -3293,16 +3293,10 @@
 						<Vertex xyz="-259,151,-9" uv="2474,1733"/>
 						<Vertex xyz="-259,0,-102" uv="3734,474"/>
 						<Vertex xyz="-259,151,-102" uv="3734,1733"/>
-						<Vertex xyz="-259,0,-102" uv="3734,474"/>
-						<Vertex xyz="-300,0,-102" uv="4996,474"/>
-						<Vertex xyz="-259,151,-102" uv="3734,1733"/>
-						<Vertex xyz="-259,151,-102" uv="3734,1733"/>
-						<Vertex xyz="-300,0,-102" uv="4996,474"/>
-						<Vertex xyz="-300,151,-102" uv="4996,1733"/>
-						<Vertex xyz="-300,151,-174" uv="532,-348"/>
+						<Vertex xyz="-300,151,-200" uv="532,-348"/>
 						<Vertex xyz="-300,151,-9" uv="1557,-348"/>
-						<Vertex xyz="-259,151,-174" uv="533,-1372"/>
-						<Vertex xyz="-259,151,-174" uv="533,-1372"/>
+						<Vertex xyz="-259,151,-200" uv="533,-1372"/>
+						<Vertex xyz="-259,151,-200" uv="533,-1372"/>
 						<Vertex xyz="-300,151,-9" uv="1557,-348"/>
 						<Vertex xyz="-259,151,-9" uv="1557,-1372"/>
 						<Vertex xyz="-300,0,-102" uv="533,-2396"/>
@@ -3312,23 +3306,17 @@
 						<Vertex xyz="-259,0,-102" uv="533,-3420"/>
 						<Vertex xyz="-259,0,-9" uv="1557,-3420"/>
 						<Vertex xyz="-259,151,-102" uv="2474,1733"/>
-						<Vertex xyz="-259,89,-174" uv="3734,474"/>
-						<Vertex xyz="-259,151,-174" uv="3734,1733"/>
+						<Vertex xyz="-259,89,-200" uv="3734,474"/>
+						<Vertex xyz="-259,151,-200" uv="3734,1733"/>
 						<Vertex xyz="-259,89,-102" uv="2474,474"/>
-						<Vertex xyz="-259,89,-174" uv="3734,474"/>
+						<Vertex xyz="-259,89,-200" uv="3734,474"/>
 						<Vertex xyz="-259,151,-102" uv="2474,1733"/>
-						<Vertex xyz="-259,151,-174" uv="3734,1733"/>
-						<Vertex xyz="-300,0,-174" uv="4996,474"/>
-						<Vertex xyz="-300,151,-174" uv="4996,1733"/>
-						<Vertex xyz="-259,0,-174" uv="3734,474"/>
-						<Vertex xyz="-300,0,-174" uv="4996,474"/>
-						<Vertex xyz="-259,151,-174" uv="3734,1733"/>
-						<Vertex xyz="-259,89,-160" uv="2474,1733"/>
-						<Vertex xyz="-259,0,-174" uv="3734,474"/>
-						<Vertex xyz="-259,89,-174" uv="3734,1733"/>
-						<Vertex xyz="-259,0,-160" uv="2474,474"/>
-						<Vertex xyz="-259,0,-174" uv="3734,474"/>
-						<Vertex xyz="-259,89,-160" uv="2474,1733"/>
+						<Vertex xyz="-259,89,-186" uv="2474,1733"/>
+						<Vertex xyz="-259,0,-200" uv="3734,474"/>
+						<Vertex xyz="-259,89,-200" uv="3734,1733"/>
+						<Vertex xyz="-259,0,-186" uv="2474,474"/>
+						<Vertex xyz="-259,0,-200" uv="3734,474"/>
+						<Vertex xyz="-259,89,-186" uv="2474,1733"/>
 					</VertexTable>
 					<TriangleList>
 						<Triangle ijk="0,1,2"/>
@@ -3345,10 +3333,6 @@
 						<Triangle ijk="33,34,35"/>
 						<Triangle ijk="36,37,38"/>
 						<Triangle ijk="39,40,41"/>
-						<Triangle ijk="42,43,44"/>
-						<Triangle ijk="45,46,47"/>
-						<Triangle ijk="48,49,50"/>
-						<Triangle ijk="51,52,53"/>
 					</TriangleList>
 				</TriangleBatch>
 			</HitMesh>
@@ -4010,11 +3994,11 @@
 		<Marker ver="4" type="Root">
 			<MapObject name="Root" id="E"/>
 		</Marker>
-		<Marker ver="4" type="Entity" pos="246,60,-119" yaw="0.000000">
+		<Marker ver="4" type="Entity" pos="-278,211,-132" yaw="0.000000">
 			<MapObject name="BadgeBlock" id="D"/>
 			<Entity type="802EA5D0" flag="*MF_caf_02_BadgeObtained" callback="false" item="AttackFXE"/>
 		</Marker>
-		<Marker ver="4" type="Entity" pos="201,60,-119" yaw="0.000000">
+		<Marker ver="4" type="Entity" pos="220,60,-119" yaw="0.000000">
 			<MapObject name="Block" id="C"/>
 			<Entity type="802EA588" flag="*MF_caf_02_ItemObtained" callback="false" item="Screw"/>
 		</Marker>

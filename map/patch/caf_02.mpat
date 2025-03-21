@@ -229,8 +229,10 @@
 			Wait 10`
 		Else
 			If *MF_BlueSwitchHit == .False
-				Call ModifyColliderFlags ( 1` ~Collider:Platform1 00018000 )
-				Call ModifyColliderFlags ( 1` ~Collider:Platform3 00018000 )
+                If *MF_caf_02_KeyUsed == .True
+                    Call ModifyColliderFlags ( 1` ~Collider:Platform1 00018000 )
+                    Call ModifyColliderFlags ( 1` ~Collider:Platform3 00018000 )
+                EndIf
 			EndIf
 			If *MF_RedSwitchHit == .False
 				Call ModifyColliderFlags ( 1` ~Collider:Platform2 00018000 )

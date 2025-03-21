@@ -445,3 +445,27 @@ And you for playing!
 [Wait][END]
 }
 
+#message:2F:023
+{
+A shiny gear, originally[BR]
+part of some contraption.[END]
+}
+
+#message:2F:024
+{
+A screw, used to hold multiple[BR]
+parts of material in place.[END]
+}
+
+#message:2F:025
+{
+A belt that was originally[BR]
+part of a machine.[END]
+}
+
+#message:2F:026
+{
+Some machine oil in a[BR]
+bottle.[END]
+}
+
